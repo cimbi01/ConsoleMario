@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleMario
 {
-    class Player
+    public class Player
     {
         // up, down, righ left keyboard key init
-        private static readonly char UP = 'w', DOWN = 's', RIGHT = 'a', LEFT = 'd';
+        private static readonly char UP = 'w', DOWN = 's', RIGHT = 'd', LEFT = 'a';
         // Character live
         public bool Live { get; private set; } = true;
         // Character character on console to write
