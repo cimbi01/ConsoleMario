@@ -9,7 +9,7 @@ namespace ConsoleMario
 {
     public static class Game
     {
-        // 
+        // default Console Background Color and Default Color to change on cursor
         private static readonly ConsoleColor default_bgcolor = ConsoleColor.Black;
         private static readonly ConsoleColor change_bgcolor = ConsoleColor.DarkRed;
         // Describes that player want to exit
