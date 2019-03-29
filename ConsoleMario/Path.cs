@@ -61,13 +61,14 @@ namespace ConsoleMario
             }
         }
         // Describes the Maximum types of level (can be an int from 1 to the max)
-        public const int MaxLevel = 1;
+        public static int MaxLevel { get; private set; } = 1;
         // returns a List of Path from level1 path to levelMaxLevel
         public static List<Path> Init()
         {
             List<Path> paths = new List<Path>
             {
-                Path1()
+                Path1(),
+                Path2()
             };
             return paths;
         }
@@ -78,6 +79,16 @@ namespace ConsoleMario
             // row*column 3 *3
             Path path = new Path(1, 3, 3);
             path.Devices[2, 2] = new End();
+            return path;
+        }
+        public static Path Path2()
+        {
+            // level = 2
+            // row*column 4*4
+            MaxLevel++;
+            Path path = new Path(2, 4, 4);
+            path.Devices[3, 3] = new End();
+            path.Devices[2, 4] = new Spiral(1);
             return path;
         }
     }

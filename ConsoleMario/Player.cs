@@ -8,12 +8,12 @@ namespace ConsoleMario
 {
     public class Player
     {
+        public const int MAXLIFE = 5;
+        public int Life { get; set; } = MAXLIFE;
         // Describes if the player won the current PathLevel
         public bool Win { get; set; } = false;
         // up, down, righ left keyboard key init
         private static readonly char UP = 'w', DOWN = 's', RIGHT = 'd', LEFT = 'a';
-        // Character live
-        public bool Live { get; internal set; } = true;
         // Character character on console to write
         public char Character { get; } = '+';
         // Character position X,Y on console to write
@@ -54,20 +54,27 @@ namespace ConsoleMario
             // step back
             if (PositionX - PreviousPositionX > 0)
             {
-                this.Move(-1, 0);
+                Move(-1, 0);
             }
             else if (PositionX - PreviousPositionX < 0)
             {
-                this.Move(1, 0);
+                Move(1, 0);
             }
             else if(PositionY - PreviousPositionY > 0)
             {
-                this.Move(0, -1);
+                Move(0, -1);
             }
             else if (PositionY - PreviousPositionY < 0)
             {
-                this.Move(0, 1);
+                Move(0, 1);
             }
+        }
+        public void Reset()
+        {
+            Win = false;
+            Life = Player.MAXLIFE;
+            PreviousPositionX = PositionX = 1;
+            PreviousPositionY = PositionY = 1;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace ConsoleMario.Devices.Tests
             Player player = new Player();
             Fire fire = new Fire();
             fire.Use(player);
-            Assert.AreEqual(false, player.Live);
+            Assert.AreEqual(0, player.Life);
         }
     }
 }

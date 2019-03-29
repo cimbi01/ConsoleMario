@@ -12,6 +12,7 @@ namespace ConsoleMario.Devices
         // throws a new RunInWallException
         public override void Use(Player player)
         {
+            player.Life--;
             throw new RunInWallException();
         }
     }

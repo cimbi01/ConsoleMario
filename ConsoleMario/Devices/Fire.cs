@@ -13,7 +13,7 @@ namespace ConsoleMario.Devices
         // Kill the player
         public override void Use(Player player)
         {
-            player.Live = false;
+            player.Life = 0;
         }
     }
 }

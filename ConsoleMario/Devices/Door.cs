@@ -17,6 +17,7 @@ namespace ConsoleMario.Devices
             // if the door is closed
             if (!Opened)
             {
+                player.Life--;
                 throw new DoorIsClosedException();
             }
         }
