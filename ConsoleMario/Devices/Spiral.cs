@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleMario.Devices
 {
-    class Spiral : Device
+    public class Spiral : Device
     {
 
         // how much should the player jump;
