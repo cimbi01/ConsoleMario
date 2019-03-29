@@ -9,6 +9,9 @@ namespace ConsoleMario
 {
     public static class Game
     {
+        // 
+        private static readonly ConsoleColor default_bgcolor = ConsoleColor.Black;
+        private static readonly ConsoleColor change_bgcolor = ConsoleColor.DarkRed;
         // Describes that player want to exit
         private static bool exited = false;
         // Describes all the existed Paths returned by path.init
@@ -23,6 +26,8 @@ namespace ConsoleMario
         private static Path actual_path;
         public static void Play()
         {
+            // cursor will not be visible
+            Console.CursorVisible = false;
             // while player does not want to exit
             while (!exited)
             {
@@ -98,11 +103,11 @@ namespace ConsoleMario
                 // setcursor to previus position and write the previous device where it is
                 Console.SetCursorPosition(player.PreviousPositionY, player.PreviousPositionX);
                 Console.Write(actual_path.Devices[player.PreviousPositionX, player.PreviousPositionY].Character);
-                Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.BackgroundColor = change_bgcolor;
                 // setcursor to current position and write the current device where it is
                 Console.SetCursorPosition(player.PositionY, player.PositionX);
                 Console.Write(actual_path.Devices[player.PositionX, player.PositionY].Character);
-                Console.BackgroundColor = ConsoleColor.Black;
+                Console.BackgroundColor = default_bgcolor;
                 Console.SetCursorPosition(player.PositionY, player.PositionX);
                 System.Threading.Thread.Sleep(300);
                 try
