@@ -40,13 +40,13 @@ namespace ConsoleMario
         private void Build()
         {
             // 0 and last index add walls around
-            for (int j = 0; j < this.column; j++)
+            for (int j = 0; j < this.column+1; j++)
             {
                 Devices[0, j] = new Wall();
                 Devices[this.row, j] = new Wall();
             }
             // 0 and last index add walls around
-            for (int i = 0; i < this.row; i++)
+            for (int i = 0; i < this.row+1; i++)
             {
                 Devices[i, 0] = (new Wall());
                 Devices[i, this.column] = (new Wall());

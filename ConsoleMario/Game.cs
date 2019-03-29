@@ -20,7 +20,7 @@ namespace ConsoleMario
         // Describes the actual level
         private static int actual_level = 1;
         // Describes the actual path
-        private static Path actual_path = new Path(paths[actual_level]);
+        private static Path actual_path = new Path(paths[actual_level-1]);
         public static void Play()
         {
             // while player does not want to exit
@@ -47,6 +47,7 @@ namespace ConsoleMario
             }
             // if player want to exit
         }
+        /*
         // Write all the device's character in row and column to console
         private static void RenderActualPath()
         {
@@ -59,14 +60,15 @@ namespace ConsoleMario
                 Console.Write('\n');
             }
         }
+        */
         // Write the Actual Path but on x, y position write the player character
-        private static void RenderActulPath(int x, int y)
+        private static void RenderActualPath()
         {
             for (int i = 0; i < actual_path.Devices.GetLength(0); i++)
             {
                 for (int j = 0; j < actual_path.Devices.GetLength(1); j++)
                 {
-                    if (i == x && j == y)
+                    if (i == player.PositionX && j == player.PositionY)
                     {
                         Console.Write(player.Character);
                     }
@@ -88,8 +90,8 @@ namespace ConsoleMario
         private static void RenderPlayer()
         {
             Console.Clear();
-            RenderActulPath(player.PositionX, player.PositionY);
-            System.Threading.Thread.Sleep(2000);
+            RenderActualPath();
+            System.Threading.Thread.Sleep(500);
             try
             {
                 actual_path.Devices[player.PositionX, player.PositionY].Use(player);

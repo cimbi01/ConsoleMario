@@ -10,6 +10,7 @@ namespace ConsoleMario
     {
         static void Main(string[] args)
         {
+            Game.Play();
             Console.ReadKey();
         }
     }
