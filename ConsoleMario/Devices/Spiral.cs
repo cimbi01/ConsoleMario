@@ -11,11 +11,11 @@ namespace ConsoleMario.Devices
 
         // how much should the player jump;
         private readonly int force;
-        public Spiral() { Character = '_'; }
+        public Spiral(int _force) { this.force = _force; Character = '_'; }
         // make player move by force
         public override void Use(Player player)
         {
-            player.Move(this.force, 0);
+            player.Move(-this.force, 0);
         }
     }
 }
