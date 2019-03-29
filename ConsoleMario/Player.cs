@@ -28,19 +28,24 @@ namespace ConsoleMario
         // DOESNT HANDLE UPPERCASES!!! :(
         public void Move(char ch)
         {
-            PreviousPositionX = PositionX;
-            PreviousPositionY = PositionY;
             if (ch == UP)
-            { PositionX--; }
+            { Move(-1, 0); }
             else if (ch == DOWN)
-            { PositionX++; }
+            { Move(1, 0); }
             else if (ch == RIGHT)
-            { PositionY++; }
+            { Move(0, 1); }
             else if (ch == LEFT)
-            { PositionY--; }
+            { Move(0, -1); }
             // THROW NOTUSEDKEYEXCEPTION
             else
             { }
+        }
+        public void Move(int x, int y)
+        {
+            PreviousPositionX = PositionX;
+            PreviousPositionY = PositionY;
+            PositionX += x;
+            PositionY += y;
         }
     }
 }
