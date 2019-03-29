@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleMario.Devices
 {
-    class Key : Device
+    public class Key : Device
     {
         // Door to open
         readonly Door door;

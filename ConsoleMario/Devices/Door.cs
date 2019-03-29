@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleMario.Devices
 {
-    class Door : Device
+    public class Door : Device
     {
         // Describes if the Door is opened
         public bool Opened { get; set; } = false;
@@ -21,7 +21,7 @@ namespace ConsoleMario.Devices
             }
         }
     }
-    class DoorIsClosedException : Exception
+    public class DoorIsClosedException : Exception
     {
         public DoorIsClosedException() : base("The Door, which on you are is closed!") { }
     }
