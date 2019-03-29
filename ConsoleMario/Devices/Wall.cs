@@ -8,7 +8,7 @@ namespace ConsoleMario.Devices
 {
     public class Wall : Device
     {
-        public Wall() : base('*') { }
+        public Wall() : base('I') { }
         // throws a new RunInWallException
         public override void Use(Player player)
         {

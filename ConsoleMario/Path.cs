@@ -68,7 +68,8 @@ namespace ConsoleMario
             List<Path> paths = new List<Path>
             {
                 Path1(),
-                Path2()
+                Path2(),
+                Path3()
             };
             return paths;
         }
@@ -89,6 +90,17 @@ namespace ConsoleMario
             Path path = new Path(2, 4, 4);
             path.Devices[3, 3] = new End();
             path.Devices[2, 4] = new Spiral(1);
+            return path;
+        }
+        public static Path Path3()
+        {
+            // level = 3
+            // row*column 5*5
+            MaxLevel++;
+            Path path = new Path(3, 5, 5);
+            path.Devices[3, 3] = new End();
+            path.Devices[1, 4] = new Wall();
+            path.Devices[3, 4] = new Spiral(3);
             return path;
         }
     }
