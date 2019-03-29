@@ -10,5 +10,6 @@ namespace ConsoleMario
     {
         public char Character { get; protected set; }
         public abstract void Use(Player player);
+        public Device(char ch) { Character = ch; }
     }
 }

@@ -9,10 +9,7 @@ namespace ConsoleMario.Devices
     public class Fire : Device
     {
         // set character
-        public Fire()
-        {
-            Character = '^';
-        }
+        public Fire() : base('^') { }
         // Kill the player
         public override void Use(Player player)
         {
