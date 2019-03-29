@@ -95,11 +95,16 @@ namespace ConsoleMario
         {
             if (player.Life > 0)
             {
+                // setcursor to previus position and write the previous device where it is
                 Console.SetCursorPosition(player.PreviousPositionY, player.PreviousPositionX);
                 Console.Write(actual_path.Devices[player.PreviousPositionX, player.PreviousPositionY].Character);
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                // setcursor to current position and write the current device where it is
                 Console.SetCursorPosition(player.PositionY, player.PositionX);
-                Console.Write(player.Character);
-                System.Threading.Thread.Sleep(500);
+                Console.Write(actual_path.Devices[player.PositionX, player.PositionY].Character);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.SetCursorPosition(player.PositionY, player.PositionX);
+                System.Threading.Thread.Sleep(300);
                 try
                 {
                     actual_path.Devices[player.PositionX, player.PositionY].Use(player);
