@@ -18,11 +18,12 @@ namespace ConsoleMario
         // Describes the devices matrix
         // We use this to Render to console
         // And to use on the player if steped on a Device
-        public List<List<Device>> Devices { get; } = new List<List<Device>>();
+        public Device[,] Devices { get; }
         // return a Path with level, row, and column
         // used for PathLevel init
         public Path(int _level, int _row, int _column)
         {
+            Devices = new Device[_row+1, _column+1];
             LevelNumber = _level;
             this.row = _row;
             this.column = _column;
@@ -31,32 +32,26 @@ namespace ConsoleMario
         // Init the Devices of the Path add walls on the first and last outer indexes 
         // and on the first and last inner indexes
         // and streets as default on all outher indexes
-        private void Build()
+        public void Build()
         {
-            for (int i = 0; i < this.row+1; i++)
+            // 0 and last index add walls around
+            for (int j = 0; j < this.column; j++)
             {
-                Devices.Add(new List<Device>());
-                // if i = 0 or i is on the last index then add walls around
-                if (i == 0 || i == this.row)
+                Devices[0, j] = new Wall();
+                Devices[this.row, j] = new Wall();
+            }
+            // 0 and last index add walls around
+            for (int i = 0; i < this.row; i++)
+            {
+                Devices[i, 0] = (new Wall());
+                Devices[i, this.column] = (new Wall());
+            }
+            // else add streets
+            for (int i = 1; i < this.row+1; i++)
+            {
+                for (int j = 1; j < this.column; j++)
                 {
-                    Devices[i].Add(new Wall());
-                }
-                // else add streets
-                else
-                { 
-                    for (int j = 0; j < this.column+1; j++)
-                    {
-                        // if j = 0 or j is on the last index then add walls around
-                        if (j == 0 || j == this.column)
-                        {
-                            Devices[i].Add(new Wall());
-                        }
-                        // else add streets
-                        else
-                        {
-                            Devices[i].Add(new Street());
-                        }
-                    }
+                    Devices[i,j] = (new Street());
                 }
             }
         }
@@ -77,6 +72,7 @@ namespace ConsoleMario
             // level = 1
             // row*column 3 *3
             Path path = new Path(1, 3, 3);
+            path.Devices[3, 3] = new End();
             return path;
         }
     }
