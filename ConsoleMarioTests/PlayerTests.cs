@@ -15,29 +15,49 @@ namespace ConsoleMario.Tests
         public void MoveTestW()
         {
             Player player = new Player();
+            int expx = player.PositionX;
+            int expy = player.PositionY;
             player.Move('w');
             Assert.AreEqual(0, player.PositionX);
+            Assert.AreEqual(player.PositionY, expy);
+            Assert.AreEqual(1, expy);
+            Assert.AreEqual(1, expx);
         }
         [TestMethod()]
         public void MoveTestA()
         {
             Player player = new Player();
+            int expx = player.PositionX;
+            int expy = player.PositionY;
             player.Move('a');
             Assert.AreEqual(0, player.PositionY);
+            Assert.AreEqual(expx, player.PositionX);
+            Assert.AreEqual(1, expy);
+            Assert.AreEqual(1, expx);
         }
         [TestMethod()]
         public void MoveTestS()
         {
             Player player = new Player();
+            int expx = player.PositionX;
+            int expy = player.PositionY;
             player.Move('s');
             Assert.AreEqual(2, player.PositionX);
+            Assert.AreEqual(player.PositionY, expy);
+            Assert.AreEqual(1, expy);
+            Assert.AreEqual(1, expx);
         }
         [TestMethod()]
         public void MoveTestD()
         {
             Player player = new Player();
+            int expx = player.PositionX;
+            int expy = player.PositionY;
             player.Move('d');
+            Assert.AreEqual(expx, player.PositionX);
             Assert.AreEqual(2, player.PositionY);
+            Assert.AreEqual(1, expy);
+            Assert.AreEqual(1, expx);
         }
     }
 }

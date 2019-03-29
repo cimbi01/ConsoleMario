@@ -47,6 +47,7 @@
     <Compile Include="Devices\Fire.cs" />
     <Compile Include="Devices\Key.cs" />
     <Compile Include="Devices\Spiral.cs" />
+    <Compile Include="Devices\Street.cs" />
     <Compile Include="Devices\Wall.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
