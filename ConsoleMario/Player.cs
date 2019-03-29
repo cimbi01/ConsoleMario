@@ -49,5 +49,25 @@ namespace ConsoleMario
             PositionX += x;
             PositionY += y;
         }
+        public void StepBack()
+        {
+            // step back
+            if (PositionX - PreviousPositionX > 0)
+            {
+                this.Move(-1, 0);
+            }
+            else if (PositionX - PreviousPositionX < 0)
+            {
+                this.Move(1, 0);
+            }
+            else if(PositionY - PreviousPositionY > 0)
+            {
+                this.Move(0, -1);
+            }
+            else if (PositionY - PreviousPositionY < 0)
+            {
+                this.Move(0, 1);
+            }
+        }
     }
 }

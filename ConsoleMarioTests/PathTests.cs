@@ -16,7 +16,7 @@ namespace ConsoleMario.Tests
         public void BuildTest()
         {
             Path path = new Path(1, 3, 2);
-            path.Build();
+            // path.Build();
             Assert.AreEqual(1, path.LevelNumber);
             Assert.AreEqual(3 + 1, path.Devices.GetLength(0));
             Assert.AreEqual(2 + 1, path.Devices.GetLength(1));

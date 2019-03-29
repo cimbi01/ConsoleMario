@@ -13,8 +13,6 @@ namespace ConsoleMario
         private readonly int row, column;
         // Describes the levelnumber (from 1 to maxLevel)
         public int LevelNumber { get; private set; }
-        // Describes if the path is completed
-        public bool Completed { get; private set; } = false;
         // Describes the devices matrix
         // We use this to Render to console
         // And to use on the player if steped on a Device
@@ -29,10 +27,17 @@ namespace ConsoleMario
             this.column = _column;
             Build();
         }
+        public Path(Path _path)
+        {
+            Devices = _path.Devices;
+            LevelNumber = _path.LevelNumber;
+            this.row = _path.row;
+            this.column = _path.column;
+        }
         // Init the Devices of the Path add walls on the first and last outer indexes 
         // and on the first and last inner indexes
         // and streets as default on all outher indexes
-        public void Build()
+        private void Build()
         {
             // 0 and last index add walls around
             for (int j = 0; j < this.column; j++)
