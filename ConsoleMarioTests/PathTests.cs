@@ -27,7 +27,7 @@ namespace ConsoleMario.Tests
         {
             Player player = new Player();
             Path path = Path.Path1();
-            player.Move(2, 2);
+            player.Move(1, 1);
             Assert.AreEqual(false, player.Win);
             path.Devices[player.PositionX, player.PositionY].Use(player);
             Assert.AreEqual(true, player.Win);

@@ -38,14 +38,17 @@ namespace ConsoleMario
                 {
                     Console.Clear();
                     Console.WriteLine("You Win");
+                    player_maxLevel++;
                 }
                 else
                 {
                     Console.Clear();
                     Console.WriteLine("You Lost");
                 }
+                exited = player_maxLevel > Path.MaxLevel;
             }
             // if player want to exit
+            Console.WriteLine("Game over");
         }
         /*
         // Write all the device's character in row and column to console
@@ -77,7 +80,7 @@ namespace ConsoleMario
                         Console.Write(actual_path.Devices[i, j].Character);
                     }
                 }
-                Console.Write('\n');
+                Console.WriteLine();
             }
         }
         private static void Move()

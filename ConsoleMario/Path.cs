@@ -52,7 +52,7 @@ namespace ConsoleMario
                 Devices[i, this.column] = (new Wall());
             }
             // else add streets
-            for (int i = 1; i < this.row+1; i++)
+            for (int i = 1; i < this.row; i++)
             {
                 for (int j = 1; j < this.column; j++)
                 {
@@ -77,7 +77,7 @@ namespace ConsoleMario
             // level = 1
             // row*column 3 *3
             Path path = new Path(1, 3, 3);
-            path.Devices[3, 3] = new End();
+            path.Devices[2, 2] = new End();
             return path;
         }
     }
