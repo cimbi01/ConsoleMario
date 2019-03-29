@@ -86,7 +86,7 @@ namespace ConsoleMario
         }
         private static void Move()
         {
-            char ch = Console.ReadKey().KeyChar;
+            char ch = Console.ReadKey(true).KeyChar;
             player.Move(ch);
             RenderPlayer();
         }
@@ -95,8 +95,10 @@ namespace ConsoleMario
         {
             if (player.Life > 0)
             {
-                Console.Clear();
-                RenderActualPath();
+                Console.SetCursorPosition(player.PreviousPositionY, player.PreviousPositionX);
+                Console.Write(actual_path.Devices[player.PreviousPositionX, player.PreviousPositionY].Character);
+                Console.SetCursorPosition(player.PositionY, player.PositionX);
+                Console.Write(player.Character);
                 System.Threading.Thread.Sleep(500);
                 try
                 {
