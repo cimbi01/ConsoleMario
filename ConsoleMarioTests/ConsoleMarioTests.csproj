@@ -57,6 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Devices\DoorTests.cs" />
+    <Compile Include="Devices\EndTests.cs" />
     <Compile Include="Devices\FireTests.cs" />
     <Compile Include="Devices\KeyTests.cs" />
     <Compile Include="Devices\SpiralTests.cs" />

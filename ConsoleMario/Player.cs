@@ -8,6 +8,8 @@ namespace ConsoleMario
 {
     public class Player
     {
+        // Describes if the player won the current PathLevel
+        public bool Win { get; set; } = false;
         // up, down, righ left keyboard key init
         private static readonly char UP = 'w', DOWN = 's', RIGHT = 'd', LEFT = 'a';
         // Character live
