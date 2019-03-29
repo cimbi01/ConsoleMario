@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleMario
 {
-    abstract class Device
+    public abstract class Device
     {
-        public string Character { get; }
+        public char Character { get; protected set; }
         public abstract void Use(Player player);
     }
 }

@@ -11,7 +11,7 @@ namespace ConsoleMario
         // up, down, righ left keyboard key init
         private static readonly char UP = 'w', DOWN = 's', RIGHT = 'd', LEFT = 'a';
         // Character live
-        public bool Live { get; private set; } = true;
+        public bool Live { get; internal set; } = true;
         // Character character on console to write
         public char Character { get; } = '+';
         // Character position X,Y on console to write
