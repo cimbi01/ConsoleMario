@@ -16,7 +16,7 @@ namespace ConsoleMario
         // Describes all the existed Paths returned by path.init
         private static readonly List<Path> paths = Path.Init();
         // Describes the player
-        public static Player Player { get; } = new Player();
+        public static Player Player { get; private set; }
         // Describes the max of levels of the player won
         public static int player_maxLevel = 0;
         // Describes the actual level
@@ -25,10 +25,63 @@ namespace ConsoleMario
         private static Path actual_path;
         static Game()
         {
+            InitPlayer();
             for (int i = 0; i < player_maxLevel+1; i++)
             {
                 AddNewMessageLine();
             }
+        }
+        private static void InitPlayer()
+        {
+            // Datainput
+            string input = "Would you like to change the default settings:" +
+                "\nCharacter: unvisible" +
+                "\nStep cursor ForeGroundColor " + Render.Change_FGColor +
+                "\nDefault ForeGroundColor " + Render.Default_FGColor +
+                "\nPress Enter if yes!";
+            if (CheckedDataInput.DecisionInput(input, ""))
+            {
+                Console.Clear();
+                /*
+                input = "Would you like to change the default Buttons?:" +
+                    "\nRIGHT button: " + Player.RIGHT +
+                    "\nLEFT button: " + Player.LEFT +
+                    "\nUP button: " + Player.UP +
+                    "\nDOWN button: " + Player.DOWN +
+                    "\nPress Enter if yes!";
+                if (CheckedDataInput.DecisionInput(input, ""))
+                {
+                    Console.Clear();
+                    // ERROR?
+                    // HOW TO CONVERT FROM KEYCHAR TO CHAR
+                    Player.UP = CheckedDataInput.InputChar("Press preferred UP button");
+                    Player.DOWN = CheckedDataInput.InputChar("Press preferred DOWN button");
+                    Player.RIGHT = CheckedDataInput.InputChar("Press preferred RIGHT button");
+                    Player.LEFT = CheckedDataInput.InputChar("Press preferred LEFT button");
+                }
+                */
+                Console.Clear();
+                input = "Would you like to change the default RenderType?:" +
+                    "\nDefault RenderType: Console.ForeGroundColour" +
+                    "\nThe Character is not shown only the foreground of the colour is different" +
+                    "\nPress Enter if yes!";
+                if (CheckedDataInput.DecisionInput(input, ""))
+                {
+                    Console.Clear();
+                    Render.ForeGroundRender = false;
+                    /* ERROR: CONSOLEKEY TO CHAR?
+                    input = "Would you like to change the default Character?:" +
+                        "\nDefault character: " + Player.DefaultCharacter +
+                        "\nPress Enter if yes!";
+                    if (CheckedDataInput.DecisionInput(input, ""))
+                    {
+                        Console.Clear();
+                        Player.DefaultCharacter = CheckedDataInput.InputChar("Press preferred Character button");
+                    }
+                    */
+                }
+            }
+            Player = new Player();
         }
         public static void Play()
         {
