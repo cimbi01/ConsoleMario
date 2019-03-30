@@ -50,13 +50,13 @@
     <Compile Include="Devices\Spiral.cs" />
     <Compile Include="Devices\Street.cs" />
     <Compile Include="Devices\Wall.cs" />
-    <Compile Include="ExamplePath.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="Path.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Utility\ExamplePath.cs" />
+    <Compile Include="Utility\Game.cs" />
+    <Compile Include="Utility\Path.cs" />
+    <Compile Include="Utility\Player.cs" />
+    <Compile Include="Utility\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Render.cs" />
+    <Compile Include="Utility\Render.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
