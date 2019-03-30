@@ -8,7 +8,9 @@ namespace ConsoleMario.Devices
 {
     public class End : Device
     {
-        public End() : base('#') {}
+        // Defines the character of the End
+        public const char EndCharacter = '#';
+        public End() : base(EndCharacter) {}
         public override void Use(Player player)
         {
             player.Win = true;

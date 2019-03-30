@@ -8,11 +8,14 @@ namespace ConsoleMario.Devices
 {
     public class Wall : Device
     {
-        public Wall() : base('I') { }
+        // Defines the character of the Wall
+        public const char WallCharacter = 'I';
+        public Wall() : base(WallCharacter) { }
         // throws a new RunInWallException
         public override void Use(Player player)
         {
             player.Life--;
+            player.RenderNeeded = true;
             throw new RunInWallException();
         }
     }

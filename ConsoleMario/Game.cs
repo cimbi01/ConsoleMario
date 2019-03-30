@@ -24,6 +24,8 @@ namespace ConsoleMario
         private static int actual_level = 0;
         // Describes the actual path
         private static Path actual_path;
+        // Describes the render path
+        private static Path renderpath;
         public static void Play()
         {
             // cursor will not be visible
@@ -34,7 +36,20 @@ namespace ConsoleMario
                 player.Reset();
                 actual_path = new Path(paths[actual_level]);
                 Console.Clear();
-                RenderActualPath();
+                // if the player win the example path of the actual_path
+                // or if the actual path has no example path
+                // then render the actual_path
+                if (player.ExamplePathWin || actual_path.ExamplePath == null)
+                {
+                    renderpath = actual_path;
+                }
+                // if isnt won &&& has example path
+                // then render the example path of it
+                else
+                {
+                    renderpath = actual_path.ExamplePath;
+                }
+                RenderRenderPath();
                 // while player doesnt win and player is alive
                 while (!player.Win && player.Life > 0)
                 {
@@ -44,19 +59,30 @@ namespace ConsoleMario
                 if (player.Win)
                 {
                     Console.Clear();
-                    Console.WriteLine("You Win");
+                    string wintext = "You Win!";
+                    if (renderpath is ExamplePath)
+                    {
+                        wintext += "\nWelldone!\nYou can move to the actual Path from the example!";
+                    }
+                    Console.WriteLine(wintext);
                     // if actual level = player_maxlevel
-                    // then if playermaxlevel < path.maxlevel 
+                    // && if the rendered path is not Example path
+                    // && if playermaxlevel < path.maxlevel 
                     // then player_maxlevel++
-                    if (actual_level == player_maxLevel && player_maxLevel < Path.MaxLevel)
+                    if (actual_level == player_maxLevel && player_maxLevel < Path.MaxLevel && !(renderpath is ExamplePath))
                     {
                         player_maxLevel++;
                     }
-                    // if actual level < Path.MaxLevel
+                    // if actual level < Path.MaxLevel && the renderpath is not examplepath
                     // then actual level++ cause there is more level above
-                    if (actual_level < Path.MaxLevel)
+                    if (actual_level < Path.MaxLevel && !(renderpath is ExamplePath))
                     {
                         actual_level++;
+                        player.ExamplePathWin = false;
+                    }
+                    else if (renderpath is ExamplePath)
+                    {
+                        player.ExamplePathWin = true;
                     }
                 }
                 else
@@ -71,11 +97,11 @@ namespace ConsoleMario
             Console.WriteLine("Game over");
         }
         // Write the Actual Path but on x, y position write the player character
-        private static void RenderActualPath()
+        private static void RenderRenderPath()
         {
-            for (int i = 0; i < actual_path.Devices.GetLength(0); i++)
+            for (int i = 0; i < renderpath.Devices.GetLength(0); i++)
             {
-                for (int j = 0; j < actual_path.Devices.GetLength(1); j++)
+                for (int j = 0; j < renderpath.Devices.GetLength(1); j++)
                 {
                     if (i == player.PositionX && j == player.PositionY)
                     {
@@ -83,9 +109,17 @@ namespace ConsoleMario
                     }
                     else
                     {
-                        Console.Write(actual_path.Devices[i, j].Character);
+                        Console.Write(renderpath.Devices[i, j].Character);
                     }
                 }
+                Console.WriteLine();
+            }
+            // if the path is Example Path
+            // then Write The Preview
+            if (renderpath is ExamplePath)
+            {
+                Console.WriteLine();
+                Console.WriteLine((renderpath as ExamplePath).Preview);
                 Console.WriteLine();
             }
         }
@@ -102,21 +136,22 @@ namespace ConsoleMario
             {
                 // setcursor to previus position and write the previous device where it is
                 Console.SetCursorPosition(player.PreviousPositionY, player.PreviousPositionX);
-                Console.Write(actual_path.Devices[player.PreviousPositionX, player.PreviousPositionY].Character);
-                Console.BackgroundColor = change_bgcolor;
+                Console.Write(renderpath.Devices[player.PreviousPositionX, player.PreviousPositionY].Character);
                 // setcursor to current position and write the current device where it is
+                Console.BackgroundColor = change_bgcolor;
                 Console.SetCursorPosition(player.PositionY, player.PositionX);
-                Console.Write(actual_path.Devices[player.PositionX, player.PositionY].Character);
+                Console.Write(renderpath.Devices[player.PositionX, player.PositionY].Character);
                 Console.BackgroundColor = default_bgcolor;
                 Console.SetCursorPosition(player.PositionY, player.PositionX);
                 System.Threading.Thread.Sleep(300);
                 try
                 {
-                    actual_path.Devices[player.PositionX, player.PositionY].Use(player);
+                    renderpath.Devices[player.PositionX, player.PositionY].Use(player);
                 }
                 // if the door is closed 
                 catch (DoorIsClosedException)
                 {
+                    player.RenderNeeded = false;
                     // step back and renderplayer again
                     player.StepBack();
                     RenderPlayer();
@@ -124,13 +159,15 @@ namespace ConsoleMario
                 // if run in wall
                 catch (RunInWallException)
                 {
+                    player.RenderNeeded = false;
                     // step back and renderplayer again
                     player.StepBack();
                     RenderPlayer();
                 }
-                // if on players previous position the device is spiral then renderplayer again
-                if (actual_path.Devices[player.PreviousPositionX, player.PreviousPositionY] is Spiral)
+                // if player need rerender
+                if (player.RenderNeeded)
                 {
+                    player.RenderNeeded = false;
                     RenderPlayer();
                 }
             }

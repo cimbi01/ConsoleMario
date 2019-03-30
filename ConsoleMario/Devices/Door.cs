@@ -8,9 +8,11 @@ namespace ConsoleMario.Devices
 {
     public class Door : Device
     {
+        // Defines the character of the Door
+        public const char DoorCharacter = '¤';
         // Describes if the Door is opened
         public bool Opened { get; set; } = false;
-        public Door() : base('¤') {}
+        public Door() : base(DoorCharacter) {}
 
         public override void Use(Player player)
         {
@@ -18,6 +20,7 @@ namespace ConsoleMario.Devices
             if (!Opened)
             {
                 player.Life--;
+                player.RenderNeeded = true;
                 throw new DoorIsClosedException();
             }
         }

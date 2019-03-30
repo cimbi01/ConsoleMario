@@ -9,16 +9,18 @@ namespace ConsoleMario
 {
     public class Path
     {
+        public ExamplePath ExamplePath { get; private set; } = null;
         // row and column without wall-s around
-        private readonly int row, column;
+        protected int row, column;
         // Describes the levelnumber (from 1 to maxLevel)
-        public int LevelNumber { get; private set; }
+        public int LevelNumber { get; protected set; }
         // Describes the devices matrix
         // We use this to Render to console
         // And to use on the player if steped on a Device
-        public Device[,] Devices { get; }
+        public Device[,] Devices { get; protected set; }
         // return a Path with level, row, and column
         // used for PathLevel init
+        public Path() { }
         public Path(int _level, int _row, int _column)
         {
             Devices = new Device[_row+1, _column+1];
@@ -33,11 +35,14 @@ namespace ConsoleMario
             LevelNumber = _path.LevelNumber;
             this.row = _path.row;
             this.column = _path.column;
+            ExamplePath = new ExamplePath(_path.ExamplePath);
+            if (ExamplePath.Devices == null)
+            { ExamplePath = null; }
         }
         // Init the Devices of the Path add walls on the first and last outer indexes 
         // and on the first and last inner indexes
         // and streets as default on all outher indexes
-        private void Build()
+        protected void Build()
         {
             // 0 and last index add walls around
             for (int j = 0; j < this.column+1; j++)
@@ -78,20 +83,28 @@ namespace ConsoleMario
         {
             // level = 1
             // row*column 3 *3
-            Path path = new Path(1, 3, 3);
+            Path path = new Path(1, 3, 3)
+            {
+                ExamplePath = ExamplePath.ExamplePath1()
+            };
             path.Devices[2, 2] = new End();
             return path;
         }
+        // return level2 Path
         public static Path Path2()
         {
             // level = 2
             // row*column 4*4
             MaxLevel++;
-            Path path = new Path(2, 4, 4);
+            Path path = new Path(2, 4, 4)
+            {
+                ExamplePath = ExamplePath.ExamplePath2()
+            };
             path.Devices[3, 3] = new End();
             path.Devices[2, 4] = new Spiral(1);
             return path;
         }
+        // return level3 Path
         public static Path Path3()
         {
             // level = 3

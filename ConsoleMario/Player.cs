@@ -8,6 +8,8 @@ namespace ConsoleMario
 {
     public class Player
     {
+        public bool RenderNeeded { get; set; } = false;
+        public bool ExamplePathWin { get; set; } = false;
         public const int MAXLIFE = 5;
         public int Life { get; set; } = MAXLIFE;
         // Describes if the player won the current PathLevel
@@ -38,9 +40,6 @@ namespace ConsoleMario
             { Move(0, 1); }
             else if (ch == LEFT)
             { Move(0, -1); }
-            // THROW NOTUSEDKEYEXCEPTION
-            else
-            { }
         }
         public void Move(int x, int y)
         {

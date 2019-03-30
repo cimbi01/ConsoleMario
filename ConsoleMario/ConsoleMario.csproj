@@ -50,6 +50,7 @@
     <Compile Include="Devices\Spiral.cs" />
     <Compile Include="Devices\Street.cs" />
     <Compile Include="Devices\Wall.cs" />
+    <Compile Include="ExamplePath.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="Player.cs" />

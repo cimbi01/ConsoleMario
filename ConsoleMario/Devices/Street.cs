@@ -8,11 +8,10 @@ namespace ConsoleMario.Devices
 {
     public class Street : Device
     {
-        public Street() : base(' ')
-        {
-        }
+        // Defines the character of the Street
+        public const char StreetChar = ' ';
+        public Street() : base(StreetChar) {}
 
-        public override void Use(Player player)
-        {}
+        public override void Use(Player player) {}
     }
 }
