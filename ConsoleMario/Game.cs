@@ -35,30 +35,10 @@ namespace ConsoleMario
                     Render.Renderpath = actual_path.ExamplePath;
                 }
                 Render.RenderRenderPath();
-                while (!Player.Win && Player.Life > 0)
-                {
-                    Move();
-                }
+                Move();
                 if (Player.Win)
                 {
-                    Render.WriteWinMessage();
-                    if (!(Render.Renderpath is ExamplePath))
-                    {
-                        if (actual_level == player_maxLevel && player_maxLevel < Path.MaxLevel)
-                        {
-                            player_maxLevel++;
-                            AddNewMessageLine();
-                        }
-                        if (actual_level < Path.MaxLevel)
-                        {
-                            actual_level++;
-                            Player.ExamplePathWin = false;
-                        }
-                    }
-                    else
-                    {
-                        Player.ExamplePathWin = true;
-                    }
+                    HandleWin();
                 }
                 else
                 {
@@ -67,16 +47,42 @@ namespace ConsoleMario
                 System.Threading.Thread.Sleep(1000);
                 exited = Path.MaxLevel == player_maxLevel;
             }
-            // if player want to exit
+            // if player want to exit or there is no more Level available
             Console.WriteLine("Game over");
+        }
+        // set player_maxlevel, actual_level, player.ExamplePathWin accroding to situation
+        private static void HandleWin()
+        {
+            Render.WriteWinMessage();
+            if (!(Render.Renderpath is ExamplePath))
+            {
+                if (actual_level == player_maxLevel && player_maxLevel < Path.MaxLevel)
+                {
+                    player_maxLevel++;
+                    AddNewMessageLine();
+                }
+                if (actual_level < Path.MaxLevel)
+                {
+                    actual_level++;
+                    Player.ExamplePathWin = false;
+                }
+            }
+            else
+            {
+                Player.ExamplePathWin = true;
+            }
         }
         private static void Move()
         {
             char ch = Console.ReadKey(true).KeyChar;
             Player.Move(ch);
-            AddMessage("Player moved x Direction: " + Convert.ToString(Player.PositionX-Player.PreviousPositionX) +
-                " y Direction: " + Convert.ToString(Player.PositionY - Player.PreviousPositionY));
+            AddMessage("Player moved x Direction: " + Convert.ToString(Player.PositionX - Player.PreviousPositionX) +
+                    " y Direction: " + Convert.ToString(Player.PositionY - Player.PreviousPositionY));
             RenderPlayer();
+            if (!Player.Win && Player.Life > 0)
+            {
+                Move();
+            }
         }
         // render player and use the player positionx, positiony device of actual_path devices
         private static void RenderPlayer()
