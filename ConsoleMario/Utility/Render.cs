@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleMario
 {
-    class Render
+    static class Render
     {
         private static bool Messages_Visible { get; set; } = true;
         // default Console Background Color and Default Color to change on cursor
@@ -17,10 +17,6 @@ namespace ConsoleMario
         static Render()
         {
             Console.CursorVisible = false;
-            for (int i = 0; i < Game.player_maxLevel+1; i++)
-            {
-                Game.Messages.Add(Convert.ToString((i + 1)) + ".level");
-            }
         }
         // Write the Actual Path but on x, y position write the player character
         public static void RenderRenderPath()
@@ -68,13 +64,13 @@ namespace ConsoleMario
         }
         public static void RenderMessages()
         {
-            int x = 0,
-                y = Renderpath.Column + 1;
-            if(Messages_Visible)
+            if (Messages_Visible)
             {
+                int x = 0,
+                    y = Renderpath.Row + 2;
                 if (Renderpath is ExamplePath)
                 {
-                    y += (Renderpath as ExamplePath).Preview.Split('\n').Length + 2;
+                    y += (Render.Renderpath as ExamplePath).Preview.Split('\n').Length + 1;
                 }
                 Console.SetCursorPosition(x, y);
                 Console.Write(Game.Messages[Renderpath.LevelNumber-1]);

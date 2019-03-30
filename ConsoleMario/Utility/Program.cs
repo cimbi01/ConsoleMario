@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace ConsoleMario
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Game.Play();
+            Console.WriteLine("Press a Key to exit!");
             Console.ReadKey();
         }
     }

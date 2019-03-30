@@ -7,7 +7,7 @@ using ConsoleMario.Devices;
 
 namespace ConsoleMario
 {
-    public static class Game
+    static class Game
     {
         // List of messages by Pathlevel
         public static List<string> Messages { get; } = new List<string>();
@@ -23,6 +23,13 @@ namespace ConsoleMario
         private static int actual_level = 0;
         // Describes the actual path
         private static Path actual_path;
+        static Game()
+        {
+            for (int i = 0; i < player_maxLevel+1; i++)
+            {
+                AddNewMessageLine();
+            }
+        }
         public static void Play()
         {
             while (!exited)
@@ -131,12 +138,7 @@ namespace ConsoleMario
         // Add message to messages and write it under Path
         public static void AddMessage(string message)
         {
-            Messages[actual_level] += '\n' + message;
-            int x = Render.Renderpath.Column, y = Render.Renderpath.Row + 1;
-            if (Render.Renderpath is ExamplePath)
-            {
-                y += (Render.Renderpath as ExamplePath).Preview.Split('\n').Length;
-            }
+            Messages[actual_level] += message+ '\n';
             Render.RenderMessages();
         }
         public static void AddNewMessageLine()
