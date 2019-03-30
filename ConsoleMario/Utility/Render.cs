@@ -10,8 +10,9 @@ namespace ConsoleMario
     {
         private static bool Messages_Visible { get; set; } = true;
         // default Console Background Color and Default Color to change on cursor
-        private static readonly ConsoleColor default_bgcolor = ConsoleColor.Black;
-        private static readonly ConsoleColor change_bgcolor = ConsoleColor.DarkRed;
+        public static ConsoleColor Default_FGColor { get; set; } = ConsoleColor.Black;
+        public static ConsoleColor Change_FGColor { get; set; } = ConsoleColor.DarkRed;
+        public static bool ForeGroundRender { get; set; } = true;
         // Describes the render path
         public static Path Renderpath { set; get; }
         static Render()
@@ -26,14 +27,7 @@ namespace ConsoleMario
             {
                 for (int j = 0; j < Renderpath.Devices.GetLength(1); j++)
                 {
-                    if (i == Game.Player.PositionX && j == Game.Player.PositionY)
-                    {
-                        Console.Write(Game.Player.Character);
-                    }
-                    else
-                    {
-                        Console.Write(Renderpath.Devices[i, j].Character);
-                    }
+                    Console.Write(Renderpath.Devices[i, j].Character);
                 }
                 Console.WriteLine();
             }
@@ -45,8 +39,8 @@ namespace ConsoleMario
                 Console.WriteLine((Renderpath as ExamplePath).Preview);
                 Console.WriteLine();
             }
-            // write all the messages by the Path
             RenderMessages();
+            RenderPlayer();
         }
         // render player and use the player positionx, positiony device of actual_path devices
         public static void RenderPlayer()
@@ -55,10 +49,15 @@ namespace ConsoleMario
             Console.SetCursorPosition(Game.Player.PreviousPositionY, Game.Player.PreviousPositionX);
             Console.Write(Renderpath.Devices[Game.Player.PreviousPositionX, Game.Player.PreviousPositionY].Character);
             // setcursor to current position and write the current device where it is
-            Console.BackgroundColor = change_bgcolor;
             Console.SetCursorPosition(Game.Player.PositionY, Game.Player.PositionX);
-            Console.Write(Renderpath.Devices[Game.Player.PositionX, Game.Player.PositionY].Character);
-            Console.BackgroundColor = default_bgcolor;
+            char character = Game.Player.Character;
+            if (ForeGroundRender)
+            {
+                Console.BackgroundColor = Change_FGColor;
+                character = Renderpath.Devices[Game.Player.PositionX, Game.Player.PositionY].Character;
+            }
+            Console.Write(character);
+            Console.BackgroundColor = Default_FGColor;
             Console.SetCursorPosition(Game.Player.PositionY, Game.Player.PositionX);
             RenderMessages();
         }

@@ -15,9 +15,13 @@ namespace ConsoleMario
         // Describes if the player won the current PathLevel
         public bool Win { get; set; } = false;
         // up, down, righ left keyboard key init
-        private static readonly char UP = 'w', DOWN = 's', RIGHT = 'd', LEFT = 'a';
+        public static char UP { get; set; } = 'w';
+        public static char DOWN { get; set; } = 's';
+        public static char RIGHT { get; set; } = 'd';
+        public static char LEFT { get; set; } = 'a';
         // Character character on console to write
-        public char Character { get; } = '+';
+        public char Character { get; } = DefaultCharacter;
+        public static char DefaultCharacter { get; set; } = '+';
         // Character position X,Y on console to write
         // row
         public int PositionX { get; private set; } = 1;
