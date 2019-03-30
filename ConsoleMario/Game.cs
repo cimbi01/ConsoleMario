@@ -9,6 +9,9 @@ namespace ConsoleMario
 {
     public static class Game
     {
+        private static bool messages_visible = false;
+        // List of messages by Pathlevel
+        private static List<string> messages = new List<string>();
         // default Console Background Color and Default Color to change on cursor
         private static readonly ConsoleColor default_bgcolor = ConsoleColor.Black;
         private static readonly ConsoleColor change_bgcolor = ConsoleColor.DarkRed;
@@ -72,6 +75,7 @@ namespace ConsoleMario
                     if (actual_level == player_maxLevel && player_maxLevel < Path.MaxLevel && !(renderpath is ExamplePath))
                     {
                         player_maxLevel++;
+                        messages.Add("");
                     }
                     // if actual level < Path.MaxLevel && the renderpath is not examplepath
                     // then actual level++ cause there is more level above
@@ -95,6 +99,13 @@ namespace ConsoleMario
             }
             // if player want to exit
             Console.WriteLine("Game over");
+        }
+        static Game()
+        {
+            for (int i = 0; i < player_maxLevel+1; i++)
+            {
+                messages.Add("");
+            }
         }
         // Write the Actual Path but on x, y position write the player character
         private static void RenderRenderPath()
@@ -122,11 +133,15 @@ namespace ConsoleMario
                 Console.WriteLine((renderpath as ExamplePath).Preview);
                 Console.WriteLine();
             }
+            // write all the messages by the Path
+            AddMessage(messages[actual_level], false);
         }
         private static void Move()
         {
             char ch = Console.ReadKey(true).KeyChar;
             player.Move(ch);
+            AddMessage("Playered moved x Direction: " + Convert.ToString(player.PositionX-player.PreviousPositionX) +
+                " y Direction: " + Convert.ToString(player.PositionY - player.PreviousPositionY));
             RenderPlayer();
         }
         // render player and use the player positionx, positiony device of actual_path devices
@@ -146,30 +161,59 @@ namespace ConsoleMario
                 System.Threading.Thread.Sleep(300);
                 try
                 {
+                    AddMessage("Device: " + Convert.ToString(renderpath.Devices[player.PositionX, player.PositionY].GetType()));
                     renderpath.Devices[player.PositionX, player.PositionY].Use(player);
                 }
                 // if the door is closed 
                 catch (DoorIsClosedException)
                 {
+                    AddMessage("Run in Closed Door");
                     player.RenderNeeded = false;
                     // step back and renderplayer again
                     player.StepBack();
+                    AddMessage("Playered moved x Direction: " + Convert.ToString(player.PositionX - player.PreviousPositionX) +
+                        " y Direction: " + Convert.ToString(player.PositionY - player.PreviousPositionY));
                     RenderPlayer();
                 }
                 // if run in wall
                 catch (RunInWallException)
                 {
+                    AddMessage("Run in Wall");
                     player.RenderNeeded = false;
                     // step back and renderplayer again
                     player.StepBack();
+                    AddMessage("Playered moved x Direction: " + Convert.ToString(player.PositionX - player.PreviousPositionX) +
+                        " y Direction: " + Convert.ToString(player.PositionY - player.PreviousPositionY));
                     RenderPlayer();
                 }
                 // if player need rerender
                 if (player.RenderNeeded)
                 {
+                    AddMessage("Playered moved x Direction: " + Convert.ToString(player.PositionX - player.PreviousPositionX) +
+                        " y Direction: " + Convert.ToString(player.PositionY - player.PreviousPositionY));
                     player.RenderNeeded = false;
                     RenderPlayer();
                 }
+            }
+        }
+        // Add message to messages and write it under Path
+        private static void AddMessage(string message, bool add = true)
+        {
+            if (add)
+            {
+                messages[actual_level] += '\n' + message;
+            }
+            int x = renderpath.Column, y = renderpath.Row + 1;
+            // if renderpath is ExamplePath then add to y the number of rows of the preview
+            if (renderpath is ExamplePath)
+            {
+                y += (renderpath as ExamplePath).Preview.Split('\n').Length;
+            }
+            if (messages_visible)
+            {
+                Console.SetCursorPosition(x, y);
+                Console.Write(messages[actual_level]);
+                Console.SetCursorPosition(player.PositionY, player.PositionX);
             }
         }
     }

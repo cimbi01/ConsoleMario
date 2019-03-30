@@ -11,7 +11,8 @@ namespace ConsoleMario
     {
         public ExamplePath ExamplePath { get; private set; } = null;
         // row and column without wall-s around
-        protected int row, column;
+        public int Row { get; protected set; }
+        public int Column { get; protected set; }
         // Describes the levelnumber (from 1 to maxLevel)
         public int LevelNumber { get; protected set; }
         // Describes the devices matrix
@@ -25,16 +26,16 @@ namespace ConsoleMario
         {
             Devices = new Device[_row+1, _column+1];
             LevelNumber = _level;
-            this.row = _row;
-            this.column = _column;
+            Row = _row;
+            Column = _column;
             Build();
         }
         public Path(Path _path)
         {
             Devices = _path.Devices;
             LevelNumber = _path.LevelNumber;
-            this.row = _path.row;
-            this.column = _path.column;
+            Row = _path.Row;
+            Column = _path.Column;
             ExamplePath = new ExamplePath(_path.ExamplePath);
             if (ExamplePath.Devices == null)
             { ExamplePath = null; }
@@ -45,21 +46,21 @@ namespace ConsoleMario
         protected void Build()
         {
             // 0 and last index add walls around
-            for (int j = 0; j < this.column+1; j++)
+            for (int j = 0; j < Column+1; j++)
             {
                 Devices[0, j] = new Wall();
-                Devices[this.row, j] = new Wall();
+                Devices[Row, j] = new Wall();
             }
             // 0 and last index add walls around
-            for (int i = 0; i < this.row+1; i++)
+            for (int i = 0; i < Row+1; i++)
             {
                 Devices[i, 0] = (new Wall());
-                Devices[i, this.column] = (new Wall());
+                Devices[i, Column] = (new Wall());
             }
             // else add streets
-            for (int i = 1; i < this.row; i++)
+            for (int i = 1; i < Row; i++)
             {
-                for (int j = 1; j < this.column; j++)
+                for (int j = 1; j < Column; j++)
                 {
                     Devices[i,j] = (new Street());
                 }
