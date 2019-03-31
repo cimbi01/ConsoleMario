@@ -51,6 +51,6 @@ namespace ConsoleMario.Utility
             { ExamplePath = null; }
         }
         // Describes the Maximum types of level (can be an int from 1 to the max)
-        public static int MaxLevel { get; } = LoadPath.GetMaxLevel();
+        public static int MaxLevel { get; } = 1;
     }
 }

@@ -5,20 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using ConsoleMario.Devices;
+using System.Reflection;
 using ConsoleMario.Utility;
 
 namespace ConsoleMario
 {
     static class LoadPath
     {
-        private static readonly string pathstring = "Paths";
+        private const string pathstring = "ConsoleMario.Paths.";
         public static ConsoleMario.Utility.Path LoadPathFromFile(int level_number)
         {
             ConsoleMario.Utility.Path path;
-            string filename = "Path" + level_number;
+            string filename = pathstring + "path" + level_number;
             // Read the preview
             string previewfile = filename + ".preview";
-            string previewpath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pathstring, previewfile);
             List<string> loadedpreview = ReadLines(previewfile, true);
             string pathpreview = "";
             for (int i = 0; i < loadedpreview.Count; i++)
@@ -27,22 +27,22 @@ namespace ConsoleMario
             }
             // Read ExamplePath
             string examplefile = filename + ".example";
-            string examplepath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pathstring, examplefile);
             ConsoleMario.Utility.ExamplePath example = new ExamplePath(ReadPath(examplefile, level_number), pathpreview);
             // Read Path
             string pathfile = filename + ".path";
-            string pathpath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pathstring);
             path = new Utility.Path(ReadPath(pathfile, level_number), example);
             return path;
         }
         private static List<string> ReadLines(string filename, bool preview = false)
         {
-            StreamReader streamReader = new StreamReader(filename);
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream stream = assembly.GetManifestResourceStream(filename);
+            StreamReader str = new StreamReader(stream);
             List<string> lines = new List<string>();
             string line = "";
             do
             {
-                line = streamReader.ReadLine();
+                line = str.ReadLine();
                 if (line != "" && line != null && preview)
                 {
                     line += '\n';
@@ -51,7 +51,8 @@ namespace ConsoleMario
             } while (line != "" && line != null);
             lines.Remove("");
             lines.Remove(null);
-            streamReader.Close();
+            str.Close();
+            stream.Close();
             return lines;
         }
         private static ConsoleMario.Utility.Path ReadPath(string filename, int level)
@@ -105,11 +106,6 @@ namespace ConsoleMario
             }
             path = new Utility.Path(devices, level);
             return path;
-        }
-        public static int GetMaxLevel()
-        {
-            int maxlevel = System.IO.Directory.GetFiles(@"Paths\").Length/3;
-            return maxlevel;
         }
     }
 }
