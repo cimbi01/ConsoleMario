@@ -15,12 +15,13 @@ namespace ConsoleMario
         // Describes if the player won the current PathLevel
         public bool Win { get; set; } = false;
         // up, down, righ left keyboard key init
-        public static char UP { get; set; } = 'w';
-        public static char DOWN { get; set; } = 's';
-        public static char RIGHT { get; set; } = 'd';
-        public static char LEFT { get; set; } = 'a';
+        public static ConsoleKey UP { get; set; } = ConsoleKey.W;
+        public static ConsoleKey DOWN { get; set; } = ConsoleKey.S;
+        public static ConsoleKey RIGHT { get; set; } = ConsoleKey.D;
+        public static ConsoleKey LEFT { get; set; } = ConsoleKey.A;
         // Character character on console to write
-        public char Character { get; } = DefaultCharacter;
+        public char Character { get; set; } = DefaultCharacter;
+        // default Console Background Color and Default Color to change on cursor
         public static char DefaultCharacter { get; set; } = '+';
         // Character position X,Y on console to write
         // row
@@ -34,7 +35,7 @@ namespace ConsoleMario
         public int PreviousPositionY { get; private set; } = 1;
         // move x, y positions
         // DOESNT HANDLE UPPERCASES!!! :(
-        public void Move(char ch)
+        public void Move(ConsoleKey ch)
         {
             if (ch == UP)
             { Move(-1, 0); }

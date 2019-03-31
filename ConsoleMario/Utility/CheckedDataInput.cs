@@ -7,13 +7,23 @@ namespace ConsoleMario
     {
         private const int waitseconds = 700;
         #region Public Methods
-        public static ConsoleKey InputChar(string inputstring = "Input the expected data!")
+        public static T InputChar<T>(string inputstring = "Input the expected data!")
         {
             Console.WriteLine(inputstring);
-            ConsoleKey ch = Console.ReadKey().Key;
+            T ch = (T)Convert.ChangeType(Console.ReadKey().Key, typeof(T));
             Console.WriteLine("Given data: {0}", ch);
             System.Threading.Thread.Sleep(1000);
+            Console.Clear();
             return ch;
+        }
+        // return truestring == Input()
+        public static bool DecisionInput(string inputstring, string truestring)
+        {
+            string data = Input(inputstring);
+            Console.WriteLine("Given data: {0}", data == truestring);
+            System.Threading.Thread.Sleep(1000);
+            Console.Clear();
+            return (data == truestring);
         }
         // Write the inputstring and Read the data without check or converstion
         public static string Input(string inputstring = "Input the expected data!")
@@ -22,14 +32,6 @@ namespace ConsoleMario
             Console.WriteLine(inputstring);
             data = Console.ReadLine();
             return data;
-        }
-        // return truestring == Input()
-        public static bool DecisionInput(string inputstring, string truestring)
-        {
-            string data = Input(inputstring);
-            Console.WriteLine("Given data: {0}", data == truestring);
-            System.Threading.Thread.Sleep(1000);
-            return (data == truestring);
         }
         // return T type with conversion
         public static T CheckDataInput<T>(string inputstring = "Input the expected data!")

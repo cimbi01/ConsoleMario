@@ -50,7 +50,7 @@ namespace ConsoleMario
             Console.Write(Renderpath.Devices[Game.Player.PreviousPositionX, Game.Player.PreviousPositionY].Character);
             // setcursor to current position and write the current device where it is
             Console.SetCursorPosition(Game.Player.PositionY, Game.Player.PositionX);
-            char character = Game.Player.Character;
+            char character = Convert.ToChar(Game.Player.Character.ToString());
             if (ForeGroundRender)
             {
                 Console.BackgroundColor = Change_FGColor;

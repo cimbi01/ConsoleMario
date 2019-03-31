@@ -37,50 +37,45 @@ namespace ConsoleMario
         {
             // Datainput
             string input = "Would you like to change the default settings:" +
-                "\nCharacter: unvisible" +
-                "\nStep cursor ForeGroundColor " + Render.Change_FGColor +
-                "Messages Visible: " + Render.Messages_Visible +
-                "\nDefault ForeGroundColor " + Render.Default_FGColor +
-                "\nPress Enter if yes!";
-            if (CheckedDataInput.DecisionInput(input, ""))
+                            "\nRIGHT button: " + Player.RIGHT +
+                            "\nLEFT button: " + Player.LEFT +
+                            "\nUP button: " + Player.UP +
+                            "\nDOWN button: " + Player.DOWN +
+                            "\nDefault character: " + Player.DefaultCharacter +
+                            "\nCharacter: unvisible" + 
+                            "\nStep Cursor ForeGroundColor: " + Render.Change_FGColor +
+                            "Messages Visible: " + Render.Messages_Visible +
+                            "\nPress Enter if No or something then enter if Yes!";
+            if (!CheckedDataInput.DecisionInput(input, ""))
             {
-                Console.Clear();
-                Console.Clear();
                 input = "Would you like to change the default RenderType?:" +
                     "\nDefault RenderType: Console.ForeGroundColour" +
                     "\nThe Character is not shown only the foreground of the colour is different" +
-                    "\nPress Enter if yes!";
-                Console.Clear();
+                    "\nPress Enter if No or something then enter if Yes!";
                 Render.ForeGroundRender = CheckedDataInput.DecisionInput(input, "");
                 input = "Would you like to make the messages visible?:" +
-                    "\nPress Enter if yes!";
-                Render.Messages_Visible = CheckedDataInput.DecisionInput(input, "");
-                /*
-                // ERROR?
-                // HOW TO CONVERT FROM KEYCHAR TO CHAR
+                    "\nPress Enter if No or something then enter if Yes!";
+                Render.Messages_Visible = !CheckedDataInput.DecisionInput(input, "");
                 input = "Would you like to change the default Character?:" +
                     "\nDefault character: " + Player.DefaultCharacter +
-                    "\nPress Enter if yes!";
-                if (CheckedDataInput.DecisionInput(input, ""))
+                    "\nPress Enter if No or something then enter if Yes!";
+                if (!CheckedDataInput.DecisionInput(input, ""))
                 {
-                    Console.Clear();
-                    Player.DefaultCharacter = CheckedDataInput.InputChar("Press preferred Character button");
+                    Player.DefaultCharacter = CheckedDataInput.InputChar<char>("Press preferred Character button");
                 }
                 input = "Would you like to change the default Buttons?:" +
                     "\nRIGHT button: " + Player.RIGHT +
                     "\nLEFT button: " + Player.LEFT +
                     "\nUP button: " + Player.UP +
                     "\nDOWN button: " + Player.DOWN +
-                    "\nPress Enter if yes!";
-                if (CheckedDataInput.DecisionInput(input, ""))
+                    "\nPress Enter if No or something then enter if Yes!";
+                if (!CheckedDataInput.DecisionInput(input, ""))
                 {
-                    Console.Clear();
-                    Player.UP = CheckedDataInput.InputChar("Press preferred UP button");
-                    Player.DOWN = CheckedDataInput.InputChar("Press preferred DOWN button");
-                    Player.RIGHT = CheckedDataInput.InputChar("Press preferred RIGHT button");
-                    Player.LEFT = CheckedDataInput.InputChar("Press preferred LEFT button");
+                    Player.UP = CheckedDataInput.InputChar<ConsoleKey>("Press preferred UP button");
+                    Player.DOWN = CheckedDataInput.InputChar<ConsoleKey>("Press preferred DOWN button");
+                    Player.RIGHT = CheckedDataInput.InputChar<ConsoleKey>("Press preferred RIGHT button");
+                    Player.LEFT = CheckedDataInput.InputChar<ConsoleKey>("Press preferred LEFT button");
                 }
-                */
             }
             Player = new Player();
         }
@@ -135,7 +130,7 @@ namespace ConsoleMario
         }
         private static void Move()
         {
-            char ch = Console.ReadKey(true).KeyChar;
+            ConsoleKey ch = Console.ReadKey(true).Key;
             Player.Move(ch);
             AddMessage("Player moved x Direction: " + Convert.ToString(Player.PositionX - Player.PreviousPositionX) +
                     " y Direction: " + Convert.ToString(Player.PositionY - Player.PreviousPositionY));
