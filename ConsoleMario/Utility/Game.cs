@@ -13,8 +13,6 @@ namespace ConsoleMario.Utility
         public static List<string> Messages { get; } = new List<string>();
         // Describes that player want to exit
         private static bool exited = false;
-        // Describes all the existed Paths returned by path.init
-        private static readonly List<Path> paths = Path.Init();
         // Describes the player
         public static Player Player { get; private set; }
         // Describes the max of levels of the player won
@@ -81,10 +79,10 @@ namespace ConsoleMario.Utility
         }
         public static void Play()
         {
+            actual_path = new Path(actual_level);
             while (!exited)
             {
                 Player.Reset();
-                actual_path = new Path(paths[actual_level]);
                 Render.Renderpath = actual_path;
                 if (!Player.ExamplePathWin && actual_path.ExamplePath != null)
                 {
@@ -120,6 +118,16 @@ namespace ConsoleMario.Utility
                 if (actual_level < Path.MaxLevel)
                 {
                     actual_level++;
+                    try
+                    {
+                        actual_path = new Path(actual_level);
+                    }
+                    catch (NoMoreLevelException e)
+                    {
+                        Console.Clear();
+                        Console.WriteLine(e.Message);
+                        exited = true;
+                    }
                     Player.ExamplePathWin = false;
                 }
             }

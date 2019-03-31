@@ -66,7 +66,7 @@ namespace ConsoleMario.Utility
             if (Messages_Visible)
             {
                 int x = 0,
-                    y = Renderpath.Row + 2;
+                    y = Renderpath.Devices.GetLength(1);
                 if (Renderpath is ExamplePath)
                 {
                     y += (Render.Renderpath as ExamplePath).Preview.Split('\n').Length + 1;
