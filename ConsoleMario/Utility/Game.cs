@@ -23,6 +23,7 @@ namespace ConsoleMario
         private static int actual_level = 0;
         // Describes the actual path
         private static Path actual_path;
+        // InitPlayer and add strings to messages by max_level
         static Game()
         {
             InitPlayer();
@@ -31,18 +32,40 @@ namespace ConsoleMario
                 AddNewMessageLine();
             }
         }
+        // Init player by UP, DOWN, RIGHT, LEFT KEY and Init Render by MessagesVisible and RenderForground
         private static void InitPlayer()
         {
             // Datainput
             string input = "Would you like to change the default settings:" +
                 "\nCharacter: unvisible" +
                 "\nStep cursor ForeGroundColor " + Render.Change_FGColor +
+                "Messages Visible: " + Render.Messages_Visible +
                 "\nDefault ForeGroundColor " + Render.Default_FGColor +
                 "\nPress Enter if yes!";
             if (CheckedDataInput.DecisionInput(input, ""))
             {
                 Console.Clear();
+                Console.Clear();
+                input = "Would you like to change the default RenderType?:" +
+                    "\nDefault RenderType: Console.ForeGroundColour" +
+                    "\nThe Character is not shown only the foreground of the colour is different" +
+                    "\nPress Enter if yes!";
+                Console.Clear();
+                Render.ForeGroundRender = CheckedDataInput.DecisionInput(input, "");
+                input = "Would you like to make the messages visible?:" +
+                    "\nPress Enter if yes!";
+                Render.Messages_Visible = CheckedDataInput.DecisionInput(input, "");
                 /*
+                // ERROR?
+                // HOW TO CONVERT FROM KEYCHAR TO CHAR
+                input = "Would you like to change the default Character?:" +
+                    "\nDefault character: " + Player.DefaultCharacter +
+                    "\nPress Enter if yes!";
+                if (CheckedDataInput.DecisionInput(input, ""))
+                {
+                    Console.Clear();
+                    Player.DefaultCharacter = CheckedDataInput.InputChar("Press preferred Character button");
+                }
                 input = "Would you like to change the default Buttons?:" +
                     "\nRIGHT button: " + Player.RIGHT +
                     "\nLEFT button: " + Player.LEFT +
@@ -52,34 +75,12 @@ namespace ConsoleMario
                 if (CheckedDataInput.DecisionInput(input, ""))
                 {
                     Console.Clear();
-                    // ERROR?
-                    // HOW TO CONVERT FROM KEYCHAR TO CHAR
                     Player.UP = CheckedDataInput.InputChar("Press preferred UP button");
                     Player.DOWN = CheckedDataInput.InputChar("Press preferred DOWN button");
                     Player.RIGHT = CheckedDataInput.InputChar("Press preferred RIGHT button");
                     Player.LEFT = CheckedDataInput.InputChar("Press preferred LEFT button");
                 }
                 */
-                Console.Clear();
-                input = "Would you like to change the default RenderType?:" +
-                    "\nDefault RenderType: Console.ForeGroundColour" +
-                    "\nThe Character is not shown only the foreground of the colour is different" +
-                    "\nPress Enter if yes!";
-                if (CheckedDataInput.DecisionInput(input, ""))
-                {
-                    Console.Clear();
-                    Render.ForeGroundRender = false;
-                    /* ERROR: CONSOLEKEY TO CHAR?
-                    input = "Would you like to change the default Character?:" +
-                        "\nDefault character: " + Player.DefaultCharacter +
-                        "\nPress Enter if yes!";
-                    if (CheckedDataInput.DecisionInput(input, ""))
-                    {
-                        Console.Clear();
-                        Player.DefaultCharacter = CheckedDataInput.InputChar("Press preferred Character button");
-                    }
-                    */
-                }
             }
             Player = new Player();
         }
@@ -189,12 +190,13 @@ namespace ConsoleMario
             }
         }
         // Add message to messages and write it under Path
-        public static void AddMessage(string message)
+        private static void AddMessage(string message)
         {
             Messages[actual_level] += message+ '\n';
             Render.RenderMessages();
         }
-        public static void AddNewMessageLine()
+        // Add new Message string line to messages if new level available
+        private static void AddNewMessageLine()
         {
             Messages.Add(Convert.ToString((player_maxLevel+1)) + ".level\n");
         }
