@@ -53,6 +53,7 @@
     <Compile Include="Utility\CheckedDataInput.cs" />
     <Compile Include="Utility\ExamplePath.cs" />
     <Compile Include="Utility\Game.cs" />
+    <Compile Include="Utility\LoadPath.cs" />
     <Compile Include="Utility\Path.cs" />
     <Compile Include="Utility\Player.cs" />
     <Compile Include="Utility\Program.cs" />
