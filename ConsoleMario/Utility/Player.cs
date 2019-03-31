@@ -18,10 +18,10 @@ namespace ConsoleMario.Utility
 
         // default Console Background Color and Default Color to change on cursor
         public static char DefaultCharacter { get; set; } = '+';
+        // up, down, righ left keyboard key init
         public static ConsoleKey DOWN { get; set; } = ConsoleKey.S;
         public static ConsoleKey LEFT { get; set; } = ConsoleKey.A;
         public static ConsoleKey RIGHT { get; set; } = ConsoleKey.D;
-        // up, down, righ left keyboard key init
         public static ConsoleKey UP { get; set; } = ConsoleKey.W;
         // Character character on console to write
         public char Character { get; set; } = DefaultCharacter;
@@ -44,7 +44,6 @@ namespace ConsoleMario.Utility
 
         #region Public Methods
 
-        // move x, y positions DOESNT HANDLE UPPERCASES!!! :(
         public void Move(ConsoleKey ch)
         {
             if (ch == UP)

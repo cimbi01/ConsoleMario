@@ -115,10 +115,11 @@ namespace ConsoleMario
             List<string> loadeddevices = ReadLines(filename);
             string fileparams = filename + ".params";
             List<string> loadedparameters = null;
-            if (File.Exists(fileparams))
+            try
             {
                 loadedparameters = ReadLines(fileparams);
             }
+            catch (FileNotFoundException) { }
             Device[,] devices = new Device[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
             int parameterindex = 0;
             for (int i = 0; i < devices.GetLength(0); i++)
@@ -131,7 +132,7 @@ namespace ConsoleMario
                     if (devices[i, j] == null)
                     {
                         Device device = null;
-                        if (rowdevices[j] != Key.KeyCharacter ||
+                        if (rowdevices[j] != Key.KeyCharacter &&
                             rowdevices[j] != Spiral.SpiralCharacter)
                         {
                             device = Device.GetDeviceByCharacter(rowdevices[j]);
@@ -148,8 +149,8 @@ namespace ConsoleMario
                                     string[] positions = loadedparameters[parameterindex].Split(' ');
                                     int row = Convert.ToInt32(positions[0]);
                                     int col = Convert.ToInt32(positions[1]);
-                                    devices[row, col] = new Door();
-                                    device = Device.GetDeviceByCharacter(rowdevices[j], ref parameterindex, devices[row, col]);
+                                    devices[row-1, col-1] = new Door();
+                                    device = Device.GetDeviceByCharacter(rowdevices[j], ref parameterindex, devices[row-1, col-1]);
                                     break;
                             }
                         }

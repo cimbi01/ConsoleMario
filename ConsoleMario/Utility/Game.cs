@@ -12,7 +12,7 @@ namespace ConsoleMario.Utility
         #region Public Fields
 
         // Describes the max of levels of the player won
-        public static int player_maxLevel = 0;
+        public static int player_maxLevel = 1;
 
         #endregion Public Fields
 
@@ -43,9 +43,9 @@ namespace ConsoleMario.Utility
 
         public static void Play()
         {
-            actual_path = new Path(actual_level);
             while (!exited)
             {
+                actual_path = new Path(actual_level);
                 Player.Reset();
                 Render.Renderpath = actual_path;
                 if (!Player.ExamplePathWin && actual_path.ExamplePath != null)
