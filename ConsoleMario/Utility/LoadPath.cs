@@ -11,13 +11,14 @@ namespace ConsoleMario
 {
     static class LoadPath
     {
-        private static readonly string pathstring = @"Paths\";
+        private static readonly string pathstring = "Paths";
         public static ConsoleMario.Utility.Path LoadPathFromFile(int level_number)
         {
             ConsoleMario.Utility.Path path;
-            string filename = pathstring + "Path" + level_number;
+            string filename = "Path" + level_number;
             // Read the preview
             string previewfile = filename + ".preview";
+            string previewpath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pathstring, previewfile);
             List<string> loadedpreview = ReadLines(previewfile, true);
             string pathpreview = "";
             for (int i = 0; i < loadedpreview.Count; i++)
@@ -26,9 +27,11 @@ namespace ConsoleMario
             }
             // Read ExamplePath
             string examplefile = filename + ".example";
+            string examplepath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pathstring, examplefile);
             ConsoleMario.Utility.ExamplePath example = new ExamplePath(ReadPath(examplefile, level_number), pathpreview);
             // Read Path
             string pathfile = filename + ".path";
+            string pathpath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pathstring);
             path = new Utility.Path(ReadPath(pathfile, level_number), example);
             return path;
         }
