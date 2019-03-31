@@ -12,6 +12,8 @@ namespace ConsoleMario.Devices.Tests
     [TestClass()]
     public class WallTests
     {
+        #region Public Methods
+
         [TestMethod()]
         [ExpectedException(typeof(RunInWallException))]
         public void UseTest()
@@ -20,5 +22,7 @@ namespace ConsoleMario.Devices.Tests
             Wall wall = new Wall();
             wall.Use(player);
         }
+
+        #endregion Public Methods
     }
 }

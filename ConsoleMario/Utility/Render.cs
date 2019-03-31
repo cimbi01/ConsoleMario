@@ -6,41 +6,45 @@ using System.Threading.Tasks;
 
 namespace ConsoleMario.Utility
 {
-    static class Render
+    internal static class Render
     {
-        public static bool Messages_Visible { get; set; } = true;
-        // default Console Background Color and Default Color to change on cursor
-        public static ConsoleColor Default_FGColor { get; set; } = ConsoleColor.Black;
-        public static ConsoleColor Change_FGColor { get; set; } = ConsoleColor.DarkRed;
-        public static bool ForeGroundRender { get; set; } = true;
-        // Describes the render path
-        public static Path Renderpath { set; get; }
+        #region Public Constructors
+
         static Render()
         {
             Console.CursorVisible = false;
         }
-        // Write the Actual Path but on x, y position write the player character
-        public static void RenderRenderPath()
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public static ConsoleColor Change_FGColor { get; set; } = ConsoleColor.DarkRed;
+        // default Console Background Color and Default Color to change on cursor
+        public static ConsoleColor Default_FGColor { get; set; } = ConsoleColor.Black;
+        public static bool ForeGroundRender { get; set; } = true;
+        public static bool Messages_Visible { get; set; } = true;
+        // Describes the render path
+        public static Path Renderpath { set; get; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public static void RenderMessages()
         {
-            Console.Clear();
-            for (int i = 0; i < Renderpath.Devices.GetLength(0); i++)
+            if (Messages_Visible)
             {
-                for (int j = 0; j < Renderpath.Devices.GetLength(1); j++)
+                int x = 0,
+                    y = Renderpath.Devices.GetLength(1);
+                if (Renderpath is ExamplePath)
                 {
-                    Console.Write(Renderpath.Devices[i, j].Character);
+                    y += (Render.Renderpath as ExamplePath).Preview.Split('\n').Length + 1;
                 }
-                Console.WriteLine();
+                Console.SetCursorPosition(x, y);
+                Console.Write(Game.Messages[Renderpath.LevelNumber - 1]);
+                Console.SetCursorPosition(Game.Player.PositionY, Game.Player.PositionX);
             }
-            // if the path is Example Path
-            // then Write The Preview
-            if (Renderpath is ExamplePath)
-            {
-                Console.WriteLine();
-                Console.WriteLine((Renderpath as ExamplePath).Preview);
-                Console.WriteLine();
-            }
-            RenderMessages();
-            RenderPlayer();
         }
         // render player and use the player positionx, positiony device of actual_path devices
         public static void RenderPlayer()
@@ -61,20 +65,27 @@ namespace ConsoleMario.Utility
             Console.SetCursorPosition(Game.Player.PositionY, Game.Player.PositionX);
             RenderMessages();
         }
-        public static void RenderMessages()
+        // Write the Actual Path but on x, y position write the player character
+        public static void RenderRenderPath()
         {
-            if (Messages_Visible)
+            Console.Clear();
+            for (int i = 0; i < Renderpath.Devices.GetLength(0); i++)
             {
-                int x = 0,
-                    y = Renderpath.Devices.GetLength(1);
-                if (Renderpath is ExamplePath)
+                for (int j = 0; j < Renderpath.Devices.GetLength(1); j++)
                 {
-                    y += (Render.Renderpath as ExamplePath).Preview.Split('\n').Length + 1;
+                    Console.Write(Renderpath.Devices[i, j].Character);
                 }
-                Console.SetCursorPosition(x, y);
-                Console.Write(Game.Messages[Renderpath.LevelNumber-1]);
-                Console.SetCursorPosition(Game.Player.PositionY, Game.Player.PositionX);
+                Console.WriteLine();
             }
+            // if the path is Example Path then Write The Preview
+            if (Renderpath is ExamplePath)
+            {
+                Console.WriteLine();
+                Console.WriteLine((Renderpath as ExamplePath).Preview);
+                Console.WriteLine();
+            }
+            RenderMessages();
+            RenderPlayer();
         }
         public static void WriteWinMessage(bool win = true)
         {
@@ -94,5 +105,7 @@ namespace ConsoleMario.Utility
             }
             Console.WriteLine(text);
         }
+
+        #endregion Public Methods
     }
 }

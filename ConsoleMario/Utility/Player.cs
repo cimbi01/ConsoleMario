@@ -8,23 +8,26 @@ namespace ConsoleMario.Utility
 {
     public class Player
     {
-        public bool RenderNeeded { get; set; } = false;
-        public bool ExamplePathWin { get; set; } = false;
+        #region Public Fields
+
         public const int MAXLIFE = 5;
-        public int Life { get; set; } = MAXLIFE;
-        // Describes if the player won the current PathLevel
-        public bool Win { get; set; } = false;
-        // up, down, righ left keyboard key init
-        public static ConsoleKey UP { get; set; } = ConsoleKey.W;
-        public static ConsoleKey DOWN { get; set; } = ConsoleKey.S;
-        public static ConsoleKey RIGHT { get; set; } = ConsoleKey.D;
-        public static ConsoleKey LEFT { get; set; } = ConsoleKey.A;
-        // Character character on console to write
-        public char Character { get; set; } = DefaultCharacter;
+
+        #endregion Public Fields
+
+        #region Public Properties
+
         // default Console Background Color and Default Color to change on cursor
         public static char DefaultCharacter { get; set; } = '+';
-        // Character position X,Y on console to write
-        // row
+        public static ConsoleKey DOWN { get; set; } = ConsoleKey.S;
+        public static ConsoleKey LEFT { get; set; } = ConsoleKey.A;
+        public static ConsoleKey RIGHT { get; set; } = ConsoleKey.D;
+        // up, down, righ left keyboard key init
+        public static ConsoleKey UP { get; set; } = ConsoleKey.W;
+        // Character character on console to write
+        public char Character { get; set; } = DefaultCharacter;
+        public bool ExamplePathWin { get; set; } = false;
+        public int Life { get; set; } = MAXLIFE;
+        // Character position X,Y on console to write row
         public int PositionX { get; private set; } = 1;
         //column
         public int PositionY { get; private set; } = 1;
@@ -33,8 +36,15 @@ namespace ConsoleMario.Utility
         public int PreviousPositionX { get; private set; } = 1;
         //previous column
         public int PreviousPositionY { get; private set; } = 1;
-        // move x, y positions
-        // DOESNT HANDLE UPPERCASES!!! :(
+        public bool RenderNeeded { get; set; } = false;
+        // Describes if the player won the current PathLevel
+        public bool Win { get; set; } = false;
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        // move x, y positions DOESNT HANDLE UPPERCASES!!! :(
         public void Move(ConsoleKey ch)
         {
             if (ch == UP)
@@ -52,6 +62,13 @@ namespace ConsoleMario.Utility
             PreviousPositionY = PositionY;
             PositionX += x;
             PositionY += y;
+        }
+        public void Reset()
+        {
+            Win = false;
+            Life = Player.MAXLIFE;
+            PreviousPositionX = PositionX = 1;
+            PreviousPositionY = PositionY = 1;
         }
         public void StepBack()
         {
@@ -73,12 +90,7 @@ namespace ConsoleMario.Utility
                 Move(0, 1);
             }
         }
-        public void Reset()
-        {
-            Win = false;
-            Life = Player.MAXLIFE;
-            PreviousPositionX = PositionX = 1;
-            PreviousPositionY = PositionY = 1;
-        }
+
+        #endregion Public Methods
     }
 }

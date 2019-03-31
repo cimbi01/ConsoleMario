@@ -9,10 +9,22 @@ namespace ConsoleMario.Devices
 {
     public abstract class Device
     {
-        public char Character { get; protected set; }
-        public abstract void Use(Player player);
+        #region Public Constructors
+
         public Device(char ch) { Character = ch; }
-        // ch is the char, parameterindex is the parameterindex of parameters, parameters are the parameters if exists
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public char Character { get; protected set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        // ch is the char, parameterindex is the parameterindex of parameters, parameters are the
+        // parameters if exists
         public static Device GetDeviceByCharacter(char ch)
         {
             switch (ch)
@@ -30,7 +42,8 @@ namespace ConsoleMario.Devices
             }
             return null;
         }
-        // ch is the char, parameterindex is the parameterindex of parameters, parameters are the parameters if exists
+        // ch is the char, parameterindex is the parameterindex of parameters, parameters are the
+        // parameters if exists
         public static Device GetDeviceByCharacter(char ch, ref int paramaterindex, object parameters)
         {
             switch (ch)
@@ -50,5 +63,8 @@ namespace ConsoleMario.Devices
             }
             return null;
         }
+        public abstract void Use(Player player);
+
+        #endregion Public Methods
     }
 }

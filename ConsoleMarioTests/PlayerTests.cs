@@ -12,18 +12,8 @@ namespace ConsoleMario.Tests
     [TestClass()]
     public class PlayerTests
     {
-        [TestMethod()]
-        public void MoveTestW()
-        {
-            Player player = new Player();
-            int expx = player.PositionX;
-            int expy = player.PositionY;
-            player.Move(ConsoleKey.W);
-            Assert.AreEqual(0, player.PositionX);
-            Assert.AreEqual(player.PositionY, expy);
-            Assert.AreEqual(1, expy);
-            Assert.AreEqual(1, expx);
-        }
+        #region Public Methods
+
         [TestMethod()]
         public void MoveTestA()
         {
@@ -33,6 +23,18 @@ namespace ConsoleMario.Tests
             player.Move(ConsoleKey.A);
             Assert.AreEqual(0, player.PositionY);
             Assert.AreEqual(expx, player.PositionX);
+            Assert.AreEqual(1, expy);
+            Assert.AreEqual(1, expx);
+        }
+        [TestMethod()]
+        public void MoveTestD()
+        {
+            Player player = new Player();
+            int expx = player.PositionX;
+            int expy = player.PositionY;
+            player.Move(ConsoleKey.D);
+            Assert.AreEqual(expx, player.PositionX);
+            Assert.AreEqual(2, player.PositionY);
             Assert.AreEqual(1, expy);
             Assert.AreEqual(1, expx);
         }
@@ -49,16 +51,18 @@ namespace ConsoleMario.Tests
             Assert.AreEqual(1, expx);
         }
         [TestMethod()]
-        public void MoveTestD()
+        public void MoveTestW()
         {
             Player player = new Player();
             int expx = player.PositionX;
             int expy = player.PositionY;
-            player.Move(ConsoleKey.D);
-            Assert.AreEqual(expx, player.PositionX);
-            Assert.AreEqual(2, player.PositionY);
+            player.Move(ConsoleKey.W);
+            Assert.AreEqual(0, player.PositionX);
+            Assert.AreEqual(player.PositionY, expy);
             Assert.AreEqual(1, expy);
             Assert.AreEqual(1, expx);
         }
+
+        #endregion Public Methods
     }
 }

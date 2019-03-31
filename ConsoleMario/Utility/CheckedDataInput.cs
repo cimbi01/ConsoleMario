@@ -5,34 +5,14 @@ namespace ConsoleMario.Utility
 {
     internal static class CheckedDataInput
     {
+        #region Private Fields
+
         private const int SLEEPSECONDS = 1000;
+
+        #endregion Private Fields
+
         #region Public Methods
-        public static T InputChar<T>(string inputstring = "Input the expected data!")
-        {
-            Console.WriteLine(inputstring);
-            T ch = (T)Convert.ChangeType(Console.ReadKey().Key, typeof(T));
-            Console.WriteLine("Given data: {0}", ch);
-            System.Threading.Thread.Sleep(SLEEPSECONDS);
-            Console.Clear();
-            return ch;
-        }
-        // return truestring == Input()
-        public static bool DecisionInput(string inputstring, string truestring)
-        {
-            string data = Input(inputstring);
-            Console.WriteLine("Given data: {0}", data == truestring);
-            System.Threading.Thread.Sleep(SLEEPSECONDS);
-            Console.Clear();
-            return (data == truestring);
-        }
-        // Write the inputstring and Read the data without check or converstion
-        public static string Input(string inputstring = "Input the expected data!")
-        {
-            string data = "";
-            Console.WriteLine(inputstring);
-            data = Console.ReadLine();
-            return data;
-        }
+
         // return T type with conversion
         public static T CheckDataInput<T>(string inputstring = "Input the expected data!")
         {
@@ -63,7 +43,8 @@ namespace ConsoleMario.Utility
             System.Threading.Thread.Sleep(1000);
             return converteddata;
         }
-        // return CheckDataInput and check if tombben is true then if data is in array return data, else call again
+        // return CheckDataInput and check if tombben is true then if data is in array return data,
+        // else call again
         public static T CheckDataInput<T>(List<T> array, string inputstring = "Input the expected data!", bool dataisinarray = true)
         {
             T converteddata = converteddata = CheckDataInput<T>(inputstring);
@@ -75,6 +56,32 @@ namespace ConsoleMario.Utility
             }
             Console.WriteLine("Given data: {0}", converteddata);
             return converteddata;
+        }
+        // return truestring == Input()
+        public static bool DecisionInput(string inputstring, string truestring)
+        {
+            string data = Input(inputstring);
+            Console.WriteLine("Given data: {0}", data == truestring);
+            System.Threading.Thread.Sleep(SLEEPSECONDS);
+            Console.Clear();
+            return (data == truestring);
+        }
+        // Write the inputstring and Read the data without check or converstion
+        public static string Input(string inputstring = "Input the expected data!")
+        {
+            string data = "";
+            Console.WriteLine(inputstring);
+            data = Console.ReadLine();
+            return data;
+        }
+        public static T InputChar<T>(string inputstring = "Input the expected data!")
+        {
+            Console.WriteLine(inputstring);
+            T ch = (T)Convert.ChangeType(Console.ReadKey().Key, typeof(T));
+            Console.WriteLine("Given data: {0}", ch);
+            System.Threading.Thread.Sleep(SLEEPSECONDS);
+            Console.Clear();
+            return ch;
         }
 
         #endregion Public Methods

@@ -12,6 +12,8 @@ namespace ConsoleMario.Devices.Tests
     [TestClass()]
     public class SpiralTests
     {
+        #region Public Methods
+
         [TestMethod()]
         public void UseTest()
         {
@@ -27,5 +29,7 @@ namespace ConsoleMario.Devices.Tests
             Assert.AreEqual(positiony, expy);
             Assert.AreEqual(1, expx);
         }
+
+        #endregion Public Methods
     }
 }

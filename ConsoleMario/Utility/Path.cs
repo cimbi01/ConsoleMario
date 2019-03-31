@@ -9,19 +9,17 @@ namespace ConsoleMario.Utility
 {
     public class NoMoreLevelException :Exception
     {
+        #region Public Constructors
+
         public NoMoreLevelException() : base("There are no more level yet") { }
+
+        #endregion Public Constructors
     }
     public class Path
     {
-        public ExamplePath ExamplePath { get; private set; } = null;
-        // Describes the levelnumber (from 1 to maxLevel)
-        public int LevelNumber { get; protected set; }
-        // Describes the devices matrix
-        // We use this to Render to console
-        // And to use on the player if steped on a Device
-        public Device[,] Devices { get; protected set; }
-        // return a Path with level, row, and column
-        // used for PathLevel init
+        #region Public Constructors
+
+        // return a Path with level, row, and column used for PathLevel init
         public Path() { }
         public Path(int level)
         {
@@ -50,7 +48,20 @@ namespace ConsoleMario.Utility
             if (example == null || ExamplePath.Devices == null)
             { ExamplePath = null; }
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
         // Describes the Maximum types of level (can be an int from 1 to the max)
         public static int MaxLevel { get; } = LoadPath.MaxPath();
+        // Describes the devices matrix We use this to Render to console And to use on the player if
+        // steped on a Device
+        public Device[,] Devices { get; protected set; }
+        public ExamplePath ExamplePath { get; private set; } = null;
+        // Describes the levelnumber (from 1 to maxLevel)
+        public int LevelNumber { get; protected set; }
+
+        #endregion Public Properties
     }
 }

@@ -12,6 +12,8 @@ namespace ConsoleMario.Devices.Tests
     [TestClass()]
     public class DoorTests
     {
+        #region Public Methods
+
         [TestMethod()]
         [ExpectedException(typeof(DoorIsClosedException))]
         public void UseTestLocked()
@@ -31,5 +33,7 @@ namespace ConsoleMario.Devices.Tests
             door.Use(player);
             Assert.AreEqual(true, door.Opened);
         }
+
+        #endregion Public Methods
     }
 }

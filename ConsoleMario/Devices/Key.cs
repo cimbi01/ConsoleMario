@@ -9,16 +9,34 @@ namespace ConsoleMario.Devices
 {
     public class Key : Device
     {
+        #region Public Fields
+
         // Defines the character of the Key
         public const char KeyCharacter = '@';
-        // Door to open
-        readonly Door door;
+
+        #endregion Public Fields
+
+        #region Public Constructors
+
         public Key(Door _door) : base(KeyCharacter) { this.door = _door; }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Use(Player player)
         {
             // opens the door
             this.door.Opened = true;
         }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        // Door to open
+        private readonly Door door;
+
+        #endregion Private Fields
     }
 }

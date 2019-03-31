@@ -7,27 +7,124 @@ using ConsoleMario.Devices;
 
 namespace ConsoleMario.Utility
 {
-    static class Game
+    internal static class Game
     {
-        // List of messages by Pathlevel
-        public static List<string> Messages { get; } = new List<string>();
-        // Describes that player want to exit
-        private static bool exited = false;
-        // Describes the player
-        public static Player Player { get; private set; }
+        #region Public Fields
+
         // Describes the max of levels of the player won
         public static int player_maxLevel = 0;
-        // Describes the actual level
-        private static int actual_level = 0;
-        // Describes the actual path
-        private static Path actual_path;
+
+        #endregion Public Fields
+
+        #region Public Constructors
+
         // InitPlayer and add strings to messages by max_level
         static Game()
         {
             InitPlayer();
-            for (int i = 0; i < player_maxLevel+1; i++)
+            for (int i = 0; i < player_maxLevel + 1; i++)
             {
                 AddNewMessageLine();
+            }
+        }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        // List of messages by Pathlevel
+        public static List<string> Messages { get; } = new List<string>();
+        // Describes the player
+        public static Player Player { get; private set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public static void Play()
+        {
+            actual_path = new Path(actual_level);
+            while (!exited)
+            {
+                Player.Reset();
+                Render.Renderpath = actual_path;
+                if (!Player.ExamplePathWin && actual_path.ExamplePath != null)
+                {
+                    Render.Renderpath = actual_path.ExamplePath;
+                }
+                Render.RenderRenderPath();
+                Move();
+                if (Player.Win)
+                {
+                    HandleWin();
+                }
+                else
+                {
+                    Render.WriteWinMessage(false);
+                }
+                System.Threading.Thread.Sleep(1000);
+                exited = Path.MaxLevel == player_maxLevel;
+            }
+            // if player want to exit or there is no more Level available
+            Console.WriteLine("Game over");
+        }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        // Describes the actual level
+        private static int actual_level = 0;
+        // Describes the actual path
+        private static Path actual_path;
+        // Describes that player want to exit
+        private static bool exited = false;
+
+        #endregion Private Fields
+
+        #region Private Methods
+
+        // Add message to messages and write it under Path
+        private static void AddMessage(string message)
+        {
+            Messages[actual_level] += message + '\n';
+            Render.RenderMessages();
+        }
+        // Add new Message string line to messages if new level available
+        private static void AddNewMessageLine()
+        {
+            Messages.Add(Convert.ToString((player_maxLevel + 1)) + ".level\n");
+        }
+        // set player_maxlevel, actual_level, player.ExamplePathWin accroding to situation
+        private static void HandleWin()
+        {
+            Render.WriteWinMessage();
+            if (!(Render.Renderpath is ExamplePath))
+            {
+                if (actual_level == player_maxLevel && player_maxLevel < Path.MaxLevel)
+                {
+                    player_maxLevel++;
+                    AddNewMessageLine();
+                }
+                if (actual_level < Path.MaxLevel)
+                {
+                    actual_level++;
+                    try
+                    {
+                        actual_path = new Path(actual_level);
+                    }
+                    catch (NoMoreLevelException e)
+                    {
+                        Console.Clear();
+                        Console.WriteLine(e.Message);
+                        exited = true;
+                    }
+                    Player.ExamplePathWin = false;
+                }
+            }
+            else
+            {
+                Player.ExamplePathWin = true;
             }
         }
         // Init player by UP, DOWN, RIGHT, LEFT KEY and Init Render by MessagesVisible and RenderForground
@@ -40,7 +137,7 @@ namespace ConsoleMario.Utility
                             "\nUP button: " + Player.UP +
                             "\nDOWN button: " + Player.DOWN +
                             "\nDefault character: " + Player.DefaultCharacter +
-                            "\nCharacter: unvisible" + 
+                            "\nCharacter: unvisible" +
                             "\nStep Cursor ForeGroundColor: " + Render.Change_FGColor +
                             "Messages Visible: " + Render.Messages_Visible +
                             "\nPress Enter if No or something then enter if Yes!";
@@ -77,65 +174,6 @@ namespace ConsoleMario.Utility
             }
             Player = new Player();
         }
-        public static void Play()
-        {
-            actual_path = new Path(actual_level);
-            while (!exited)
-            {
-                Player.Reset();
-                Render.Renderpath = actual_path;
-                if (!Player.ExamplePathWin && actual_path.ExamplePath != null)
-                {
-                    Render.Renderpath = actual_path.ExamplePath;
-                }
-                Render.RenderRenderPath();
-                Move();
-                if (Player.Win)
-                {
-                    HandleWin();
-                }
-                else
-                {
-                    Render.WriteWinMessage(false);
-                }
-                System.Threading.Thread.Sleep(1000);
-                exited = Path.MaxLevel == player_maxLevel;
-            }
-            // if player want to exit or there is no more Level available
-            Console.WriteLine("Game over");
-        }
-        // set player_maxlevel, actual_level, player.ExamplePathWin accroding to situation
-        private static void HandleWin()
-        {
-            Render.WriteWinMessage();
-            if (!(Render.Renderpath is ExamplePath))
-            {
-                if (actual_level == player_maxLevel && player_maxLevel < Path.MaxLevel)
-                {
-                    player_maxLevel++;
-                    AddNewMessageLine();
-                }
-                if (actual_level < Path.MaxLevel)
-                {
-                    actual_level++;
-                    try
-                    {
-                        actual_path = new Path(actual_level);
-                    }
-                    catch (NoMoreLevelException e)
-                    {
-                        Console.Clear();
-                        Console.WriteLine(e.Message);
-                        exited = true;
-                    }
-                    Player.ExamplePathWin = false;
-                }
-            }
-            else
-            {
-                Player.ExamplePathWin = true;
-            }
-        }
         private static void Move()
         {
             ConsoleKey ch = Console.ReadKey(true).Key;
@@ -160,7 +198,7 @@ namespace ConsoleMario.Utility
                     AddMessage("Device: " + Convert.ToString(Render.Renderpath.Devices[Player.PositionX, Player.PositionY].GetType()));
                     Render.Renderpath.Devices[Player.PositionX, Player.PositionY].Use(Player);
                 }
-                // if the door is closed 
+                // if the door is closed
                 catch (DoorIsClosedException)
                 {
                     AddMessage("Run in Closed Door");
@@ -192,16 +230,7 @@ namespace ConsoleMario.Utility
                 }
             }
         }
-        // Add message to messages and write it under Path
-        private static void AddMessage(string message)
-        {
-            Messages[actual_level] += message+ '\n';
-            Render.RenderMessages();
-        }
-        // Add new Message string line to messages if new level available
-        private static void AddNewMessageLine()
-        {
-            Messages.Add(Convert.ToString((player_maxLevel+1)) + ".level\n");
-        }
+
+        #endregion Private Methods
     }
 }

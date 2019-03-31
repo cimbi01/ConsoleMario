@@ -10,9 +10,10 @@ using ConsoleMario.Utility;
 
 namespace ConsoleMario
 {
-    static class LoadPath
+    internal static class LoadPath
     {
-        private const string pathstring = "ConsoleMario.Paths.";
+        #region Public Methods
+
         public static ConsoleMario.Utility.Path LoadPathFromFile(int level_number)
         {
             ConsoleMario.Utility.Path path;
@@ -42,6 +43,42 @@ namespace ConsoleMario
             path = new Utility.Path(ReadPath(pathfile, level_number), example);
             return path;
         }
+        public static int MaxPath()
+        {
+            string[] resources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            int path = 1;
+            string pathstring = "path" + Convert.ToString(path);
+            bool path_is_in_resources = true;
+            while (path_is_in_resources)
+            {
+                path_is_in_resources = false;
+                for (int i = 0; i < resources.Length; i++)
+                {
+                    if (resources[i].Split('.').Contains(pathstring))
+                    {
+                        i = resources.Length;
+                        path_is_in_resources = true;
+                    }
+                }
+                if (path_is_in_resources)
+                {
+                    path++;
+                    pathstring = "path" + Convert.ToString(path);
+                }
+            }
+            return path - 1;
+        }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        private const string pathstring = "ConsoleMario.Paths.";
+
+        #endregion Private Fields
+
+        #region Private Methods
+
         private static List<string> ReadLines(string filename, bool preview = false)
         {
             if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Contains(filename))
@@ -107,7 +144,7 @@ namespace ConsoleMario
                                     device = Device.GetDeviceByCharacter(rowdevices[j], ref parameterindex, loadedparameters[parameterindex]);
                                     break;
                                 case Key.KeyCharacter:
-                                    // Door's row, columns separated by 
+                                    // Door's row, columns separated by
                                     string[] positions = loadedparameters[parameterindex].Split(' ');
                                     int row = Convert.ToInt32(positions[0]);
                                     int col = Convert.ToInt32(positions[1]);
@@ -123,30 +160,7 @@ namespace ConsoleMario
             path = new Utility.Path(devices, level);
             return path;
         }
-        public static int MaxPath()
-        {
-            string[] resources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            int path = 1;
-            string pathstring = "path" + Convert.ToString(path);
-            bool path_is_in_resources = true;
-            while (path_is_in_resources)
-            {
-                path_is_in_resources = false;
-                for (int i = 0; i < resources.Length; i++)
-                {
-                    if (resources[i].Split('.').Contains(pathstring))
-                    {
-                        i = resources.Length;
-                        path_is_in_resources = true;
-                    }
-                }
-                if (path_is_in_resources)
-                {
-                    path++;
-                    pathstring = "path" + Convert.ToString(path);
-                }
-            }
-            return path-1;
-        }
+
+        #endregion Private Methods
     }
 }

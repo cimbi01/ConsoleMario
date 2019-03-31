@@ -12,6 +12,8 @@ namespace ConsoleMario.Devices.Tests
     [TestClass()]
     public class KeyTests
     {
+        #region Public Methods
+
         [TestMethod()]
         public void UseTestUnlocked()
         {
@@ -22,5 +24,7 @@ namespace ConsoleMario.Devices.Tests
             door.Use(player);
             Assert.AreEqual(true, door.Opened);
         }
+
+        #endregion Public Methods
     }
 }
