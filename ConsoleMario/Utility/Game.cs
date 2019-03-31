@@ -42,15 +42,44 @@ namespace ConsoleMario
             if (CheckedDataInput.DecisionInput(input, ""))
             {
                 Console.Clear();
+                /*
+                input = "Would you like to change the default Buttons?:" +
+                    "\nRIGHT button: " + Player.RIGHT +
+                    "\nLEFT button: " + Player.LEFT +
+                    "\nUP button: " + Player.UP +
+                    "\nDOWN button: " + Player.DOWN +
+                    "\nPress Enter if yes!";
+                if (CheckedDataInput.DecisionInput(input, ""))
+                {
+                    Console.Clear();
+                    // ERROR?
+                    // HOW TO CONVERT FROM KEYCHAR TO CHAR
+                    Player.UP = CheckedDataInput.InputChar("Press preferred UP button");
+                    Player.DOWN = CheckedDataInput.InputChar("Press preferred DOWN button");
+                    Player.RIGHT = CheckedDataInput.InputChar("Press preferred RIGHT button");
+                    Player.LEFT = CheckedDataInput.InputChar("Press preferred LEFT button");
+                }
+                */
+                Console.Clear();
                 input = "Would you like to change the default RenderType?:" +
                     "\nDefault RenderType: Console.ForeGroundColour" +
                     "\nThe Character is not shown only the foreground of the colour is different" +
-                    "\nPress Enter if No!";
-                Console.Clear();
-                Render.ForeGroundRender = CheckedDataInput.DecisionInput(input, "");
-                input = "Would you like to see the Messages?" +
-                    "\nPress Enter if Yes";
-                Render.Messages_Visible = CheckedDataInput.DecisionInput(input, "");
+                    "\nPress Enter if yes!";
+                if (CheckedDataInput.DecisionInput(input, ""))
+                {
+                    Console.Clear();
+                    Render.ForeGroundRender = false;
+                    /* ERROR: CONSOLEKEY TO CHAR?
+                    input = "Would you like to change the default Character?:" +
+                        "\nDefault character: " + Player.DefaultCharacter +
+                        "\nPress Enter if yes!";
+                    if (CheckedDataInput.DecisionInput(input, ""))
+                    {
+                        Console.Clear();
+                        Player.DefaultCharacter = CheckedDataInput.InputChar("Press preferred Character button");
+                    }
+                    */
+                }
             }
             Player = new Player();
         }

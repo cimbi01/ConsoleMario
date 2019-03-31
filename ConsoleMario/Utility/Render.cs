@@ -8,7 +8,7 @@ namespace ConsoleMario
 {
     static class Render
     {
-        public static bool Messages_Visible { get; set; } = false;
+        private static bool Messages_Visible { get; set; } = true;
         // default Console Background Color and Default Color to change on cursor
         public static ConsoleColor Default_FGColor { get; set; } = ConsoleColor.Black;
         public static ConsoleColor Change_FGColor { get; set; } = ConsoleColor.DarkRed;
