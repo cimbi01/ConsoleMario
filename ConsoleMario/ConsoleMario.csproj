@@ -68,9 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EmbeddedResource Include="Paths\path1.example" />
     <EmbeddedResource Include="Paths\path1.path" />
     <EmbeddedResource Include="Paths\path1.preview" />
+    <EmbeddedResource Include="Paths\path1.example" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -19,15 +19,24 @@ namespace ConsoleMario
             string filename = pathstring + "path" + level_number;
             // Read the preview
             string previewfile = filename + ".preview";
-            List<string> loadedpreview = ReadLines(previewfile, true);
             string pathpreview = "";
-            for (int i = 0; i < loadedpreview.Count; i++)
+            try
             {
-                pathpreview += loadedpreview[i];
+                List<string> loadedpreview = ReadLines(previewfile, true);
+                for (int i = 0; i < loadedpreview.Count; i++)
+                {
+                    pathpreview += loadedpreview[i];
+                }
             }
+            catch (FileNotFoundException) { };
             // Read ExamplePath
             string examplefile = filename + ".example";
-            ConsoleMario.Utility.ExamplePath example = new ExamplePath(ReadPath(examplefile, level_number), pathpreview);
+            ConsoleMario.Utility.ExamplePath example = null;
+            try
+            {
+                example = new ExamplePath(ReadPath(examplefile, level_number), pathpreview);
+            }
+            catch (FileNotFoundException) { }
             // Read Path
             string pathfile = filename + ".path";
             path = new Utility.Path(ReadPath(pathfile, level_number), example);
@@ -35,25 +44,32 @@ namespace ConsoleMario
         }
         private static List<string> ReadLines(string filename, bool preview = false)
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream(filename);
-            StreamReader str = new StreamReader(stream);
-            List<string> lines = new List<string>();
-            string line = "";
-            do
+            if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Contains(filename))
             {
-                line = str.ReadLine();
-                if (line != "" && line != null && preview)
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                Stream stream = assembly.GetManifestResourceStream(filename);
+                StreamReader str = new StreamReader(stream);
+                List<string> lines = new List<string>();
+                string line = "";
+                do
                 {
-                    line += '\n';
-                }
-                lines.Add(line);
-            } while (line != "" && line != null);
-            lines.Remove("");
-            lines.Remove(null);
-            str.Close();
-            stream.Close();
-            return lines;
+                    line = str.ReadLine();
+                    if (line != "" && line != null && preview)
+                    {
+                        line += '\n';
+                    }
+                    lines.Add(line);
+                } while (line != "" && line != null);
+                lines.Remove("");
+                lines.Remove(null);
+                str.Close();
+                stream.Close();
+                return lines;
+            }
+            else
+            {
+                throw new FileNotFoundException();
+            }
         }
         private static ConsoleMario.Utility.Path ReadPath(string filename, int level)
         {
@@ -106,6 +122,31 @@ namespace ConsoleMario
             }
             path = new Utility.Path(devices, level);
             return path;
+        }
+        public static int MaxPath()
+        {
+            string[] resources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            int path = 1;
+            string pathstring = "path" + Convert.ToString(path);
+            bool path_is_in_resources = true;
+            while (path_is_in_resources)
+            {
+                path_is_in_resources = false;
+                for (int i = 0; i < resources.Length; i++)
+                {
+                    if (resources[i].Split('.').Contains(pathstring))
+                    {
+                        i = resources.Length;
+                        path_is_in_resources = true;
+                    }
+                }
+                if (path_is_in_resources)
+                {
+                    path++;
+                    pathstring = "path" + Convert.ToString(path);
+                }
+            }
+            return path-1;
         }
     }
 }

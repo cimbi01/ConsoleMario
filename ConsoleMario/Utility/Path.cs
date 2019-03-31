@@ -47,10 +47,10 @@ namespace ConsoleMario.Utility
             Devices = _path.Devices;
             LevelNumber = _path.LevelNumber;
             ExamplePath = example;
-            if (ExamplePath.Devices == null)
+            if (example == null || ExamplePath.Devices == null)
             { ExamplePath = null; }
         }
         // Describes the Maximum types of level (can be an int from 1 to the max)
-        public static int MaxLevel { get; } = 1;
+        public static int MaxLevel { get; } = LoadPath.MaxPath();
     }
 }
