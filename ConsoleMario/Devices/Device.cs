@@ -44,21 +44,15 @@ namespace ConsoleMario.Devices
         }
         // ch is the char, parameterindex is the parameterindex of parameters, parameters are the
         // parameters if exists
-        public static Device GetDeviceByCharacter(char ch, ref int paramaterindex, object parameters)
+        public static Device GetDeviceByCharacter(char ch, ref int parameterindex, object parameters)
         {
             switch (ch)
             {
-                case Street.StreetCharacter:
-                    return new Street();
-                case Wall.WallCharacter:
-                    return new Wall();
                 case Spiral.SpiralCharacter:
+                    parameterindex++;
                     return new Spiral(Convert.ToInt32(parameters));
-                case Fire.FireCharacter:
-                    return new Fire();
-                case Door.DoorCharacter:
-                    return new Door();
                 case Key.KeyCharacter:
+                    parameterindex++;
                     return new Key((Door)Convert.ChangeType(parameters, typeof(Door)));
             }
             return null;

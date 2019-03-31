@@ -12,7 +12,7 @@ namespace ConsoleMario.Utility
         #region Public Fields
 
         // Describes the max of levels of the player won
-        public static int player_maxLevel = 1;
+        public static int player_maxLevel;
 
         #endregion Public Fields
 
@@ -21,6 +21,7 @@ namespace ConsoleMario.Utility
         // InitPlayer and add strings to messages by max_level
         static Game()
         {
+            player_maxLevel = actual_level;
             InitPlayer();
             for (int i = 0; i < player_maxLevel + 1; i++)
             {
