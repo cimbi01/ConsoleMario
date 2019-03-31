@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleMario.Utility;
 
-namespace ConsoleMario
+namespace ConsoleMario.Devices
 {
     public abstract class Device
     {

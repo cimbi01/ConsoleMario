@@ -17,7 +17,7 @@ namespace ConsoleMario.Tests
             Player player = new Player();
             int expx = player.PositionX;
             int expy = player.PositionY;
-            player.Move('w');
+            player.Move(ConsoleKey.W);
             Assert.AreEqual(0, player.PositionX);
             Assert.AreEqual(player.PositionY, expy);
             Assert.AreEqual(1, expy);
@@ -29,7 +29,7 @@ namespace ConsoleMario.Tests
             Player player = new Player();
             int expx = player.PositionX;
             int expy = player.PositionY;
-            player.Move('a');
+            player.Move(ConsoleKey.A);
             Assert.AreEqual(0, player.PositionY);
             Assert.AreEqual(expx, player.PositionX);
             Assert.AreEqual(1, expy);
@@ -41,7 +41,7 @@ namespace ConsoleMario.Tests
             Player player = new Player();
             int expx = player.PositionX;
             int expy = player.PositionY;
-            player.Move('s');
+            player.Move(ConsoleKey.S);
             Assert.AreEqual(2, player.PositionX);
             Assert.AreEqual(player.PositionY, expy);
             Assert.AreEqual(1, expy);
@@ -53,7 +53,7 @@ namespace ConsoleMario.Tests
             Player player = new Player();
             int expx = player.PositionX;
             int expy = player.PositionY;
-            player.Move('d');
+            player.Move(ConsoleKey.D);
             Assert.AreEqual(expx, player.PositionX);
             Assert.AreEqual(2, player.PositionY);
             Assert.AreEqual(1, expy);

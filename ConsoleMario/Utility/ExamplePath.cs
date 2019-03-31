@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ConsoleMario.Devices;
 
-namespace ConsoleMario
+namespace ConsoleMario.Utility
 {
     public class ExamplePath : Path
     {
