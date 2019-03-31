@@ -16,44 +16,52 @@ namespace ConsoleMario
         {
             ConsoleMario.Utility.Path path;
             string filename = pathstring + "Path" + level_number;
-            StreamReader streamReader = new StreamReader(filename);
             // Read the preview
-            List<string> loadedpreview = ReadLines(streamReader, true);
+            string previewfile = filename + ".preview";
+            List<string> loadedpreview = ReadLines(previewfile, true);
             string pathpreview = "";
             for (int i = 0; i < loadedpreview.Count; i++)
             {
                 pathpreview += loadedpreview[i];
             }
             // Read ExamplePath
-            ConsoleMario.Utility.ExamplePath example = new ExamplePath(ReadPath(streamReader, level_number), pathpreview);
+            string examplefile = filename + ".example";
+            ConsoleMario.Utility.ExamplePath example = new ExamplePath(ReadPath(examplefile, level_number), pathpreview);
             // Read Path
-            path = new Utility.Path(ReadPath(streamReader, level_number), example);
-            streamReader.Close();
+            string pathfile = filename + ".path";
+            path = new Utility.Path(ReadPath(pathfile, level_number), example);
             return path;
         }
-        private static List<string> ReadLines(StreamReader streamReader, bool preview = false)
+        private static List<string> ReadLines(string filename, bool preview = false)
         {
+            StreamReader streamReader = new StreamReader(filename);
             List<string> lines = new List<string>();
             string line = "";
             do
             {
                 line = streamReader.ReadLine();
-                if (line != "" && preview)
+                if (line != "" && line != null && preview)
                 {
                     line += '\n';
                 }
                 lines.Add(line);
             } while (line != "" && line != null);
-            lines.Remove("\n");
             lines.Remove("");
+            lines.Remove(null);
+            streamReader.Close();
             return lines;
         }
-        private static ConsoleMario.Utility.Path ReadPath(StreamReader streamReader, int level)
+        private static ConsoleMario.Utility.Path ReadPath(string filename, int level)
         {
             ConsoleMario.Utility.Path path = null;
             // Read Path
-            List<string> loadeddevices = ReadLines(streamReader);
-            List<string> loadedparameters = ReadLines(streamReader);
+            List<string> loadeddevices = ReadLines(filename);
+            string fileparams = filename + ".params";
+            List<string> loadedparameters = null;
+            if (File.Exists(fileparams))
+            {
+                loadedparameters = ReadLines(fileparams);
+            }
             Device[,] devices = new Device[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
             int parameterindex = 0;
             for (int i = 0; i < devices.GetLength(0); i++)
@@ -97,7 +105,7 @@ namespace ConsoleMario
         }
         public static int GetMaxLevel()
         {
-            int maxlevel = System.IO.Directory.GetFiles(@"Paths\").Length;
+            int maxlevel = System.IO.Directory.GetFiles(@"Paths\").Length/3;
             return maxlevel;
         }
     }
