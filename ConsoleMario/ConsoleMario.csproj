@@ -53,7 +53,7 @@
     <Compile Include="Utility\CheckedDataInput.cs" />
     <Compile Include="Utility\ExamplePath.cs" />
     <Compile Include="Utility\Game.cs" />
-    <Compile Include="Utility\LoadPath.cs" />
+    <Compile Include="Paths\LoadPath.cs" />
     <Compile Include="Utility\Path.cs" />
     <Compile Include="Utility\Player.cs" />
     <Compile Include="Utility\Program.cs" />
@@ -63,8 +63,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Paths\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

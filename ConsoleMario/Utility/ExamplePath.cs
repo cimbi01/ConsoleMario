@@ -10,7 +10,7 @@ namespace ConsoleMario.Utility
     public class ExamplePath : Path
     {
         // preview the new Elements
-        public string Preview { get; private set; }
+        public string Preview { get; set; }
         public ExamplePath(ExamplePath _path)
         {
             if (_path != null)
@@ -20,9 +20,18 @@ namespace ConsoleMario.Utility
                 LevelNumber = _path.LevelNumber;
                 Row = _path.Row;
                 Column = _path.Column;
-                Build();
-                Preview = _path.Preview; Devices = _path.Devices;
+                Preview = _path.Preview;
+                Devices = _path.Devices;
             }
+        }
+        public ExamplePath(Path _path, string preview)
+        {
+            Devices = new Device[_path.Row + 1, _path.Column + 1];
+            LevelNumber = _path.LevelNumber;
+            Row = _path.Row;
+            Column = _path.Column;
+            Devices = _path.Devices;
+            Preview = preview;
         }
         public ExamplePath(int _level, int _row, int _column) : base(_level, _row, _column) {}
         // return the 1st ExamplePath of the Leveled Path

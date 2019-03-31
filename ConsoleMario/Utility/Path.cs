@@ -22,6 +22,12 @@ namespace ConsoleMario.Utility
         // return a Path with level, row, and column
         // used for PathLevel init
         public Path() { }
+        public Path(ExamplePath example, int _level, Device[,] devices)
+        {
+            LevelNumber = _level;
+            ExamplePath = new ExamplePath(example);
+            Devices = devices;
+        }
         public Path(int _level, int _row, int _column)
         {
             Devices = new Device[_row+1, _column+1];
@@ -30,13 +36,13 @@ namespace ConsoleMario.Utility
             Column = _column;
             Build();
         }
-        public Path(Path _path)
+        public Path(Path _path, ExamplePath example)
         {
             Devices = _path.Devices;
             LevelNumber = _path.LevelNumber;
             Row = _path.Row;
             Column = _path.Column;
-            ExamplePath = new ExamplePath(_path.ExamplePath);
+            ExamplePath = new ExamplePath(example);
             if (ExamplePath.Devices == null)
             { ExamplePath = null; }
         }
