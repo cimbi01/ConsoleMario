@@ -5,14 +5,14 @@ namespace ConsoleMario
 {
     internal static class CheckedDataInput
     {
-        private const int waitseconds = 700;
+        private const int SLEEPSECONDS = 1000;
         #region Public Methods
         public static T InputChar<T>(string inputstring = "Input the expected data!")
         {
             Console.WriteLine(inputstring);
             T ch = (T)Convert.ChangeType(Console.ReadKey().Key, typeof(T));
             Console.WriteLine("Given data: {0}", ch);
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(SLEEPSECONDS);
             Console.Clear();
             return ch;
         }
@@ -21,7 +21,7 @@ namespace ConsoleMario
         {
             string data = Input(inputstring);
             Console.WriteLine("Given data: {0}", data == truestring);
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(SLEEPSECONDS);
             Console.Clear();
             return (data == truestring);
         }
