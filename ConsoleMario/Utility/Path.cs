@@ -19,6 +19,14 @@ namespace ConsoleMario.Utility
     {
         #region Public Properties
 
+        public bool IsExample { get; set; } = false;
+
+        #endregion Public Properties
+
+
+
+        #region Public Properties
+
         // preview the new Elements
         public string Preview { get; set; }
         public bool PreviewVisible { get; protected set; } = false;
@@ -45,15 +53,17 @@ namespace ConsoleMario.Utility
                 throw new NoMoreLevelException();
             }
         }
-        public Path(Device[,] devices, int level, string preview = "")
+        public Path(bool example, Device[,] devices, int level, string preview = "")
         {
+            PreviewVisible = example;
+            IsExample = example;
             Devices = devices;
             LevelNumber = level;
             Preview = preview;
         }
-        public Path(Path _path, ExamplePath example, string _preview = "")
+        public Path(bool examplebool, Path _path, Path example, string _preview)
         {
-            Preview = _preview;
+            IsExample = examplebool;
             PreviewVisible = _path.PreviewVisible;
             Devices = _path.Devices;
             LevelNumber = _path.LevelNumber;
@@ -62,7 +72,16 @@ namespace ConsoleMario.Utility
             {
                 ExamplePath = null;
                 PreviewVisible = true;
+                Preview = _preview;
             }
+        }
+        public Path(bool examplebool, Path _path, string _preview)
+        {
+            IsExample = examplebool;
+            Preview = _preview;
+            PreviewVisible = _path.PreviewVisible;
+            Devices = _path.Devices;
+            LevelNumber = _path.LevelNumber;
         }
 
         #endregion Public Constructors
@@ -74,7 +93,7 @@ namespace ConsoleMario.Utility
         // Describes the devices matrix We use this to Render to console And to use on the player if
         // steped on a Device
         public Device[,] Devices { get; protected set; }
-        public ExamplePath ExamplePath { get; private set; } = null;
+        public Path ExamplePath { get; private set; } = null;
         // Describes the levelnumber (from 1 to maxLevel)
         public int LevelNumber { get; protected set; }
 

@@ -32,15 +32,16 @@ namespace ConsoleMario
             catch (FileNotFoundException) { };
             // Read ExamplePath
             string examplefile = filename + ".example";
-            ConsoleMario.Utility.ExamplePath example = null;
+            ConsoleMario.Utility.Path example = null;
             try
             {
-                example = new ExamplePath(ReadPath(examplefile, level_number), pathpreview);
+                example = ReadPath(examplefile, level_number, true);
+                example.Preview = pathpreview ;
             }
             catch (FileNotFoundException) { }
             // Read Path
             string pathfile = filename + ".path";
-            path = new Utility.Path(ReadPath(pathfile, level_number), example, pathpreview);
+            path = new Utility.Path(false, ReadPath(pathfile, level_number, false), example, pathpreview);
             return path;
         }
         public static int MaxPath()
@@ -108,7 +109,7 @@ namespace ConsoleMario
                 throw new FileNotFoundException();
             }
         }
-        private static ConsoleMario.Utility.Path ReadPath(string filename, int level)
+        private static ConsoleMario.Utility.Path ReadPath(string filename, int level, bool example)
         {
             ConsoleMario.Utility.Path path = null;
             // Read Path
@@ -158,7 +159,7 @@ namespace ConsoleMario
                     }
                 }
             }
-            path = new Utility.Path(devices, level);
+            path = new Utility.Path(example, devices, level);
             return path;
         }
 

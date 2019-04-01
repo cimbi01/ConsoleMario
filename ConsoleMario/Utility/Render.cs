@@ -37,9 +37,9 @@ namespace ConsoleMario.Utility
             {
                 int x = 0,
                     y = Renderpath.Devices.GetLength(1);
-                if (Renderpath is ExamplePath)
+                if (Renderpath.Preview.Length > 0)
                 {
-                    y += (Render.Renderpath as ExamplePath).Preview.Split('\n').Length + 1;
+                    y += Renderpath.Preview.Split('\n').Length + 1;
                 }
                 Console.SetCursorPosition(x, y);
                 Console.Write(Game.Messages[Renderpath.LevelNumber - 1]);
@@ -94,7 +94,7 @@ namespace ConsoleMario.Utility
             if (win)
             {
                 text = "You Win!";
-                if (Renderpath is ExamplePath)
+                if (Renderpath.IsExample)
                 {
                     text += "\nWelldone!\nYou can move to the actual Path from the example!";
                 }

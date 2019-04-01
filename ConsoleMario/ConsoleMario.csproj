@@ -57,7 +57,6 @@
     <Compile Include="Devices\Street.cs" />
     <Compile Include="Devices\Wall.cs" />
     <Compile Include="Utility\CheckedDataInput.cs" />
-    <Compile Include="Utility\ExamplePath.cs" />
     <Compile Include="Utility\Game.cs" />
     <Compile Include="Utility\LoadPath.cs" />
     <Compile Include="Utility\Path.cs" />

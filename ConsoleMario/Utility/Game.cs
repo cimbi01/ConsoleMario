@@ -96,7 +96,7 @@ namespace ConsoleMario.Utility
         private static void HandleWin()
         {
             Render.WriteWinMessage();
-            if (!(Render.Renderpath is ExamplePath))
+            if (!(Render.Renderpath.IsExample))
             {
                 if (actual_level == player_maxLevel && player_maxLevel < Path.MaxLevel)
                 {
