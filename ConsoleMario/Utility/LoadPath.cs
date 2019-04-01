@@ -8,7 +8,7 @@ using ConsoleMario.Devices;
 using System.Reflection;
 using ConsoleMario.Utility;
 
-namespace ConsoleMario
+namespace ConsoleMario.Utility
 {
     internal static class LoadPath
     {
