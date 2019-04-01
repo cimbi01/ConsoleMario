@@ -36,7 +36,7 @@ namespace ConsoleMario.Utility
             try
             {
                 example = ReadPath(examplefile, level_number, true);
-                example.Preview = pathpreview ;
+                example.Preview = pathpreview;
             }
             catch (FileNotFoundException) { }
             // Read Path
@@ -80,6 +80,59 @@ namespace ConsoleMario.Utility
 
         #region Private Methods
 
+        private static Device[,] ReadDevices(List<string> loadeddevices)
+        {
+            Device[,] devices = new Device[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
+            for (int i = 0; i < devices.GetLength(0); i++)
+            {
+                // rows
+                char[] rowdevices = loadeddevices[i].ToCharArray();
+                // column
+                for (int j = 0; j < rowdevices.Length; j++)
+                {
+                    Device device = Device.GetDeviceByCharacter(rowdevices[j]);
+                    devices[i, j] = device;
+                }
+            }
+            return devices;
+        }
+        private static Device[,] ReadDevices(List<string> loadeddevices, List<string> loadedparameters)
+        {
+            Device[,] devices = new Device[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
+            int parameterindex = 0;
+            for (int i = 0; i < devices.GetLength(0); i++)
+            {
+                // rows
+                char[] rowdevices = loadeddevices[i].ToCharArray();
+                // column
+                for (int j = 0; j < rowdevices.Length; j++)
+                {
+                    Device device;
+                    if (!Device.IsComplexCharacter(rowdevices[j]))
+                    {
+                        device = Device.GetDeviceByCharacter(rowdevices[j]);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            device = Device.GetDeviceByCharacter(rowdevices[j], ref parameterindex, loadedparameters[parameterindex]);
+                        }
+                        catch (InvalidCastException)
+                        {
+                            // Door's row, columns separated by
+                            string[] positions = loadedparameters[parameterindex].Split(' ');
+                            int row = Convert.ToInt32(positions[0]);
+                            int col = Convert.ToInt32(positions[1]);
+                            devices[row - 1, col - 1] = new Door();
+                            device = Device.GetDeviceByCharacter(rowdevices[j], ref parameterindex, devices[row - 1, col - 1]);
+                        }
+                    }
+                    devices[i, j] = device;
+                }
+            }
+            return devices;
+        }
         private static List<string> ReadLines(string filename, bool preview = false)
         {
             if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Contains(filename))
@@ -116,48 +169,15 @@ namespace ConsoleMario.Utility
             List<string> loadeddevices = ReadLines(filename);
             string fileparams = filename + ".params";
             List<string> loadedparameters = null;
+            Device[,] devices = null;
             try
             {
                 loadedparameters = ReadLines(fileparams);
+                devices = ReadDevices(loadeddevices, loadedparameters);
             }
-            catch (FileNotFoundException) { }
-            Device[,] devices = new Device[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
-            int parameterindex = 0;
-            for (int i = 0; i < devices.GetLength(0); i++)
+            catch (FileNotFoundException)
             {
-                // rows
-                char[] rowdevices = loadeddevices[i].ToCharArray();
-                // column
-                for (int j = 0; j < rowdevices.Length; j++)
-                {
-                    if (devices[i, j] == null)
-                    {
-                        Device device = null;
-                        if (rowdevices[j] != Key.KeyCharacter &&
-                            rowdevices[j] != Spiral.SpiralCharacter)
-                        {
-                            device = Device.GetDeviceByCharacter(rowdevices[j]);
-                        }
-                        else
-                        {
-                            switch (rowdevices[j])
-                            {
-                                case Spiral.SpiralCharacter:
-                                    device = Device.GetDeviceByCharacter(rowdevices[j], ref parameterindex, loadedparameters[parameterindex]);
-                                    break;
-                                case Key.KeyCharacter:
-                                    // Door's row, columns separated by
-                                    string[] positions = loadedparameters[parameterindex].Split(' ');
-                                    int row = Convert.ToInt32(positions[0]);
-                                    int col = Convert.ToInt32(positions[1]);
-                                    devices[row-1, col-1] = new Door();
-                                    device = Device.GetDeviceByCharacter(rowdevices[j], ref parameterindex, devices[row-1, col-1]);
-                                    break;
-                            }
-                        }
-                        devices[i, j] = device;
-                    }
-                }
+                devices = ReadDevices(loadeddevices);
             }
             path = new Utility.Path(example, devices, level);
             return path;

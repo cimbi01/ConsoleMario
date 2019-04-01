@@ -14,7 +14,6 @@ namespace ConsoleMario.Utility
         // InitPlayer and add strings to messages by max_level
         static Game()
         {
-            player_maxLevel = actual_level;
             InitPlayer();
             for (int i = 0; i < player_maxLevel + 1; i++)
             {
@@ -75,7 +74,7 @@ namespace ConsoleMario.Utility
         // Describes that player want to exit
         private static bool exited = false;
         // Describes the max of levels of the player won
-        private static int player_maxLevel;
+        private static int player_maxLevel = actual_level;
 
         #endregion Private Fields
 
@@ -106,22 +105,26 @@ namespace ConsoleMario.Utility
                 if (actual_level < Path.MaxLevel)
                 {
                     actual_level++;
-                    try
-                    {
-                        actual_path = new Path(actual_level);
-                    }
-                    catch (NoMoreLevelException e)
-                    {
-                        Console.Clear();
-                        Console.WriteLine(e.Message);
-                        exited = true;
-                    }
+                    IncreaseActulPath();
                     Player.ExamplePathWin = false;
                 }
             }
             else
             {
                 Player.ExamplePathWin = true;
+            }
+        }
+        private static void IncreaseActulPath()
+        {
+            try
+            {
+                actual_path = new Path(actual_level);
+            }
+            catch (NoMoreLevelException e)
+            {
+                Console.Clear();
+                Console.WriteLine(e.Message);
+                exited = true;
             }
         }
         // Init player by UP, DOWN, RIGHT, LEFT KEY and Init Render by MessagesVisible and RenderForground
@@ -188,6 +191,7 @@ namespace ConsoleMario.Utility
         {
             if (Player.Life > 0)
             {
+                Player.RenderNeeded = false;
                 Render.RenderPlayer();
                 System.Threading.Thread.Sleep(300);
                 try
@@ -199,30 +203,25 @@ namespace ConsoleMario.Utility
                 catch (DoorIsClosedException)
                 {
                     AddMessage("Run in Closed Door");
-                    Player.RenderNeeded = false;
                     // step back and renderplayer again
                     Player.StepBack();
                     AddMessage("Player moved x Direction: " + Convert.ToString(Player.PositionX - Player.PreviousPositionX) +
                         " y Direction: " + Convert.ToString(Player.PositionY - Player.PreviousPositionY));
-                    RenderPlayer();
                 }
                 // if run in wall
                 catch (RunInWallException)
                 {
                     AddMessage("Run in Wall");
-                    Player.RenderNeeded = false;
                     // step back and renderplayer again
                     Player.StepBack();
                     AddMessage("Player moved x Direction: " + Convert.ToString(Player.PositionX - Player.PreviousPositionX) +
                         " y Direction: " + Convert.ToString(Player.PositionY - Player.PreviousPositionY));
-                    RenderPlayer();
                 }
                 // if player need rerender
                 if (Player.RenderNeeded)
                 {
                     AddMessage("Player moved x Direction: " + Convert.ToString(Player.PositionX - Player.PreviousPositionX) +
                         " y Direction: " + Convert.ToString(Player.PositionY - Player.PreviousPositionY));
-                    Player.RenderNeeded = false;
                     RenderPlayer();
                 }
             }

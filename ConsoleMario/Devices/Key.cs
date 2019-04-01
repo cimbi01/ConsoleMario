@@ -9,6 +9,25 @@ namespace ConsoleMario.Devices
 {
     public class Key : Device
     {
+        #region Public Constructors
+
+        static Key()
+        {
+            Device.AddCharDevicePair(KeyCharacter, GetDevice);
+            Device.AddComplexCharacter(KeyCharacter);
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public static Key GetDevice(object parameter2)
+        {
+            return new Key((Door)Convert.ChangeType(parameter2, typeof(Door)));
+        }
+
+        #endregion Public Methods
+
         #region Private Fields
 
         private const char CharacterAfterStep = ' ';

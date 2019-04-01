@@ -9,6 +9,24 @@ namespace ConsoleMario.Devices
 {
     public class End : Device
     {
+        #region Public Constructors
+
+        static End()
+        {
+            Device.AddCharDevicePair(EndCharacter, GetDevice);
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public static End GetDevice(object parameter2)
+        {
+            return new End();
+        }
+
+        #endregion Public Methods
+
         #region Public Fields
 
         // Defines the character of the End

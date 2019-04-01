@@ -9,6 +9,24 @@ namespace ConsoleMario.Devices
 {
     public class Door : Device
     {
+        #region Public Constructors
+
+        static Door()
+        {
+            Device.AddCharDevicePair(DoorCharacter, GetDevice);
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public static Door GetDevice(object parameter2)
+        {
+            return new Door();
+        }
+
+        #endregion Public Methods
+
         #region Private Fields
 
         private const char CharacterAfterStep = ' ';
@@ -21,6 +39,8 @@ namespace ConsoleMario.Devices
         public const char DoorCharacter = '¤';
 
         #endregion Public Fields
+
+
 
         #region Public Constructors
 

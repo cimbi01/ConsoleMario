@@ -9,6 +9,24 @@ namespace ConsoleMario.Devices
 {
     public class Street : Device
     {
+        #region Public Constructors
+
+        static Street()
+        {
+            Device.AddCharDevicePair(StreetCharacter, GetDevice);
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public static Street GetDevice(object parameter2)
+        {
+            return new Street();
+        }
+
+        #endregion Public Methods
+
         #region Public Fields
 
         // Defines the character of the Street

@@ -9,12 +9,33 @@ namespace ConsoleMario.Devices
 {
     public class Spiral : Device
     {
+        #region Public Constructors
+
+        static Spiral()
+        {
+            Device.AddCharDevicePair(SpiralCharacter, GetDevice);
+            Device.AddComplexCharacter(SpiralCharacter);
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public static Spiral GetDevice(object parameter2)
+        {
+            return new Spiral(Convert.ToInt32(parameter2));
+        }
+
+        #endregion Public Methods
+
         #region Public Fields
 
         // Defines the character of the Spiral
         public const char SpiralCharacter = '_';
 
         #endregion Public Fields
+
+
 
         #region Public Constructors
 

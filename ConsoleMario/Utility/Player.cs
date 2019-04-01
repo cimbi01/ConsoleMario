@@ -6,8 +6,57 @@ using System.Threading.Tasks;
 
 namespace ConsoleMario.Utility
 {
+    internal class Position
+    {
+        #region Private Fields
+
+        internal int X { get; private set; }
+        internal int Y { get; private set; }
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
+        public Position(int _x, int _y)
+        {
+            X = _x;
+            Y = _y;
+        }
+
+        #endregion Public Constructors
+    }
     public class Player
     {
+        #region Public Constructors
+
+        public Player()
+        {
+            Init();
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public static void Init()
+        {
+            key_move_pairs = new Dictionary<ConsoleKey, Position>
+            {
+                { UP, new Position(-1, 0) },
+                { DOWN, new Position(1, 0) },
+                { RIGHT, new Position(0, 1) },
+                { LEFT, new Position(0, -1) }
+            };
+        }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        private static Dictionary<ConsoleKey, Position> key_move_pairs;
+
+        #endregion Private Fields
+
         #region Public Fields
 
         public const int MAXLIFE = 5;
@@ -46,14 +95,14 @@ namespace ConsoleMario.Utility
 
         public void Move(ConsoleKey ch)
         {
-            if (ch == UP)
-            { Move(-1, 0); }
-            else if (ch == DOWN)
-            { Move(1, 0); }
-            else if (ch == RIGHT)
-            { Move(0, 1); }
-            else if (ch == LEFT)
-            { Move(0, -1); }
+            try
+            {
+                key_move_pairs.TryGetValue(ch, out Position position);
+                int x = position.X;
+                int y = position.Y;
+                Move(x, y);
+            }
+            catch (NullReferenceException) { }
         }
         public void Move(int x, int y)
         {
@@ -71,23 +120,19 @@ namespace ConsoleMario.Utility
         }
         public void StepBack()
         {
-            // step back
-            if (PositionX - PreviousPositionX > 0)
+            int posx = 0, posy = 0;
+            int y = PositionY - PreviousPositionY;
+            int x = PositionX - PreviousPositionX;
+            try
             {
-                Move(-1, 0);
+                posx = -1*(x / Math.Abs(x));
             }
-            else if (PositionX - PreviousPositionX < 0)
+            catch (DivideByZeroException)
             {
-                Move(1, 0);
+                posy = -1 * (y / Math.Abs(y));
             }
-            else if(PositionY - PreviousPositionY > 0)
-            {
-                Move(0, -1);
-            }
-            else if (PositionY - PreviousPositionY < 0)
-            {
-                Move(0, 1);
-            }
+            RenderNeeded = true;
+            Move(posx, posy);
         }
 
         #endregion Public Methods
