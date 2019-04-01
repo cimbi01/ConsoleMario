@@ -9,13 +9,6 @@ namespace ConsoleMario.Utility
 {
     internal static class Game
     {
-        #region Public Fields
-
-        // Describes the max of levels of the player won
-        public static int player_maxLevel;
-
-        #endregion Public Fields
-
         #region Public Constructors
 
         // InitPlayer and add strings to messages by max_level
@@ -46,6 +39,7 @@ namespace ConsoleMario.Utility
         {
             while (!exited)
             {
+                // Need to be reseted every turn because of the used elements
                 actual_path = new Path(actual_level);
                 Player.Reset();
                 Render.Renderpath = actual_path;
@@ -80,6 +74,8 @@ namespace ConsoleMario.Utility
         private static Path actual_path;
         // Describes that player want to exit
         private static bool exited = false;
+        // Describes the max of levels of the player won
+        private static int player_maxLevel;
 
         #endregion Private Fields
 
