@@ -40,7 +40,7 @@ namespace ConsoleMario
             catch (FileNotFoundException) { }
             // Read Path
             string pathfile = filename + ".path";
-            path = new Utility.Path(ReadPath(pathfile, level_number), example);
+            path = new Utility.Path(ReadPath(pathfile, level_number), example, pathpreview);
             return path;
         }
         public static int MaxPath()

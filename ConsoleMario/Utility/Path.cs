@@ -17,6 +17,14 @@ namespace ConsoleMario.Utility
     }
     public class Path
     {
+        #region Public Properties
+
+        // preview the new Elements
+        public string Preview { get; set; }
+        public bool PreviewVisible { get; protected set; } = false;
+
+        #endregion Public Properties
+
         #region Public Constructors
 
         // return a Path with level, row, and column used for PathLevel init
@@ -29,24 +37,32 @@ namespace ConsoleMario.Utility
                 ExamplePath = path.ExamplePath;
                 LevelNumber = path.LevelNumber;
                 Devices = path.Devices;
+                Preview = path.Preview;
+                PreviewVisible = path.PreviewVisible;
             }
             else
             {
                 throw new NoMoreLevelException();
             }
         }
-        public Path(Device[,] devices, int level)
+        public Path(Device[,] devices, int level, string preview = "")
         {
             Devices = devices;
             LevelNumber = level;
+            Preview = preview;
         }
-        public Path(Path _path, ExamplePath example)
+        public Path(Path _path, ExamplePath example, string _preview = "")
         {
+            Preview = _preview;
+            PreviewVisible = _path.PreviewVisible;
             Devices = _path.Devices;
             LevelNumber = _path.LevelNumber;
             ExamplePath = example;
             if (example == null || ExamplePath.Devices == null)
-            { ExamplePath = null; }
+            {
+                ExamplePath = null;
+                PreviewVisible = true;
+            }
         }
 
         #endregion Public Constructors

@@ -22,16 +22,7 @@ namespace ConsoleMario.Devices.Tests
             Door door = new Door();
             Key key = new Key(door);
             door.Use(player);
-        }
-        [TestMethod()]
-        public void UseTestUnlocked()
-        {
-            Player player = new Player();
-            Door door = new Door();
-            Key key = new Key(door);
-            key.Use(player);
-            door.Use(player);
-            Assert.AreEqual(true, door.Opened);
+            Assert.AreEqual(false, door.Opened);
         }
 
         #endregion Public Methods

@@ -11,18 +11,11 @@ namespace ConsoleMario.Utility
     {
         #region Public Constructors
 
-        public ExamplePath(Path _path, string preview) : base(_path.Devices, _path.LevelNumber)
+        public ExamplePath(Path _path, string preview) : base(_path.Devices, _path.LevelNumber, preview)
         {
-            Preview = preview;
+            PreviewVisible = true;
         }
 
         #endregion Public Constructors
-
-        #region Public Properties
-
-        // preview the new Elements
-        public string Preview { get; set; }
-
-        #endregion Public Properties
     }
 }

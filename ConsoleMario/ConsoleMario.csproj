@@ -75,6 +75,8 @@
     <EmbeddedResource Include="Paths\path2.path.params" />
     <EmbeddedResource Include="Paths\path3.path" />
     <EmbeddedResource Include="Paths\path3.path.params" />
+    <EmbeddedResource Include="Paths\path2.preview" />
+    <EmbeddedResource Include="Paths\path3.preview" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

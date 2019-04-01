@@ -9,6 +9,12 @@ namespace ConsoleMario.Devices
 {
     public class Door : Device
     {
+        #region Private Fields
+
+        private const char CharacterAfterStep = ' ';
+
+        #endregion Private Fields
+
         #region Public Fields
 
         // Defines the character of the Door
@@ -36,9 +42,14 @@ namespace ConsoleMario.Devices
             // if the door is closed
             if (!Opened)
             {
-                player.Life--;
                 player.RenderNeeded = true;
+                player.Life--;
                 throw new DoorIsClosedException();
+            }
+            else
+            {
+                Character = CharacterAfterStep;
+                Render.RenderPlayer();
             }
         }
 

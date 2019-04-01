@@ -78,10 +78,10 @@ namespace ConsoleMario.Utility
                 Console.WriteLine();
             }
             // if the path is Example Path then Write The Preview
-            if (Renderpath is ExamplePath)
+            if (Renderpath.PreviewVisible)
             {
                 Console.WriteLine();
-                Console.WriteLine((Renderpath as ExamplePath).Preview);
+                Console.WriteLine(Renderpath.Preview);
                 Console.WriteLine();
             }
             RenderMessages();

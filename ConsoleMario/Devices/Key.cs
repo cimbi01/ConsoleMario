@@ -9,6 +9,12 @@ namespace ConsoleMario.Devices
 {
     public class Key : Device
     {
+        #region Private Fields
+
+        private const char CharacterAfterStep = ' ';
+
+        #endregion Private Fields
+
         #region Public Fields
 
         // Defines the character of the Key
@@ -28,6 +34,8 @@ namespace ConsoleMario.Devices
         {
             // opens the door
             this.door.Opened = true;
+            Character = CharacterAfterStep;
+            Render.RenderPlayer();
         }
 
         #endregion Public Methods
