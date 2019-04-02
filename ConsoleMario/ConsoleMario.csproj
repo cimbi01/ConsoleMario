@@ -48,26 +48,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Devices\Device.cs" />
-    <Compile Include="Devices\Door.cs" />
-    <Compile Include="Exceptions\DeviceExceptions\RunInWallException.cs" />
-    <Compile Include="Exceptions\DeviceExceptions\DoorIsClosedException.cs" />
-    <Compile Include="Devices\End.cs" />
-    <Compile Include="Devices\Fire.cs" />
-    <Compile Include="Devices\Key.cs" />
-    <Compile Include="Devices\Spiral.cs" />
-    <Compile Include="Devices\Street.cs" />
-    <Compile Include="Devices\Wall.cs" />
-    <Compile Include="Utility\CheckedDataInput.cs" />
-    <Compile Include="Utility\Game.cs" />
-    <Compile Include="Utility\Init.cs" />
-    <Compile Include="Utility\LoadPath.cs" />
-    <Compile Include="Exceptions\UtilityExceptions\NoMoreLevelException.cs" />
-    <Compile Include="Utility\Path.cs" />
-    <Compile Include="Utility\Player.cs" />
-    <Compile Include="Utility\Program.cs" />
+    <Compile Include="src\Devices\Device.cs" />
+    <Compile Include="src\Devices\Door.cs" />
+    <Compile Include="src\Exceptions\DeviceExceptions\RunInWallException.cs" />
+    <Compile Include="src\Exceptions\DeviceExceptions\DoorIsClosedException.cs" />
+    <Compile Include="src\Devices\End.cs" />
+    <Compile Include="src\Devices\Fire.cs" />
+    <Compile Include="src\Devices\Key.cs" />
+    <Compile Include="src\Devices\Spiral.cs" />
+    <Compile Include="src\Devices\Street.cs" />
+    <Compile Include="src\Devices\Wall.cs" />
+    <Compile Include="src\Utility\CheckedDataInput.cs" />
+    <Compile Include="src\Utility\Game.cs" />
+    <Compile Include="src\Utility\Init.cs" />
+    <Compile Include="src\Utility\LoadPath.cs" />
+    <Compile Include="src\Exceptions\UtilityExceptions\NoMoreLevelException.cs" />
+    <Compile Include="src\Utility\Path.cs" />
+    <Compile Include="src\Utility\Player.cs" />
+    <Compile Include="src\Utility\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\Render.cs" />
+    <Compile Include="src\Utility\Render.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
