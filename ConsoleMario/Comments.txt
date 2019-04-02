@@ -1,0 +1,9 @@
+﻿Device
+Device Character változásra eventet
+Device charDevicePairs csúnya > hogy lehet osztályonként hozzáaadni
+Device complexDeviceChars csúnya > hogy lehet osztályonként hozzáaadniW
+static tagok > nem Device része csak a Device-ra hivatkozik > Új osztály
+Device hozzáad static abstract metodus > implementálják az alosztályok
+
+Door
+Door Character változásra event

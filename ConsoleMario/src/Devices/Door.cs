@@ -30,6 +30,7 @@ namespace ConsoleMario.Devices
         {
             return new Door();
         }
+
         public override void Use(Player player)
         {
             // if the door is closed
@@ -37,14 +38,26 @@ namespace ConsoleMario.Devices
             {
                 throw new Exceptions.DeviceExceptions.DoorIsClosedException();
             }
-            else if (!this.characterchanged)
+            else
+            {
+                TryChangeCharacter();
+            }
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private void TryChangeCharacter()
+        {
+            if (!this.characterchanged)
             {
                 Character = CharacterAfterStep;
                 this.characterchanged = true;
             }
         }
 
-        #endregion Public Methods
+        #endregion Private Methods
 
         #region Private Fields
 

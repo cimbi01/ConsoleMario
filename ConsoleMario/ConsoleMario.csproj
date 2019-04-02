@@ -80,7 +80,10 @@
     <EmbeddedResource Include="Paths\path3.path.params" />
     <EmbeddedResource Include="Paths\path2.preview" />
     <EmbeddedResource Include="Paths\path3.preview" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Comments.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
