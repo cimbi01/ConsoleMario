@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ConsoleMario.Utility
 {
     internal static class CheckedDataInput
     {
-        private const int SLEEPSECONDS = 1000;
+        #region Public Methods
 
         // return truestring == Input()
         public static bool DecisionInput(string inputstring, string truestring)
@@ -32,5 +31,13 @@ namespace ConsoleMario.Utility
             Console.Clear();
             return ch;
         }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        private const int SLEEPSECONDS = 1000;
+
+        #endregion Private Fields
     }
 }

@@ -1,23 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConsoleMario.Utility;
+﻿using ConsoleMario.Utility;
 
 namespace ConsoleMario.Devices
 {
     public class Door : Device
     {
-        private const char CharacterAfterStep = ' ';
-        private bool characterchanged = false;
+        #region Public Fields
 
         // Defines the character of the Door
         public const char DoorCharacter = '¤';
 
+        #endregion Public Fields
+
+        #region Public Constructors
+
         public Door() : base(DoorCharacter) { }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         // Describes if the Door is opened
         public bool Opened { get; set; } = false;
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public static Door GetDevice(object parameter2)
         {
@@ -30,11 +37,20 @@ namespace ConsoleMario.Devices
             {
                 throw new Exceptions.DeviceExceptions.DoorIsClosedException();
             }
-            else if(!this.characterchanged)
+            else if (!this.characterchanged)
             {
                 Character = CharacterAfterStep;
                 this.characterchanged = true;
             }
         }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        private const char CharacterAfterStep = ' ';
+        private bool characterchanged = false;
+
+        #endregion Private Fields
     }
 }

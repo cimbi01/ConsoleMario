@@ -1,18 +1,81 @@
-﻿using System;
+﻿using ConsoleMario.Devices;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using ConsoleMario.Devices;
+using System.Linq;
 using System.Reflection;
-using ConsoleMario.Utility;
 
 namespace ConsoleMario.Utility
 {
     internal static class LoadPath
     {
+        #region Public Methods
+
+        public static ConsoleMario.Utility.Path LoadPathFromFile(int level_number)
+        {
+            ConsoleMario.Utility.Path path;
+            string filename = pathstring + "path" + level_number;
+            // Read the preview
+            string previewfile = filename + ".preview";
+            string pathpreview = "";
+            try
+            {
+                List<string> loadedpreview = ReadLines(previewfile, true);
+                for (int i = 0; i < loadedpreview.Count; i++)
+                {
+                    pathpreview += loadedpreview[i];
+                }
+            }
+            catch (FileNotFoundException) { }
+            // Read ExamplePath
+            string examplefile = filename + ".example";
+            ConsoleMario.Utility.Path example = null;
+            try
+            {
+                example = ReadPath(examplefile, level_number, true);
+                example.Preview = pathpreview;
+            }
+            catch (FileNotFoundException) { }
+            // Read Path
+            string pathfile = filename + ".path";
+            path = new Utility.Path(false, ReadPath(pathfile, level_number, false), example, pathpreview);
+            return path;
+        }
+        public static int MaxPath()
+        {
+            string[] resources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            int path = 1;
+            string pathstring = "path" + Convert.ToString(path);
+            bool path_is_in_resources = true;
+            while (path_is_in_resources)
+            {
+                path_is_in_resources = false;
+                for (int i = 0; i < resources.Length; i++)
+                {
+                    if (resources[i].Split('.').Contains(pathstring))
+                    {
+                        i = resources.Length;
+                        path_is_in_resources = true;
+                    }
+                }
+                if (path_is_in_resources)
+                {
+                    path++;
+                    pathstring = "path" + Convert.ToString(path);
+                }
+            }
+            return path - 1;
+        }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
         private const string pathstring = "ConsoleMario.Paths.";
+
+        #endregion Private Fields
+
+        #region Private Methods
 
         private static Device[,] ReadDevices(List<string> loadeddevices)
         {
@@ -121,60 +184,6 @@ namespace ConsoleMario.Utility
             return path;
         }
 
-        public static ConsoleMario.Utility.Path LoadPathFromFile(int level_number)
-        {
-            ConsoleMario.Utility.Path path;
-            string filename = pathstring + "path" + level_number;
-            // Read the preview
-            string previewfile = filename + ".preview";
-            string pathpreview = "";
-            try
-            {
-                List<string> loadedpreview = ReadLines(previewfile, true);
-                for (int i = 0; i < loadedpreview.Count; i++)
-                {
-                    pathpreview += loadedpreview[i];
-                }
-            }
-            catch (FileNotFoundException) { }
-            // Read ExamplePath
-            string examplefile = filename + ".example";
-            ConsoleMario.Utility.Path example = null;
-            try
-            {
-                example = ReadPath(examplefile, level_number, true);
-                example.Preview = pathpreview;
-            }
-            catch (FileNotFoundException) { }
-            // Read Path
-            string pathfile = filename + ".path";
-            path = new Utility.Path(false, ReadPath(pathfile, level_number, false), example, pathpreview);
-            return path;
-        }
-        public static int MaxPath()
-        {
-            string[] resources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            int path = 1;
-            string pathstring = "path" + Convert.ToString(path);
-            bool path_is_in_resources = true;
-            while (path_is_in_resources)
-            {
-                path_is_in_resources = false;
-                for (int i = 0; i < resources.Length; i++)
-                {
-                    if (resources[i].Split('.').Contains(pathstring))
-                    {
-                        i = resources.Length;
-                        path_is_in_resources = true;
-                    }
-                }
-                if (path_is_in_resources)
-                {
-                    path++;
-                    pathstring = "path" + Convert.ToString(path);
-                }
-            }
-            return path - 1;
-        }
+        #endregion Private Methods
     }
 }

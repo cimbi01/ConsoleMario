@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConsoleMario.Devices;
 
 namespace ConsoleMario.Utility
 {
     internal static class Game
     {
-        // Describes that player want to exit
-        private static bool exited = false;
+        #region Public Constructors
 
         // InitPlayer and add strings to messages by max_level
         static Game()
@@ -18,10 +13,66 @@ namespace ConsoleMario.Utility
             Init.InitPlayer();
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         // List of messages by Pathlevel
         public static List<string> Messages { get; } = new List<string>();
         // Describes the player
         public static Player Player { get; internal set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        // Add new Message string line to messages if new level available
+        public static void AddNewMessageLine()
+        {
+            Messages.Add(Convert.ToString((Player.Max_Level + 1)) + ".level\n");
+        }
+        public static void Play()
+        {
+            while (!exited)
+            {
+                // Need to be reseted every turn because of the used elements
+                Player.Actual_Path = new Path(Player.Actual_Level);
+                Player.Reset();
+                Render.Renderpath = Player.Actual_Path;
+                bool actulpathisexample = !Player.ExamplePathWin;
+                actulpathisexample = actulpathisexample && Player.Actual_Path.ExamplePath != null;
+                if (actulpathisexample)
+                {
+                    Render.Renderpath = Player.Actual_Path.ExamplePath;
+                }
+                Render.RenderRenderPath();
+                Move();
+                Render.Initialized = false;
+                if (Player.Win)
+                {
+                    HandleWin();
+                }
+                else
+                {
+                    Render.WriteWinMessage(false);
+                }
+                System.Threading.Thread.Sleep(1000);
+                exited = Path.MaxLevel == Player.Max_Level;
+            }
+            // if player want to exit or there is no more Level available
+            Console.WriteLine("Game over");
+        }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        // Describes that player want to exit
+        private static bool exited = false;
+
+        #endregion Private Fields
+
+        #region Private Methods
 
         // Add message to messages and write it under Path
         private static void AddMessage(string message)
@@ -117,41 +168,6 @@ namespace ConsoleMario.Utility
             }
         }
 
-        // Add new Message string line to messages if new level available
-        public static void AddNewMessageLine()
-        {
-            Messages.Add(Convert.ToString((Player.Max_Level + 1)) + ".level\n");
-        }
-        public static void Play()
-        {
-            while (!exited)
-            {
-                // Need to be reseted every turn because of the used elements
-                Player.Actual_Path = new Path(Player.Actual_Level);
-                Player.Reset();
-                Render.Renderpath = Player.Actual_Path;
-                bool actulpathisexample = !Player.ExamplePathWin;
-                actulpathisexample = actulpathisexample && Player.Actual_Path.ExamplePath != null;
-                if (actulpathisexample)
-                {
-                    Render.Renderpath = Player.Actual_Path.ExamplePath;
-                }
-                Render.RenderRenderPath();
-                Move();
-                Render.Initialized = false;
-                if (Player.Win)
-                {
-                    HandleWin();
-                }
-                else
-                {
-                    Render.WriteWinMessage(false);
-                }
-                System.Threading.Thread.Sleep(1000);
-                exited = Path.MaxLevel == Player.Max_Level;
-            }
-            // if player want to exit or there is no more Level available
-            Console.WriteLine("Game over");
-        }
+        #endregion Private Methods
     }
 }

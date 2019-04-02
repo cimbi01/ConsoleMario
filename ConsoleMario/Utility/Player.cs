@@ -1,33 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleMario.Utility
 {
-    internal class Position
-    {
-        public Position(int _x, int _y)
-        {
-            X = _x;
-            Y = _y;
-        }
-
-        internal int X { get; private set; }
-        internal int Y { get; private set; }
-    }
     public class Player
     {
-        private static Dictionary<ConsoleKey, Position> key_move_pairs;
+        #region Public Fields
 
         public const int MAXLIFE = 5;
+
+        #endregion Public Fields
+
+        #region Public Constructors
 
         public Player()
         {
             Max_Level = Actual_Level;
             InitKeyMovePairs();
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         // default Console Background Color and Default Color to change on cursor
         public static char DefaultCharacter { get; set; } = '+';
@@ -55,6 +49,10 @@ namespace ConsoleMario.Utility
         public bool RenderNeeded { get; set; } = false;
         // Describes if the player won the current PathLevel
         public bool Win { get; set; } = false;
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public static void InitKeyMovePairs()
         {
@@ -104,7 +102,7 @@ namespace ConsoleMario.Utility
             // by one move only one of the x, y could change
             try
             {
-                posx = -1*(x / Math.Abs(x));
+                posx = -1 * (x / Math.Abs(x));
             }
             catch (DivideByZeroException)
             {
@@ -112,5 +110,32 @@ namespace ConsoleMario.Utility
             }
             Move(posx, posy);
         }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        private static Dictionary<ConsoleKey, Position> key_move_pairs;
+
+        #endregion Private Fields
+    }
+    internal class Position
+    {
+        #region Public Constructors
+
+        public Position(int _x, int _y)
+        {
+            X = _x;
+            Y = _y;
+        }
+
+        #endregion Public Constructors
+
+        #region Internal Properties
+
+        internal int X { get; private set; }
+        internal int Y { get; private set; }
+
+        #endregion Internal Properties
     }
 }

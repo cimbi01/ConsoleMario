@@ -1,23 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConsoleMario.Utility;
+﻿using ConsoleMario.Utility;
+using System;
 
 namespace ConsoleMario.Devices
 {
     public class Key : Device
     {
-        private const char CharacterAfterStep = ' ';
-        // Door to open
-        private readonly Door door;
-        private bool characterchanged = false;
+        #region Public Fields
 
         // Defines the character of the Key
         public const char KeyCharacter = '@';
 
+        #endregion Public Fields
+
+        #region Public Constructors
+
         public Key(Door _door) : base(KeyCharacter) { this.door = _door; }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public static Key GetDevice(object parameter2)
         {
@@ -34,5 +35,16 @@ namespace ConsoleMario.Devices
                 this.characterchanged = true;
             }
         }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        private const char CharacterAfterStep = ' ';
+        // Door to open
+        private readonly Door door;
+        private bool characterchanged = false;
+
+        #endregion Private Fields
     }
 }

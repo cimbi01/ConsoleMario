@@ -1,13 +1,11 @@
 ﻿using ConsoleMario.Devices;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleMario.Utility
 {
     public class Path
     {
+        #region Public Constructors
+
         public Path() { }
         public Path(int level)
         {
@@ -58,6 +56,10 @@ namespace ConsoleMario.Utility
             LevelNumber = _path.LevelNumber;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         // Describes the Maximum types of level (can be an int from 1 to the max)
         public static int MaxLevel { get; } = LoadPath.MaxPath();
         // Describes the devices matrix We use this to Render to console
@@ -69,5 +71,7 @@ namespace ConsoleMario.Utility
         // preview the new Elements
         public string Preview { get; set; }
         public bool PreviewVisible { get; set; } = false;
+
+        #endregion Public Properties
     }
 }

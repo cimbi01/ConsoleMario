@@ -1,21 +1,24 @@
 ﻿using ConsoleMario.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleMario.Devices
 {
     public class Spiral : Device
     {
-        // how much should the player jump;
-        private readonly int force;
+        #region Public Fields
 
         // Defines the character of the Spiral
         public const char SpiralCharacter = '_';
 
+        #endregion Public Fields
+
+        #region Public Constructors
+
         public Spiral(int _force) : base(SpiralCharacter) { this.force = _force; }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public static Spiral GetDevice(object parameter2)
         {
@@ -26,5 +29,14 @@ namespace ConsoleMario.Devices
         {
             player.Move(-this.force, 0);
         }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        // how much should the player jump;
+        private readonly int force;
+
+        #endregion Private Fields
     }
 }

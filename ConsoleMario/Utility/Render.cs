@@ -1,19 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleMario.Utility
 {
     internal static class Render
     {
+        #region Public Fields
+
         public static bool Initialized = false;
+
+        #endregion Public Fields
+
+        #region Public Constructors
 
         static Render()
         {
             Console.CursorVisible = false;
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public static ConsoleColor Change_FGColor { get; set; } = ConsoleColor.DarkRed;
         // default Console Background Color and Default Color to change on cursor
@@ -22,6 +28,10 @@ namespace ConsoleMario.Utility
         public static bool Messages_Visible { get; set; } = true;
         // Describes the render path
         public static Path Renderpath { set; get; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public static void RenderMessages()
         {
@@ -101,5 +111,7 @@ namespace ConsoleMario.Utility
             }
             Console.WriteLine(text);
         }
+
+        #endregion Public Methods
     }
 }

@@ -1,13 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleMario.Utility
 {
     internal static class Init
     {
+        #region Public Methods
+
+        // Init player by UP, DOWN, RIGHT, LEFT KEY and Init Render by MessagesVisible and RenderForground
+        public static void InitPlayer()
+        {
+            if (!InitDefaults())
+            {
+                InitButtons();
+                InitDefaultCharacter();
+                InitMessagesVisible();
+                InitRenderType();
+            }
+            Game.Player = new Player();
+            for (int i = 0; i < Game.Player.Max_Level + 1; i++)
+            {
+                Game.AddNewMessageLine();
+            }
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
         private static void InitButtons()
         {
             string input = "Would you like to change the default Buttons?:" +
@@ -64,21 +83,6 @@ namespace ConsoleMario.Utility
             Render.ForeGroundRender = CheckedDataInput.DecisionInput(input, "");
         }
 
-        // Init player by UP, DOWN, RIGHT, LEFT KEY and Init Render by MessagesVisible and RenderForground
-        public static void InitPlayer()
-        {
-            if (!InitDefaults())
-            {
-                InitButtons();
-                InitDefaultCharacter();
-                InitMessagesVisible();
-                InitRenderType();
-            }
-            Game.Player = new Player();
-            for (int i = 0; i < Game.Player.Max_Level + 1; i++)
-            {
-                Game.AddNewMessageLine();
-            }
-        }
+        #endregion Private Methods
     }
 }

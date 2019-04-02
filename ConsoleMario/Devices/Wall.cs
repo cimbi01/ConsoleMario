@@ -1,17 +1,23 @@
 ﻿using ConsoleMario.Utility;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleMario.Devices
 {
     public class Wall : Devices.Device
     {
+        #region Public Fields
+
         // Defines the character of the Wall
         public const char WallCharacter = 'I';
 
+        #endregion Public Fields
+
+        #region Public Constructors
+
         public Wall() : base(WallCharacter) { }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public static Wall GetDevice(object parameter2)
         {
@@ -23,5 +29,7 @@ namespace ConsoleMario.Devices
             player.Life--;
             throw new Exceptions.DeviceExceptions.RunInWallException();
         }
+
+        #endregion Public Methods
     }
 }
