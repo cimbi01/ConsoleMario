@@ -14,11 +14,7 @@ namespace ConsoleMario.Utility
         // InitPlayer and add strings to messages by max_level
         static Game()
         {
-            InitPlayer();
-            for (int i = 0; i < player_maxLevel + 1; i++)
-            {
-                AddNewMessageLine();
-            }
+            Init.InitPlayer();
         }
 
         #endregion Public Constructors
@@ -28,7 +24,7 @@ namespace ConsoleMario.Utility
         // List of messages by Pathlevel
         public static List<string> Messages { get; } = new List<string>();
         // Describes the player
-        public static Player Player { get; private set; }
+        public static Player Player { get; internal set; }
 
         #endregion Public Properties
 
@@ -39,14 +35,14 @@ namespace ConsoleMario.Utility
             while (!exited)
             {
                 // Need to be reseted every turn because of the used elements
-                actual_path = new Path(actual_level);
+                Player.Actual_Path = new Path(Player.Actual_Level);
                 Player.Reset();
-                Render.Renderpath = actual_path;
+                Render.Renderpath = Player.Actual_Path;
                 bool example = !Player.ExamplePathWin;
-                example = example && actual_path.ExamplePath != null;
+                example = example && Player.Actual_Path.ExamplePath != null;
                 if (example)
                 {
-                    Render.Renderpath = actual_path.ExamplePath;
+                    Render.Renderpath = Player.Actual_Path.ExamplePath;
                 }
                 Render.RenderRenderPath();
                 Move();
@@ -60,7 +56,7 @@ namespace ConsoleMario.Utility
                     Render.WriteWinMessage(false);
                 }
                 System.Threading.Thread.Sleep(1000);
-                exited = Path.MaxLevel == player_maxLevel;
+                exited = Path.MaxLevel == Player.Max_Level;
             }
             // if player want to exit or there is no more Level available
             Console.WriteLine("Game over");
@@ -70,14 +66,8 @@ namespace ConsoleMario.Utility
 
         #region Private Fields
 
-        // Describes the actual level
-        private static int actual_level = 0;
-        // Describes the actual path
-        private static Path actual_path;
         // Describes that player want to exit
         private static bool exited = false;
-        // Describes the max of levels of the player won
-        private static int player_maxLevel = actual_level;
 
         #endregion Private Fields
 
@@ -86,13 +76,8 @@ namespace ConsoleMario.Utility
         // Add message to messages and write it under Path
         private static void AddMessage(string message)
         {
-            Messages[actual_level] += message + '\n';
+            Messages[Player.Actual_Level] += message + '\n';
             Render.RenderMessages();
-        }
-        // Add new Message string line to messages if new level available
-        private static void AddNewMessageLine()
-        {
-            Messages.Add(Convert.ToString((player_maxLevel + 1)) + ".level\n");
         }
         // set player_maxlevel, actual_level, player.ExamplePathWin accroding to situation
         private static void HandleWin()
@@ -100,14 +85,14 @@ namespace ConsoleMario.Utility
             Render.WriteWinMessage();
             if (!(Render.Renderpath.IsExample))
             {
-                if (actual_level == player_maxLevel && player_maxLevel < Path.MaxLevel)
+                if (Player.Actual_Level == Player.Max_Level && Player.Max_Level < Path.MaxLevel)
                 {
-                    player_maxLevel++;
+                    Player.Max_Level++;
                     AddNewMessageLine();
                 }
-                if (actual_level < Path.MaxLevel)
+                if (Player.Actual_Level < Path.MaxLevel)
                 {
-                    actual_level++;
+                    Player.Actual_Level++;
                     IncreaseActulPath();
                     Player.ExamplePathWin = false;
                 }
@@ -121,7 +106,7 @@ namespace ConsoleMario.Utility
         {
             try
             {
-                actual_path = new Path(actual_level);
+                Player.Actual_Path = new Path(Player.Actual_Level);
             }
             catch (NoMoreLevelException e)
             {
@@ -129,53 +114,6 @@ namespace ConsoleMario.Utility
                 Console.WriteLine(e.Message);
                 exited = true;
             }
-        }
-        // Init player by UP, DOWN, RIGHT, LEFT KEY and Init Render by MessagesVisible and RenderForground
-        private static void InitPlayer()
-        {
-            // Datainput
-            string input = "Would you like to change the default settings:" +
-                            "\nRIGHT button: " + Player.RIGHT +
-                            "\nLEFT button: " + Player.LEFT +
-                            "\nUP button: " + Player.UP +
-                            "\nDOWN button: " + Player.DOWN +
-                            "\nDefault character: " + Player.DefaultCharacter +
-                            "\nCharacter: unvisible" +
-                            "\nStep Cursor ForeGroundColor: " + Render.Change_FGColor +
-                            "Messages Visible: " + Render.Messages_Visible +
-                            "\nPress Enter if No or something then enter if Yes!";
-            if (!CheckedDataInput.DecisionInput(input, ""))
-            {
-                input = "Would you like to change the default RenderType?:" +
-                    "\nDefault RenderType: Console.ForeGroundColour" +
-                    "\nThe Character is not shown only the foreground of the colour is different" +
-                    "\nPress Enter if No or something then enter if Yes!";
-                Render.ForeGroundRender = CheckedDataInput.DecisionInput(input, "");
-                input = "Would you like to make the messages visible?:" +
-                    "\nPress Enter if No or something then enter if Yes!";
-                Render.Messages_Visible = !CheckedDataInput.DecisionInput(input, "");
-                input = "Would you like to change the default Character?:" +
-                    "\nDefault character: " + Player.DefaultCharacter +
-                    "\nPress Enter if No or something then enter if Yes!";
-                if (!CheckedDataInput.DecisionInput(input, ""))
-                {
-                    Player.DefaultCharacter = CheckedDataInput.InputChar<char>("Press preferred Character button");
-                }
-                input = "Would you like to change the default Buttons?:" +
-                    "\nRIGHT button: " + Player.RIGHT +
-                    "\nLEFT button: " + Player.LEFT +
-                    "\nUP button: " + Player.UP +
-                    "\nDOWN button: " + Player.DOWN +
-                    "\nPress Enter if No or something then enter if Yes!";
-                if (!CheckedDataInput.DecisionInput(input, ""))
-                {
-                    Player.UP = CheckedDataInput.InputChar<ConsoleKey>("Press preferred UP button");
-                    Player.DOWN = CheckedDataInput.InputChar<ConsoleKey>("Press preferred DOWN button");
-                    Player.RIGHT = CheckedDataInput.InputChar<ConsoleKey>("Press preferred RIGHT button");
-                    Player.LEFT = CheckedDataInput.InputChar<ConsoleKey>("Press preferred LEFT button");
-                }
-            }
-            Player = new Player();
         }
         private static void Move()
         {
@@ -229,6 +167,11 @@ namespace ConsoleMario.Utility
                     RenderMovingPlayer();
                 }
             }
+        }
+        // Add new Message string line to messages if new level available
+        public static void AddNewMessageLine()
+        {
+            Messages.Add(Convert.ToString((Player.Max_Level + 1)) + ".level\n");
         }
 
         #endregion Private Methods

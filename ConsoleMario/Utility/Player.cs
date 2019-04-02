@@ -27,18 +27,27 @@ namespace ConsoleMario.Utility
     }
     public class Player
     {
+        #region Public Properties
+
+        public int Actual_Level { get; set; } = 0;
+        public Path Actual_Path { get; set; }
+        public int Max_Level { get; set; }
+
+        #endregion Public Properties
+
         #region Public Constructors
 
         public Player()
         {
-            Init();
+            Max_Level = Actual_Level;
+            InitKeyMovePairs();
         }
 
         #endregion Public Constructors
 
         #region Public Methods
 
-        public static void Init()
+        public static void InitKeyMovePairs()
         {
             key_move_pairs = new Dictionary<ConsoleKey, Position>
             {
@@ -122,11 +131,13 @@ namespace ConsoleMario.Utility
             PreviousPositionX = PositionX = 1;
             PreviousPositionY = PositionY = 1;
         }
+        // Make Player Move step back by one to the opposite way
         public void StepBack()
         {
             int posx = 0, posy = 0;
             int y = PositionY - PreviousPositionY;
             int x = PositionX - PreviousPositionX;
+            // by one move only one of the x, y could change
             try
             {
                 posx = -1*(x / Math.Abs(x));

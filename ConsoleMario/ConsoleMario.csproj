@@ -58,6 +58,7 @@
     <Compile Include="Devices\Wall.cs" />
     <Compile Include="Utility\CheckedDataInput.cs" />
     <Compile Include="Utility\Game.cs" />
+    <Compile Include="Utility\Init.cs" />
     <Compile Include="Utility\LoadPath.cs" />
     <Compile Include="Utility\Path.cs" />
     <Compile Include="Utility\Player.cs" />
