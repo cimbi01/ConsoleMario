@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="Devices\Device.cs" />
     <Compile Include="Devices\Door.cs" />
+    <Compile Include="Exceptions\DeviceExceptions\RunInWallException.cs" />
+    <Compile Include="Exceptions\DeviceExceptions\DoorIsClosedException.cs" />
     <Compile Include="Devices\End.cs" />
     <Compile Include="Devices\Fire.cs" />
     <Compile Include="Devices\Key.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="Utility\Game.cs" />
     <Compile Include="Utility\Init.cs" />
     <Compile Include="Utility\LoadPath.cs" />
+    <Compile Include="Utility\NoMoreLevelException.cs" />
     <Compile Include="Utility\Path.cs" />
     <Compile Include="Utility\Player.cs" />
     <Compile Include="Utility\Program.cs" />

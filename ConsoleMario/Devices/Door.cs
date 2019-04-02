@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +28,7 @@ namespace ConsoleMario.Devices
             // if the door is closed
             if (!Opened)
             {
-                throw new DoorIsClosedException();
+                throw new Exceptions.DeviceExceptions.DoorIsClosedException();
             }
             else if(!this.characterchanged)
             {
@@ -37,9 +36,5 @@ namespace ConsoleMario.Devices
                 this.characterchanged = true;
             }
         }
-    }
-    public class DoorIsClosedException : Exception
-    {
-        public DoorIsClosedException() : base("The Door, which on you are is closed!") { }
     }
 }

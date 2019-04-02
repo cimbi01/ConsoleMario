@@ -58,7 +58,7 @@ namespace ConsoleMario.Utility
             {
                 Player.Actual_Path = new Path(Player.Actual_Level);
             }
-            catch (NoMoreLevelException e)
+            catch (Exceptions.UtilityExceptions.NoMoreLevelException e)
             {
                 Console.Clear();
                 Console.WriteLine(e.Message);
@@ -91,7 +91,7 @@ namespace ConsoleMario.Utility
                     Render.Renderpath.Devices[Player.PositionX, Player.PositionY].Use(Player);
                 }
                 // if the door is closed
-                catch (DoorIsClosedException)
+                catch (Exceptions.DeviceExceptions.DoorIsClosedException)
                 {
                     Player.Life--;
                     AddMessage("Run in Closed Door");
@@ -101,7 +101,7 @@ namespace ConsoleMario.Utility
                         " y Direction: " + Convert.ToString(Player.PositionY - Player.PreviousPositionY));
                 }
                 // if run in wall
-                catch (RunInWallException)
+                catch (Exceptions.DeviceExceptions.RunInWallException)
                 {
                     AddMessage("Run in Wall");
                     // step back and renderplayer again

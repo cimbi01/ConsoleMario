@@ -1,5 +1,4 @@
 ﻿using ConsoleMario.Devices;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleMario.Utility
 {
-    public class NoMoreLevelException : Exception
-    {
-        public NoMoreLevelException() : base("There are no more level yet") { }
-    }
     public class Path
     {
         public Path() { }
@@ -27,7 +22,7 @@ namespace ConsoleMario.Utility
             }
             else
             {
-                throw new NoMoreLevelException();
+                throw new Exceptions.UtilityExceptions.NoMoreLevelException();
             }
         }
         public Path(bool example, Device[,] devices, int level, string preview = "")
