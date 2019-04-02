@@ -9,6 +9,12 @@ namespace ConsoleMario.Devices
 {
     public class Key : Device
     {
+        #region Private Fields
+
+        private bool characterchanged = false;
+
+        #endregion Private Fields
+
         #region Public Methods
 
         public static Key GetDevice(object parameter2)
@@ -18,6 +24,8 @@ namespace ConsoleMario.Devices
         }
 
         #endregion Public Methods
+
+
 
         #region Private Fields
 
@@ -44,7 +52,11 @@ namespace ConsoleMario.Devices
         {
             // opens the door
             this.door.Opened = true;
-            Character = CharacterAfterStep;
+            if (!characterchanged)
+            {
+                Character = CharacterAfterStep;
+                characterchanged = true;
+            }
         }
 
         #endregion Public Methods

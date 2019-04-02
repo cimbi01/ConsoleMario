@@ -9,6 +9,12 @@ namespace ConsoleMario.Devices
 {
     public class Door : Device
     {
+        #region Private Fields
+
+        private bool characterchanged = false;
+
+        #endregion Private Fields
+
         #region Public Methods
 
         public static Door GetDevice(object parameter2)
@@ -17,6 +23,8 @@ namespace ConsoleMario.Devices
         }
 
         #endregion Public Methods
+
+
 
         #region Private Fields
 
@@ -53,9 +61,10 @@ namespace ConsoleMario.Devices
             {
                 throw new DoorIsClosedException();
             }
-            else
+            else if(!characterchanged)
             {
                 Character = CharacterAfterStep;
+                characterchanged = true;
             }
         }
 
