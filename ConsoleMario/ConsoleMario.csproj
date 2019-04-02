@@ -62,7 +62,7 @@
     <Compile Include="Utility\Game.cs" />
     <Compile Include="Utility\Init.cs" />
     <Compile Include="Utility\LoadPath.cs" />
-    <Compile Include="Utility\NoMoreLevelException.cs" />
+    <Compile Include="Exceptions\UtilityExceptions\NoMoreLevelException.cs" />
     <Compile Include="Utility\Path.cs" />
     <Compile Include="Utility\Player.cs" />
     <Compile Include="Utility\Program.cs" />
