@@ -9,15 +9,6 @@ namespace ConsoleMario.Devices
 {
     public class Fire : Device
     {
-        #region Public Constructors
-
-        static Fire()
-        {
-            Device.AddCharDevicePair(FireCharacter, GetDevice);
-        }
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         public static Fire GetDevice(object parameter2)

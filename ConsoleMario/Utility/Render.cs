@@ -8,6 +8,12 @@ namespace ConsoleMario.Utility
 {
     internal static class Render
     {
+        #region Private Fields
+
+        public static bool Initialized = false;
+
+        #endregion Private Fields
+
         #region Public Constructors
 
         static Render()
@@ -49,25 +55,29 @@ namespace ConsoleMario.Utility
         // render player and use the player positionx, positiony device of actual_path devices
         public static void RenderPlayer()
         {
-            // setcursor to previus position and write the previous device where it is
-            Console.SetCursorPosition(Game.Player.PreviousPositionY, Game.Player.PreviousPositionX);
-            Console.Write(Renderpath.Devices[Game.Player.PreviousPositionX, Game.Player.PreviousPositionY].Character);
-            // setcursor to current position and write the current device where it is
-            Console.SetCursorPosition(Game.Player.PositionY, Game.Player.PositionX);
-            char character = Convert.ToChar(Game.Player.Character.ToString());
-            if (ForeGroundRender)
+            if (Initialized)
             {
-                Console.BackgroundColor = Change_FGColor;
-                character = Renderpath.Devices[Game.Player.PositionX, Game.Player.PositionY].Character;
+                // setcursor to previus position and write the previous device where it is
+                Console.SetCursorPosition(Game.Player.PreviousPositionY, Game.Player.PreviousPositionX);
+                Console.Write(Renderpath.Devices[Game.Player.PreviousPositionX, Game.Player.PreviousPositionY].Character);
+                // setcursor to current position and write the current device where it is
+                Console.SetCursorPosition(Game.Player.PositionY, Game.Player.PositionX);
+                char character = Convert.ToChar(Game.Player.Character.ToString());
+                if (ForeGroundRender)
+                {
+                    Console.BackgroundColor = Change_FGColor;
+                    character = Renderpath.Devices[Game.Player.PositionX, Game.Player.PositionY].Character;
+                }
+                Console.Write(character);
+                Console.BackgroundColor = Default_FGColor;
+                Console.SetCursorPosition(Game.Player.PositionY, Game.Player.PositionX);
+                RenderMessages();
             }
-            Console.Write(character);
-            Console.BackgroundColor = Default_FGColor;
-            Console.SetCursorPosition(Game.Player.PositionY, Game.Player.PositionX);
-            RenderMessages();
         }
         // Write the Actual Path but on x, y position write the player character
         public static void RenderRenderPath()
         {
+            Initialized = true;
             Console.Clear();
             for (int i = 0; i < Renderpath.Devices.GetLength(0); i++)
             {

@@ -9,15 +9,6 @@ namespace ConsoleMario.Devices
 {
     public class End : Device
     {
-        #region Public Constructors
-
-        static End()
-        {
-            Device.AddCharDevicePair(EndCharacter, GetDevice);
-        }
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         public static End GetDevice(object parameter2)

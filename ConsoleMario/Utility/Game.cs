@@ -42,12 +42,15 @@ namespace ConsoleMario.Utility
                 actual_path = new Path(actual_level);
                 Player.Reset();
                 Render.Renderpath = actual_path;
-                if (!Player.ExamplePathWin && actual_path.ExamplePath != null)
+                bool example = !Player.ExamplePathWin;
+                example = example && actual_path.ExamplePath != null;
+                if (example)
                 {
                     Render.Renderpath = actual_path.ExamplePath;
                 }
                 Render.RenderRenderPath();
                 Move();
+                Render.Initialized = false;
                 if (Player.Win)
                 {
                     HandleWin();
@@ -180,14 +183,14 @@ namespace ConsoleMario.Utility
             Player.Move(ch);
             AddMessage("Player moved x Direction: " + Convert.ToString(Player.PositionX - Player.PreviousPositionX) +
                     " y Direction: " + Convert.ToString(Player.PositionY - Player.PreviousPositionY));
-            RenderPlayer();
+            RenderMovingPlayer();
             if (!Player.Win && Player.Life > 0)
             {
                 Move();
             }
         }
         // render player and use the player positionx, positiony device of actual_path devices
-        private static void RenderPlayer()
+        private static void RenderMovingPlayer()
         {
             if (Player.Life > 0)
             {
@@ -202,6 +205,7 @@ namespace ConsoleMario.Utility
                 // if the door is closed
                 catch (DoorIsClosedException)
                 {
+                    Player.Life--;
                     AddMessage("Run in Closed Door");
                     // step back and renderplayer again
                     Player.StepBack();
@@ -222,7 +226,7 @@ namespace ConsoleMario.Utility
                 {
                     AddMessage("Player moved x Direction: " + Convert.ToString(Player.PositionX - Player.PreviousPositionX) +
                         " y Direction: " + Convert.ToString(Player.PositionY - Player.PreviousPositionY));
-                    RenderPlayer();
+                    RenderMovingPlayer();
                 }
             }
         }

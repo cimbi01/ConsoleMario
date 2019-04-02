@@ -19,14 +19,6 @@ namespace ConsoleMario.Utility
     {
         #region Public Properties
 
-        public bool IsExample { get; set; } = false;
-
-        #endregion Public Properties
-
-
-
-        #region Public Properties
-
         // preview the new Elements
         public string Preview { get; set; }
         public bool PreviewVisible { get; protected set; } = false;
@@ -90,10 +82,10 @@ namespace ConsoleMario.Utility
 
         // Describes the Maximum types of level (can be an int from 1 to the max)
         public static int MaxLevel { get; } = LoadPath.MaxPath();
-        // Describes the devices matrix We use this to Render to console And to use on the player if
-        // steped on a Device
+        // Describes the devices matrix We use this to Render to console
         public Device[,] Devices { get; protected set; }
         public Path ExamplePath { get; private set; } = null;
+        public bool IsExample { get; private set; } = false;
         // Describes the levelnumber (from 1 to maxLevel)
         public int LevelNumber { get; protected set; }
 

@@ -9,15 +9,6 @@ namespace ConsoleMario.Devices
 {
     public class Door : Device
     {
-        #region Public Constructors
-
-        static Door()
-        {
-            Device.AddCharDevicePair(DoorCharacter, GetDevice);
-        }
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         public static Door GetDevice(object parameter2)
@@ -40,8 +31,6 @@ namespace ConsoleMario.Devices
 
         #endregion Public Fields
 
-
-
         #region Public Constructors
 
         public Door() : base(DoorCharacter) { }
@@ -62,14 +51,11 @@ namespace ConsoleMario.Devices
             // if the door is closed
             if (!Opened)
             {
-                player.RenderNeeded = true;
-                player.Life--;
                 throw new DoorIsClosedException();
             }
             else
             {
                 Character = CharacterAfterStep;
-                Render.RenderPlayer();
             }
         }
 

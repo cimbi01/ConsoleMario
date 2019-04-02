@@ -18,15 +18,6 @@ namespace ConsoleMario.Devices
     }
     public class Wall : Device
     {
-        #region Public Constructors
-
-        static Wall()
-        {
-            Device.AddCharDevicePair(WallCharacter, GetDevice);
-        }
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         public static Wall GetDevice(object parameter2)

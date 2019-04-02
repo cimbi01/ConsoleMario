@@ -9,21 +9,12 @@ namespace ConsoleMario.Devices
 {
     public class Key : Device
     {
-        #region Public Constructors
-
-        static Key()
-        {
-            Device.AddCharDevicePair(KeyCharacter, GetDevice);
-            Device.AddComplexCharacter(KeyCharacter);
-        }
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         public static Key GetDevice(object parameter2)
         {
-            return new Key((Door)Convert.ChangeType(parameter2, typeof(Door)));
+            Door door = (Door)Convert.ChangeType(parameter2, typeof(Door));
+            return new Key(door);
         }
 
         #endregion Public Methods
@@ -54,7 +45,6 @@ namespace ConsoleMario.Devices
             // opens the door
             this.door.Opened = true;
             Character = CharacterAfterStep;
-            Render.RenderPlayer();
         }
 
         #endregion Public Methods

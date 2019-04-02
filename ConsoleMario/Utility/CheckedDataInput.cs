@@ -47,7 +47,7 @@ namespace ConsoleMario.Utility
         // else call again
         public static T CheckDataInput<T>(List<T> array, string inputstring = "Input the expected data!", bool dataisinarray = true)
         {
-            T converteddata = converteddata = CheckDataInput<T>(inputstring);
+            T converteddata = CheckDataInput<T>(inputstring);
             if ((array.Contains(converteddata) && !dataisinarray) ||
                 (!array.Contains(converteddata) && dataisinarray))
             {

@@ -9,16 +9,6 @@ namespace ConsoleMario.Devices
 {
     public class Spiral : Device
     {
-        #region Public Constructors
-
-        static Spiral()
-        {
-            Device.AddCharDevicePair(SpiralCharacter, GetDevice);
-            Device.AddComplexCharacter(SpiralCharacter);
-        }
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         public static Spiral GetDevice(object parameter2)
@@ -35,13 +25,13 @@ namespace ConsoleMario.Devices
 
         #endregion Public Fields
 
-
-
         #region Public Constructors
 
         public Spiral(int _force) : base(SpiralCharacter) { this.force = _force; }
 
         #endregion Public Constructors
+
+
 
         #region Public Methods
 

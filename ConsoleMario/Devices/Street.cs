@@ -9,15 +9,6 @@ namespace ConsoleMario.Devices
 {
     public class Street : Device
     {
-        #region Public Constructors
-
-        static Street()
-        {
-            Device.AddCharDevicePair(StreetCharacter, GetDevice);
-        }
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         public static Street GetDevice(object parameter2)

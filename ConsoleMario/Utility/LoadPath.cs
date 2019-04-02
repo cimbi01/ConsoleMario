@@ -29,7 +29,7 @@ namespace ConsoleMario.Utility
                     pathpreview += loadedpreview[i];
                 }
             }
-            catch (FileNotFoundException) { };
+            catch (FileNotFoundException) { }
             // Read ExamplePath
             string examplefile = filename + ".example";
             ConsoleMario.Utility.Path example = null;
@@ -107,28 +107,32 @@ namespace ConsoleMario.Utility
                 // column
                 for (int j = 0; j < rowdevices.Length; j++)
                 {
-                    Device device;
-                    if (!Device.IsComplexCharacter(rowdevices[j]))
+                    if (devices[i, j] == null)
                     {
-                        device = Device.GetDeviceByCharacter(rowdevices[j]);
-                    }
-                    else
-                    {
-                        try
+                        Device device;
+                        if (!Device.IsComplexCharacter(rowdevices[j]))
                         {
-                            device = Device.GetDeviceByCharacter(rowdevices[j], ref parameterindex, loadedparameters[parameterindex]);
+                            device = Device.GetDeviceByCharacter(rowdevices[j]);
                         }
-                        catch (InvalidCastException)
+                        else
                         {
-                            // Door's row, columns separated by
-                            string[] positions = loadedparameters[parameterindex].Split(' ');
-                            int row = Convert.ToInt32(positions[0]);
-                            int col = Convert.ToInt32(positions[1]);
-                            devices[row - 1, col - 1] = new Door();
-                            device = Device.GetDeviceByCharacter(rowdevices[j], ref parameterindex, devices[row - 1, col - 1]);
+                            try
+                            {
+                                device = Device.GetDeviceByCharacter(rowdevices[j], loadedparameters[parameterindex]);
+                            }
+                            catch (InvalidCastException)
+                            {
+                                // Door's row, columns separated by
+                                string[] positions = loadedparameters[parameterindex].Split(' ');
+                                int row = Convert.ToInt32(positions[0]);
+                                int col = Convert.ToInt32(positions[1]);
+                                devices[row - 1, col - 1] = new Door();
+                                device = Device.GetDeviceByCharacter(rowdevices[j], devices[row - 1, col - 1]);
+                            }
+                            parameterindex++;
                         }
+                        devices[i, j] = device;
                     }
-                    devices[i, j] = device;
                 }
             }
             return devices;
