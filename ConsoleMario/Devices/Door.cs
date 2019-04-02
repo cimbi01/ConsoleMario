@@ -61,10 +61,10 @@ namespace ConsoleMario.Devices
             {
                 throw new DoorIsClosedException();
             }
-            else if(!characterchanged)
+            else if(!this.characterchanged)
             {
                 Character = CharacterAfterStep;
-                characterchanged = true;
+                this.characterchanged = true;
             }
         }
 

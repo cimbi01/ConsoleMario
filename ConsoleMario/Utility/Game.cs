@@ -38,9 +38,9 @@ namespace ConsoleMario.Utility
                 Player.Actual_Path = new Path(Player.Actual_Level);
                 Player.Reset();
                 Render.Renderpath = Player.Actual_Path;
-                bool example = !Player.ExamplePathWin;
-                example = example && Player.Actual_Path.ExamplePath != null;
-                if (example)
+                bool actulpathisexample = !Player.ExamplePathWin;
+                actulpathisexample = actulpathisexample && Player.Actual_Path.ExamplePath != null;
+                if (actulpathisexample)
                 {
                     Render.Renderpath = Player.Actual_Path.ExamplePath;
                 }

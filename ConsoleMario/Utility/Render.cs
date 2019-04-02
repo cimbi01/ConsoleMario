@@ -29,7 +29,7 @@ namespace ConsoleMario.Utility
         // default Console Background Color and Default Color to change on cursor
         public static ConsoleColor Default_FGColor { get; set; } = ConsoleColor.Black;
         public static bool ForeGroundRender { get; set; } = true;
-        public static bool Messages_Visible { get; set; } = false;
+        public static bool Messages_Visible { get; set; } = true;
         // Describes the render path
         public static Path Renderpath { set; get; }
 
@@ -43,7 +43,7 @@ namespace ConsoleMario.Utility
             {
                 int x = 0,
                     y = Renderpath.Devices.GetLength(1);
-                if (Renderpath.Preview.Length > 0)
+                if (Render.Renderpath.PreviewVisible && Renderpath.Preview.Length > 0)
                 {
                     y += Renderpath.Preview.Split('\n').Length + 1;
                 }
