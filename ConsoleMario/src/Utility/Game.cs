@@ -94,7 +94,7 @@ namespace ConsoleMario.Utility
                 if (Player.Actual_Level < Path.MaxLevel)
                 {
                     Player.Actual_Level++;
-                    IncreaseActulPath();
+                    IncreaseActualPath();
                     Player.ExamplePathWin = false;
                 }
             }
@@ -103,7 +103,7 @@ namespace ConsoleMario.Utility
                 Player.ExamplePathWin = true;
             }
         }
-        private static void IncreaseActulPath()
+        private static void IncreaseActualPath()
         {
             try
             {
@@ -122,14 +122,14 @@ namespace ConsoleMario.Utility
             Player.Move(ch);
             AddMessage("Player moved x Direction: " + Convert.ToString(Player.PositionX - Player.PreviousPositionX) +
                     " y Direction: " + Convert.ToString(Player.PositionY - Player.PreviousPositionY));
-            RenderMovingPlayer();
+            PlayerUseDeviceOnPosition();
             if (!Player.Win && Player.Life > 0)
             {
                 Move();
             }
         }
         // render player and use the player positionx, positiony device of actual_path devices
-        private static void RenderMovingPlayer()
+        private static void PlayerUseDeviceOnPosition()
         {
             if (Player.Life > 0)
             {
@@ -163,7 +163,7 @@ namespace ConsoleMario.Utility
                 // if player need rerender
                 if (Player.RenderNeeded)
                 {
-                    RenderMovingPlayer();
+                    PlayerUseDeviceOnPosition();
                 }
             }
         }

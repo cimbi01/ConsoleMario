@@ -1,9 +1,88 @@
-﻿Device
+﻿Player:
+Render task:
+UP, DOWN, RIGHT, LEFT nem ide való > mozgatásért felelnek
+InitKkeyMovePairs, KeyMovePairs nem ide való > mozgatásért felelnek
+character, DefaultCharacter se ide való > mozgatásért felelnek
+Renderneeded egy esemény, ami renderelést vált ki maga után
+Actual_Path is renderelési feladatot lát el
+Kell ennyi Move method?
+Path task:
+ExamplePathWin > Path-ba való
+Actual_Level, Max_level ide való?
+
+Player.Move > eventhandler > RenderPlayer
+Player > belemozdul valamibe akkor meghívja a valami use-t
+Player
+
+Device:
 Device Character változásra eventet
-Device charDevicePairs csúnya > hogy lehet osztályonként hozzáaadni
-Device complexDeviceChars csúnya > hogy lehet osztályonként hozzáaadniW
+Device charDevicePairs csúnya > hogy lehet osztályonként hozzáaadni?
 static tagok > nem Device része csak a Device-ra hivatkozik > Új osztály
 Device hozzáad static abstract metodus > implementálják az alosztályok
 
-Door
+End:
+Use:
+Win > eseménykezelő > győzelem > End use hívja meg
+
+Key:
+Use:
+Character event handler
+
+Wall:
+Use:
+Life-- csúnya
+catch(ben) life--oljon
+
+Door:
 Door Character változásra event
+
+Game:
+Feladata:
+Mozgatja a játékost
+Inicializál és egybefoglal Mindent:
+Player, Render(Path)
+Play:
+Túl sok mindent Csinál
+Feladata:
+Játék életciklusa:
+Aktuális Path renderelése
+Játékos mozgatása
+PlayerUseDeviceOnPosition:
+Ez nem renderel
+Csak használja a Player position található Device-t
+Ez lehet a StepInDevice event függvénye
+Move:
+Feladata csak hogy ConsoleKey-t továbbadja PlayerMovenak
+HandleWin && IncreaseActualPath:
+WinHandler event függvénye lehetne
+
+Init:
+Feladata:
+Minden adat Inicializálásért
+InitRender, InitPlayer
+
+static LoadPath:
+Beolvas Path-okat és eltárolja
+Path path > a path maga
+Path example > a path example-e, ha van
+Pathpathstring > a resourcek helye
+List<Path> loadedpaths > az eddig betöltött path-ok
+Assembly assembly
+// keep it DRY
+lépések:
+ha loadedpath.length < level return loadedpath[level]
+else
+1. probal beolvasni previewt
+2. probal beovlasni example devices-t
+3. probal devices-t gyártani a beolvasottból
+4. example = Path(level, devices, preview)
+5.-6 = 2-3.
+6. Path mainpath = new Path(level, devices, preview);
+8. path = new Path()
+9. loadedpath.add(path);
+
+Eventek:
+Elmozdul : Player move meghívódik > Renderel
+Win : End.use meghívódik > HandleWin
+DeviceCharacterchanged : Device Character set > Render Device position
+StepinDevice : ha a játékos pontján van egy device > meghívja a device.use-t
