@@ -12,8 +12,6 @@ namespace ConsoleMario.Tests
     [TestClass()]
     public class PlayerTests
     {
-        #region Public Methods
-
         [TestMethod()]
         public void MoveTestA()
         {
@@ -62,7 +60,5 @@ namespace ConsoleMario.Tests
             Assert.AreEqual(1, expy);
             Assert.AreEqual(1, expx);
         }
-
-        #endregion Public Methods
     }
 }

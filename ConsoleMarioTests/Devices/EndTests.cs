@@ -12,8 +12,6 @@ namespace ConsoleMario.Devices.Tests
     [TestClass()]
     public class EndTests
     {
-        #region Public Methods
-
         [TestMethod()]
         public void UseTest()
         {
@@ -29,7 +27,5 @@ namespace ConsoleMario.Devices.Tests
             End end = new End();
             Assert.AreEqual(false, player.Win);
         }
-
-        #endregion Public Methods
     }
 }

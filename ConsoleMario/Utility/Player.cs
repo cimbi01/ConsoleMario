@@ -8,71 +8,26 @@ namespace ConsoleMario.Utility
 {
     internal class Position
     {
-        #region Private Fields
-
-        internal int X { get; private set; }
-        internal int Y { get; private set; }
-
-        #endregion Private Fields
-
-        #region Public Constructors
-
         public Position(int _x, int _y)
         {
             X = _x;
             Y = _y;
         }
 
-        #endregion Public Constructors
+        internal int X { get; private set; }
+        internal int Y { get; private set; }
     }
     public class Player
     {
-        #region Public Properties
+        private static Dictionary<ConsoleKey, Position> key_move_pairs;
 
-        public int Actual_Level { get; set; } = 0;
-        public Path Actual_Path { get; set; }
-        public int Max_Level { get; set; }
-
-        #endregion Public Properties
-
-        #region Public Constructors
+        public const int MAXLIFE = 5;
 
         public Player()
         {
             Max_Level = Actual_Level;
             InitKeyMovePairs();
         }
-
-        #endregion Public Constructors
-
-        #region Public Methods
-
-        public static void InitKeyMovePairs()
-        {
-            key_move_pairs = new Dictionary<ConsoleKey, Position>
-            {
-                { UP, new Position(-1, 0) },
-                { DOWN, new Position(1, 0) },
-                { RIGHT, new Position(0, 1) },
-                { LEFT, new Position(0, -1) }
-            };
-        }
-
-        #endregion Public Methods
-
-        #region Private Fields
-
-        private static Dictionary<ConsoleKey, Position> key_move_pairs;
-
-        #endregion Private Fields
-
-        #region Public Fields
-
-        public const int MAXLIFE = 5;
-
-        #endregion Public Fields
-
-        #region Public Properties
 
         // default Console Background Color and Default Color to change on cursor
         public static char DefaultCharacter { get; set; } = '+';
@@ -81,10 +36,13 @@ namespace ConsoleMario.Utility
         public static ConsoleKey LEFT { get; set; } = ConsoleKey.A;
         public static ConsoleKey RIGHT { get; set; } = ConsoleKey.D;
         public static ConsoleKey UP { get; set; } = ConsoleKey.W;
+        public int Actual_Level { get; set; } = 0;
+        public Path Actual_Path { get; set; }
         // Character character on console to write
         public char Character { get; set; } = DefaultCharacter;
         public bool ExamplePathWin { get; set; } = false;
         public int Life { get; set; } = MAXLIFE;
+        public int Max_Level { get; set; }
         // Character position X,Y on console to write row
         public int PositionX { get; private set; } = 1;
         //column
@@ -98,10 +56,16 @@ namespace ConsoleMario.Utility
         // Describes if the player won the current PathLevel
         public bool Win { get; set; } = false;
 
-        #endregion Public Properties
-
-        #region Public Methods
-
+        public static void InitKeyMovePairs()
+        {
+            key_move_pairs = new Dictionary<ConsoleKey, Position>
+            {
+                { UP, new Position(-1, 0) },
+                { DOWN, new Position(1, 0) },
+                { RIGHT, new Position(0, 1) },
+                { LEFT, new Position(0, -1) }
+            };
+        }
         public void Move(ConsoleKey ch)
         {
             try
@@ -148,7 +112,5 @@ namespace ConsoleMario.Utility
             }
             Move(posx, posy);
         }
-
-        #endregion Public Methods
     }
 }

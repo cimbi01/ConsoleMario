@@ -9,7 +9,11 @@ namespace ConsoleMario.Devices
 {
     public abstract class Device
     {
-        #region Public Constructors
+        private static Dictionary<char, Func<object, Device>> charDevicePairs = new Dictionary<char, Func<object, Device>>();
+        private static List<char> complexDeviceChars = new List<char>();
+        private char character;
+
+        protected Device(char ch) { Character = ch; }
 
         static Device()
         {
@@ -24,9 +28,18 @@ namespace ConsoleMario.Devices
             charDevicePairs.Add(Wall.WallCharacter, Wall.GetDevice);
         }
 
-        #endregion Public Constructors
-
-        #region Public Methods
+        public char Character
+        {
+            get
+            {
+                return this.character;
+            }
+            protected set
+            {
+                this.character = value;
+                Render.RenderPlayer();
+            }
+        }
 
         // ch is the char, parameterindex is the parameterindex of parameters, parameters are the
         // parameters if exists
@@ -39,39 +52,6 @@ namespace ConsoleMario.Devices
         {
             return (complexDeviceChars.Contains(ch));
         }
-
-        #endregion Public Methods
-
-        #region Private Fields
-
-        private static Dictionary<char, Func<object, Device>> charDevicePairs = new Dictionary<char, Func<object, Device>>();
-        private static List<char> complexDeviceChars = new List<char>();
-
-        #endregion Private Fields
-
-
-
-        #region Public Constructors
-
-        protected Device(char ch) { Character = ch; }
-
-        #endregion Public Constructors
-
-        #region Public Properties
-
-        private char character;
-        public char Character
-        {
-            get { return this.character; }
-            protected set
-            {
-                this.character = value;
-                Render.RenderPlayer();
-            }
-        }
-
-        #endregion Public Properties
-
         public abstract void Use(Player player);
     }
 }

@@ -8,8 +8,6 @@ namespace ConsoleMario.Utility
 {
     internal static class Init
     {
-        #region Private Methods
-
         private static void InitButtons()
         {
             string input = "Would you like to change the default Buttons?:" +
@@ -66,10 +64,6 @@ namespace ConsoleMario.Utility
             Render.ForeGroundRender = CheckedDataInput.DecisionInput(input, "");
         }
 
-        #endregion Private Methods
-
-        #region Public Methods
-
         // Init player by UP, DOWN, RIGHT, LEFT KEY and Init Render by MessagesVisible and RenderForground
         public static void InitPlayer()
         {
@@ -86,7 +80,5 @@ namespace ConsoleMario.Utility
                 Game.AddNewMessageLine();
             }
         }
-
-        #endregion Public Methods
     }
 }

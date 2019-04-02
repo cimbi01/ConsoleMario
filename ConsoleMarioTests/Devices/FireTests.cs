@@ -12,8 +12,6 @@ namespace ConsoleMario.Devices.Tests
     [TestClass()]
     public class FireTests
     {
-        #region Public Methods
-
         [TestMethod()]
         public void UseTest()
         {
@@ -22,7 +20,5 @@ namespace ConsoleMario.Devices.Tests
             fire.Use(player);
             Assert.AreEqual(0, player.Life);
         }
-
-        #endregion Public Methods
     }
 }

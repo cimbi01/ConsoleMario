@@ -9,24 +9,10 @@ namespace ConsoleMario.Utility
 {
     public class NoMoreLevelException : Exception
     {
-        #region Public Constructors
-
         public NoMoreLevelException() : base("There are no more level yet") { }
-
-        #endregion Public Constructors
     }
     public class Path
     {
-        #region Public Properties
-
-        // preview the new Elements
-        public string Preview { get; set; }
-        public bool PreviewVisible { get; set; } = false;
-
-        #endregion Public Properties
-
-        #region Public Constructors
-
         public Path() { }
         public Path(int level)
         {
@@ -77,10 +63,6 @@ namespace ConsoleMario.Utility
             LevelNumber = _path.LevelNumber;
         }
 
-        #endregion Public Constructors
-
-        #region Public Properties
-
         // Describes the Maximum types of level (can be an int from 1 to the max)
         public static int MaxLevel { get; } = LoadPath.MaxPath();
         // Describes the devices matrix We use this to Render to console
@@ -89,7 +71,8 @@ namespace ConsoleMario.Utility
         public bool IsExample { get; private set; } = false;
         // Describes the levelnumber (from 1 to maxLevel)
         public int LevelNumber { get; protected set; }
-
-        #endregion Public Properties
+        // preview the new Elements
+        public string Preview { get; set; }
+        public bool PreviewVisible { get; set; } = false;
     }
 }
