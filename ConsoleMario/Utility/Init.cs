@@ -73,7 +73,7 @@ namespace ConsoleMario.Utility
         // Init player by UP, DOWN, RIGHT, LEFT KEY and Init Render by MessagesVisible and RenderForground
         public static void InitPlayer()
         {
-            if (InitDefaults())
+            if (!InitDefaults())
             {
                 InitButtons();
                 InitDefaultCharacter();

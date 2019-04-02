@@ -110,7 +110,6 @@ namespace ConsoleMario.Utility
                 int x = position.X;
                 int y = position.Y;
                 Move(x, y);
-                RenderNeeded = true;
             }
             catch (NullReferenceException)
             {
@@ -123,6 +122,7 @@ namespace ConsoleMario.Utility
             PreviousPositionY = PositionY;
             PositionX += x;
             PositionY += y;
+            Game.Player.RenderNeeded = true;
         }
         public void Reset()
         {

@@ -135,9 +135,9 @@ namespace ConsoleMario.Utility
                 Player.RenderNeeded = false;
                 Render.RenderPlayer();
                 System.Threading.Thread.Sleep(300);
+                AddMessage("Device: " + Convert.ToString(Render.Renderpath.Devices[Player.PositionX, Player.PositionY].GetType()));
                 try
                 {
-                    AddMessage("Device: " + Convert.ToString(Render.Renderpath.Devices[Player.PositionX, Player.PositionY].GetType()));
                     Render.Renderpath.Devices[Player.PositionX, Player.PositionY].Use(Player);
                 }
                 // if the door is closed
@@ -162,8 +162,6 @@ namespace ConsoleMario.Utility
                 // if player need rerender
                 if (Player.RenderNeeded)
                 {
-                    AddMessage("Player moved x Direction: " + Convert.ToString(Player.PositionX - Player.PreviousPositionX) +
-                        " y Direction: " + Convert.ToString(Player.PositionY - Player.PreviousPositionY));
                     RenderMovingPlayer();
                 }
             }

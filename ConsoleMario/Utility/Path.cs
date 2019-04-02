@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleMario.Utility
 {
-    public class NoMoreLevelException :Exception
+    public class NoMoreLevelException : Exception
     {
         #region Public Constructors
 
@@ -21,13 +21,12 @@ namespace ConsoleMario.Utility
 
         // preview the new Elements
         public string Preview { get; set; }
-        public bool PreviewVisible { get; protected set; } = false;
+        public bool PreviewVisible { get; set; } = false;
 
         #endregion Public Properties
 
         #region Public Constructors
 
-        // return a Path with level, row, and column used for PathLevel init
         public Path() { }
         public Path(int level)
         {
@@ -60,7 +59,9 @@ namespace ConsoleMario.Utility
             Devices = _path.Devices;
             LevelNumber = _path.LevelNumber;
             ExamplePath = example;
-            if (example == null || ExamplePath.Devices == null)
+            bool exampleisnull = example == null;
+            exampleisnull = exampleisnull || ExamplePath.Devices == null;
+            if (exampleisnull)
             {
                 ExamplePath = null;
                 PreviewVisible = true;

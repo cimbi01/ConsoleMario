@@ -8,11 +8,11 @@ namespace ConsoleMario.Utility
 {
     internal static class Render
     {
-        #region Private Fields
+        #region Public Fields
 
         public static bool Initialized = false;
 
-        #endregion Private Fields
+        #endregion Public Fields
 
         #region Public Constructors
 
