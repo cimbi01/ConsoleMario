@@ -39,7 +39,6 @@ namespace ConsoleMario.Devices
         public override void Use(Player player)
         {
             player.Move(-this.force, 0);
-            player.RenderNeeded = true;
         }
 
         #endregion Public Methods

@@ -46,7 +46,6 @@ namespace ConsoleMario.Devices
         public override void Use(Player player)
         {
             player.Life--;
-            player.RenderNeeded = true;
             throw new RunInWallException();
         }
 

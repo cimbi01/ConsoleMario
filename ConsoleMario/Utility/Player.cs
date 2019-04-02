@@ -101,8 +101,12 @@ namespace ConsoleMario.Utility
                 int x = position.X;
                 int y = position.Y;
                 Move(x, y);
+                RenderNeeded = true;
             }
-            catch (NullReferenceException) { }
+            catch (NullReferenceException)
+            {
+                // didnt pressed UP, DOWN, RIGHT, LEFT
+            }
         }
         public void Move(int x, int y)
         {
@@ -131,7 +135,6 @@ namespace ConsoleMario.Utility
             {
                 posy = -1 * (y / Math.Abs(y));
             }
-            RenderNeeded = true;
             Move(posx, posy);
         }
 
