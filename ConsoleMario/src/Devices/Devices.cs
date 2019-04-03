@@ -1,14 +1,13 @@
-﻿using ConsoleMario.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ConsoleMario.Devices
 {
-    public abstract class Device
+    public static class Devices
     {
         #region Public Constructors
 
-        static Device()
+        static Devices()
         {
             charDevicePairs.Add(Door.DoorCharacter, Door.GetDevice);
             charDevicePairs.Add(End.EndCharacter, End.GetDevice);
@@ -23,48 +22,26 @@ namespace ConsoleMario.Devices
 
         #endregion Public Constructors
 
-        #region Public Properties
-
-        public char Character
-        {
-            get => this.character;
-            protected set
-            {
-                this.character = value;
-                Render.RenderPlayer();
-            }
-        }
-
-        #endregion Public Properties
-
         #region Public Methods
 
         // ch is the char, parameterindex is the parameterindex of parameters, parameters are the
         // parameters if exists
-        public static Device GetDeviceByCharacter(char ch, object parameters = null)
+        public static IDevice GetDeviceByCharacter(char ch, object parameters = null)
         {
-            charDevicePairs.TryGetValue(ch, out Func<object, Device> getdevice);
+            charDevicePairs.TryGetValue(ch, out Func<object, IDevice> getdevice);
             return getdevice(parameters);
         }
         public static bool IsComplexCharacter(char ch)
         {
             return (complexDeviceChars.Contains(ch));
         }
-        public abstract void Use(Player player);
 
         #endregion Public Methods
 
-        #region Protected Constructors
-
-        protected Device(char ch) { Character = ch; }
-
-        #endregion Protected Constructors
-
         #region Private Fields
 
-        private static Dictionary<char, Func<object, Device>> charDevicePairs = new Dictionary<char, Func<object, Device>>();
+        private static Dictionary<char, Func<object, IDevice>> charDevicePairs = new Dictionary<char, Func<object, IDevice>>();
         private static List<char> complexDeviceChars = new List<char>();
-        private char character;
 
         #endregion Private Fields
     }

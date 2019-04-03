@@ -2,7 +2,7 @@
 
 namespace ConsoleMario.Devices
 {
-    public class Wall : Devices.Device
+    public class Wall : DeviceBase, IDevice
     {
         #region Public Fields
 
@@ -24,7 +24,7 @@ namespace ConsoleMario.Devices
             return new Wall();
         }
         // throws a new RunInWallException
-        public override void Use(Player player)
+        public new void Use(Player player)
         {
             player.Life--;
             throw new Exceptions.DeviceExceptions.RunInWallException();

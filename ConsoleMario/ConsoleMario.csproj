@@ -48,8 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Devices\Device.cs" />
+    <Compile Include="src\Devices\DeviceBase.cs" />
+    <Compile Include="src\Devices\Devices.cs" />
     <Compile Include="src\Devices\Door.cs" />
+    <Compile Include="src\Devices\IDevice.cs" />
     <Compile Include="src\Exceptions\DeviceExceptions\RunInWallException.cs" />
     <Compile Include="src\Exceptions\DeviceExceptions\DoorIsClosedException.cs" />
     <Compile Include="src\Devices\End.cs" />
@@ -80,7 +82,6 @@
     <EmbeddedResource Include="Paths\path3.path.params" />
     <EmbeddedResource Include="Paths\path2.preview" />
     <EmbeddedResource Include="Paths\path3.preview" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Comments.txt" />

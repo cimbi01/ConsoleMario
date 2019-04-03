@@ -2,7 +2,7 @@
 
 namespace ConsoleMario.Devices
 {
-    public class Door : Device
+    public class Door : DeviceBase, IDevice
     {
         #region Public Fields
 
@@ -31,7 +31,7 @@ namespace ConsoleMario.Devices
             return new Door();
         }
 
-        public override void Use(Player player)
+        public new void Use(Player player)
         {
             // if the door is closed
             if (!Opened)

@@ -23,7 +23,7 @@ namespace ConsoleMario.Utility
                 throw new Exceptions.UtilityExceptions.NoMoreLevelException();
             }
         }
-        public Path(bool example, Device[,] devices, int level, string preview = "")
+        public Path(bool example, IDevice[,] devices, int level, string preview = "")
         {
             PreviewVisible = example;
             IsExample = example;
@@ -63,7 +63,7 @@ namespace ConsoleMario.Utility
         // Describes the Maximum types of level (can be an int from 1 to the max)
         public static int MaxLevel { get; } = LoadPath.MaxPath();
         // Describes the devices matrix We use this to Render to console
-        public Device[,] Devices { get; protected set; }
+        public IDevice[,] Devices { get; protected set; }
         public Path ExamplePath { get; private set; } = null;
         public bool IsExample { get; private set; } = false;
         // Describes the levelnumber (from 1 to maxLevel)

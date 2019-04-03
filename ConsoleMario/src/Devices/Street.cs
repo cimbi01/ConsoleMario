@@ -2,7 +2,7 @@
 
 namespace ConsoleMario.Devices
 {
-    public class Street : Device
+    public class Street : DeviceBase, IDevice
     {
         #region Public Fields
 
@@ -23,7 +23,10 @@ namespace ConsoleMario.Devices
         {
             return new Street();
         }
-        public override void Use(Player player) { }
+        public new void Use(Player player)
+        {
+            // implements IDevice.Use
+        }
 
         #endregion Public Methods
     }

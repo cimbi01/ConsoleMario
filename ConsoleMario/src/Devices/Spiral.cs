@@ -3,7 +3,7 @@ using System;
 
 namespace ConsoleMario.Devices
 {
-    public class Spiral : Device
+    public class Spiral : DeviceBase, IDevice
     {
         #region Public Fields
 
@@ -25,7 +25,7 @@ namespace ConsoleMario.Devices
             return new Spiral(Convert.ToInt32(parameter2));
         }
         // make player move by force
-        public override void Use(Player player)
+        public new void Use(Player player)
         {
             player.Move(-this.force, 0);
         }

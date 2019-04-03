@@ -2,7 +2,7 @@
 
 namespace ConsoleMario.Devices
 {
-    public class Fire : Device
+    public class Fire : DeviceBase, IDevice
     {
         #region Public Fields
 
@@ -25,7 +25,7 @@ namespace ConsoleMario.Devices
             return new Fire();
         }
         // Kill the player
-        public override void Use(Player player)
+        public new void Use(Player player)
         {
             player.Life = 0;
         }

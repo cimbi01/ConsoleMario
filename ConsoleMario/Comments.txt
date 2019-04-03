@@ -18,7 +18,6 @@ Device:
 Device Character változásra eventet
 Device charDevicePairs csúnya > hogy lehet osztályonként hozzáaadni?
 static tagok > nem Device része csak a Device-ra hivatkozik > Új osztály
-
 Minden Device implementál egy interfacet:
 Van neki: void Use(Player), Character > property
 Device > static Devices > minden más megmarad

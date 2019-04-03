@@ -2,7 +2,7 @@
 
 namespace ConsoleMario.Devices
 {
-    public class End : Device
+    public class End : DeviceBase, IDevice
     {
         #region Public Fields
 
@@ -23,7 +23,7 @@ namespace ConsoleMario.Devices
         {
             return new End();
         }
-        public override void Use(Player player)
+        public new void Use(Player player)
         {
             player.Win = true;
         }

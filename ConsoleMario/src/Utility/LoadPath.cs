@@ -64,9 +64,9 @@ namespace ConsoleMario.Utility
 
         #region Private Methods
 
-        private static Device[,] GetDevices(List<string> loadeddevices, List<string> loadedparameters)
+        private static IDevice[,] GetDevices(List<string> loadeddevices, List<string> loadedparameters)
         {
-            Device[,] devices = new Device[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
+            IDevice[,] devices = new IDevice[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
             int parameterindex = 0;
             for (int i = 0; i < devices.GetLength(0); i++)
             {
@@ -83,9 +83,9 @@ namespace ConsoleMario.Utility
             }
             return devices;
         }
-        private static Device[,] GetDevices(List<string> loadeddevices)
+        private static IDevice[,] GetDevices(List<string> loadeddevices)
         {
-            Device[,] devices = new Device[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
+            IDevice[,] devices = new IDevice[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
             for (int i = 0; i < devices.GetLength(0); i++)
             {
                 // rows
@@ -93,24 +93,24 @@ namespace ConsoleMario.Utility
                 // column
                 for (int j = 0; j < rowdevices.Length; j++)
                 {
-                    Device device = Device.GetDeviceByCharacter(rowdevices[j]);
+                    IDevice device = Devices.Devices.GetDeviceByCharacter(rowdevices[j]);
                     devices[i, j] = device;
                 }
             }
             return devices;
         }
-        private static void PushDeviceToDevices(Device[,] devices, char[] rowdevices, List<string> loadedparameters, int i, int j, ref int parameterindex)
+        private static void PushDeviceToDevices(IDevice[,] devices, char[] rowdevices, List<string> loadedparameters, int i, int j, ref int parameterindex)
         {
-            Device device;
-            if (!Device.IsComplexCharacter(rowdevices[j]))
+            IDevice device;
+            if (!Devices.Devices.IsComplexCharacter(rowdevices[j]))
             {
-                device = Device.GetDeviceByCharacter(rowdevices[j]);
+                device = Devices.Devices.GetDeviceByCharacter(rowdevices[j]);
             }
             else
             {
                 try
                 {
-                    device = Device.GetDeviceByCharacter(rowdevices[j], loadedparameters[parameterindex]);
+                    device = Devices.Devices.GetDeviceByCharacter(rowdevices[j], loadedparameters[parameterindex]);
                 }
                 catch (InvalidCastException)
                 {
@@ -119,7 +119,7 @@ namespace ConsoleMario.Utility
                     int row = Convert.ToInt32(positions[0]);
                     int col = Convert.ToInt32(positions[1]);
                     devices[row - 1, col - 1] = new Door();
-                    device = Device.GetDeviceByCharacter(rowdevices[j], devices[row - 1, col - 1]);
+                    device = Devices.Devices.GetDeviceByCharacter(rowdevices[j], devices[row - 1, col - 1]);
                 }
                 parameterindex++;
             }
@@ -154,7 +154,7 @@ namespace ConsoleMario.Utility
             string exampleparametersfilename = examplepathfilename + ".params";
             List<string> loadeddevices = null;
             List<string> loadedparams = null;
-            Device[,] devices;
+            IDevice[,] devices;
             try
             {
                 loadeddevices = ReadLines(examplepathfilename);

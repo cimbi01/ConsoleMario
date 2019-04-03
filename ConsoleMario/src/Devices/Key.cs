@@ -3,7 +3,7 @@ using System;
 
 namespace ConsoleMario.Devices
 {
-    public class Key : Device
+    public class Key : DeviceBase, IDevice
     {
         #region Public Fields
 
@@ -25,7 +25,7 @@ namespace ConsoleMario.Devices
             Door door = (Door)Convert.ChangeType(parameter2, typeof(Door));
             return new Key(door);
         }
-        public override void Use(Player player)
+        public new void Use(Player player)
         {
             // opens the door
             this.door.Opened = true;
