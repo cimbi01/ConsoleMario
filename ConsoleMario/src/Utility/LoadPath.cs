@@ -12,7 +12,6 @@ namespace ConsoleMario.Utility
 
         private const string pathstring = "ConsoleMario.Paths.";
         private static readonly Assembly assembly = Assembly.GetExecutingAssembly();
-        private static readonly List<Path> loadedpaths = new List<Path>();
 
         #endregion Private Fields
 
@@ -20,27 +19,23 @@ namespace ConsoleMario.Utility
 
         public static ConsoleMario.Utility.Path LoadPathFromFile(int level_number)
         {
-            if (level_number > loadedpaths.Count)
+            string filename = pathstring + "path" + level_number;
+            string preview = "";
+            // load preview
+            string previewfilename = filename + ".preview";
+            try
             {
-                string filename = pathstring + "path" + level_number;
-                string preview = "";
-                // load preview
-                string previewfilename = filename + ".preview";
-                try
+                List<string> readpreview = ReadLines(previewfilename);
+                for (int i = 0; i < readpreview.Count; i++)
                 {
-                    List<string> readpreview = ReadLines(previewfilename);
-                    for (int i = 0; i < readpreview.Count; i++)
-                    {
-                        preview += readpreview[i] + '\n';
-                    }
-                    preview = preview.Remove(preview.Length - 1, 1);
+                    preview += readpreview[i] + '\n';
                 }
-                catch (System.IO.FileNotFoundException) { }
-                Path examplepath = ReadPath(preview, filename, level_number, ".exammple", true);
-                Path path = ReadPath(preview, filename, level_number, ".path", false);
-                loadedpaths.Add(new Path(false, path, examplepath, preview));
+                preview = preview.Remove(preview.Length - 1, 1);
             }
-            return loadedpaths[level_number - 1];
+            catch (System.IO.FileNotFoundException) { }
+            Path examplepath = ReadPath(preview, filename, level_number, ".example", true);
+            Path path = ReadPath(preview, filename, level_number, ".path", false);
+            return new Path(false, path, examplepath, preview);
         }
         public static int MaxPath()
         {
@@ -51,13 +46,10 @@ namespace ConsoleMario.Utility
             while (path_is_in_resources)
             {
                 path_is_in_resources = false;
-                for (int i = 0; i < resources.Length; i++)
+                for (int i = 0; i < resources.Length &&
+                    !path_is_in_resources; i++)
                 {
-                    if (resources[i].Split('.').Contains(pathfilename))
-                    {
-                        i = resources.Length;
-                        path_is_in_resources = true;
-                    }
+                    path_is_in_resources = resources[i].Split('.').Contains(pathfilename);
                 }
                 if (path_is_in_resources)
                 {
@@ -85,29 +77,7 @@ namespace ConsoleMario.Utility
                 {
                     if (devices[i, j] == null)
                     {
-                        Device device;
-                        if (!Device.IsComplexCharacter(rowdevices[j]))
-                        {
-                            device = Device.GetDeviceByCharacter(rowdevices[j]);
-                        }
-                        else
-                        {
-                            try
-                            {
-                                device = Device.GetDeviceByCharacter(rowdevices[j], loadedparameters[parameterindex]);
-                            }
-                            catch (InvalidCastException)
-                            {
-                                // Door's row, columns separated by
-                                string[] positions = loadedparameters[parameterindex].Split(' ');
-                                int row = Convert.ToInt32(positions[0]);
-                                int col = Convert.ToInt32(positions[1]);
-                                devices[row - 1, col - 1] = new Door();
-                                device = Device.GetDeviceByCharacter(rowdevices[j], devices[row - 1, col - 1]);
-                            }
-                            parameterindex++;
-                        }
-                        devices[i, j] = device;
+                        PushDeviceToDevices(devices, rowdevices, loadedparameters, i, j, ref parameterindex);
                     }
                 }
             }
@@ -128,6 +98,32 @@ namespace ConsoleMario.Utility
                 }
             }
             return devices;
+        }
+        private static void PushDeviceToDevices(Device[,] devices, char[] rowdevices, List<string> loadedparameters, int i, int j, ref int parameterindex)
+        {
+            Device device;
+            if (!Device.IsComplexCharacter(rowdevices[j]))
+            {
+                device = Device.GetDeviceByCharacter(rowdevices[j]);
+            }
+            else
+            {
+                try
+                {
+                    device = Device.GetDeviceByCharacter(rowdevices[j], loadedparameters[parameterindex]);
+                }
+                catch (InvalidCastException)
+                {
+                    // Door's row, columns separated by
+                    string[] positions = loadedparameters[parameterindex].Split(' ');
+                    int row = Convert.ToInt32(positions[0]);
+                    int col = Convert.ToInt32(positions[1]);
+                    devices[row - 1, col - 1] = new Door();
+                    device = Device.GetDeviceByCharacter(rowdevices[j], devices[row - 1, col - 1]);
+                }
+                parameterindex++;
+            }
+            devices[i, j] = device;
         }
         private static List<string> ReadLines(string filename)
         {
