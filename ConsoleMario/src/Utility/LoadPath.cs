@@ -1,7 +1,6 @@
 ﻿using ConsoleMario.Devices;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -9,50 +8,52 @@ namespace ConsoleMario.Utility
 {
     internal static class LoadPath
     {
+        #region Private Fields
+
+        private const string pathstring = "ConsoleMario.Paths.";
+        private static readonly Assembly assembly = Assembly.GetExecutingAssembly();
+        private static readonly List<Path> loadedpaths = new List<Path>();
+
+        #endregion Private Fields
+
         #region Public Methods
 
         public static ConsoleMario.Utility.Path LoadPathFromFile(int level_number)
         {
-            ConsoleMario.Utility.Path path;
-            string filename = pathstring + "path" + level_number;
-            // Read the preview
-            string previewfile = filename + ".preview";
-            string pathpreview = "";
-            try
+            if (level_number > loadedpaths.Count)
             {
-                List<string> loadedpreview = ReadLines(previewfile, true);
-                for (int i = 0; i < loadedpreview.Count; i++)
+                string filename = pathstring + "path" + level_number;
+                string preview = "";
+                // load preview
+                string previewfilename = filename + ".preview";
+                try
                 {
-                    pathpreview += loadedpreview[i];
+                    List<string> readpreview = ReadLines(previewfilename);
+                    for (int i = 0; i < readpreview.Count; i++)
+                    {
+                        preview += readpreview[i] + '\n';
+                    }
+                    preview = preview.Remove(preview.Length - 1, 1);
                 }
+                catch (System.IO.FileNotFoundException) { }
+                Path examplepath = ReadPath(preview, filename, level_number, ".exammple", true);
+                Path path = ReadPath(preview, filename, level_number, ".path", false);
+                loadedpaths.Add(new Path(false, path, examplepath, preview));
             }
-            catch (FileNotFoundException) { }
-            // Read ExamplePath
-            string examplefile = filename + ".example";
-            ConsoleMario.Utility.Path example = null;
-            try
-            {
-                example = ReadPath(examplefile, level_number, true);
-                example.Preview = pathpreview;
-            }
-            catch (FileNotFoundException) { }
-            // Read Path
-            string pathfile = filename + ".path";
-            path = new Utility.Path(false, ReadPath(pathfile, level_number, false), example, pathpreview);
-            return path;
+            return loadedpaths[level_number - 1];
         }
         public static int MaxPath()
         {
             string[] resources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            int path = 1;
-            string pathstring = "path" + Convert.ToString(path);
+            int pathlevel = 1;
+            string pathfilename = "path" + Convert.ToString(pathlevel);
             bool path_is_in_resources = true;
             while (path_is_in_resources)
             {
                 path_is_in_resources = false;
                 for (int i = 0; i < resources.Length; i++)
                 {
-                    if (resources[i].Split('.').Contains(pathstring))
+                    if (resources[i].Split('.').Contains(pathfilename))
                     {
                         i = resources.Length;
                         path_is_in_resources = true;
@@ -60,40 +61,18 @@ namespace ConsoleMario.Utility
                 }
                 if (path_is_in_resources)
                 {
-                    path++;
-                    pathstring = "path" + Convert.ToString(path);
+                    pathlevel++;
+                    pathfilename = "path" + Convert.ToString(pathlevel);
                 }
             }
-            return path - 1;
+            return pathlevel - 1;
         }
 
         #endregion Public Methods
 
-        #region Private Fields
-
-        private const string pathstring = "ConsoleMario.Paths.";
-
-        #endregion Private Fields
-
         #region Private Methods
 
-        private static Device[,] ReadDevices(List<string> loadeddevices)
-        {
-            Device[,] devices = new Device[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
-            for (int i = 0; i < devices.GetLength(0); i++)
-            {
-                // rows
-                char[] rowdevices = loadeddevices[i].ToCharArray();
-                // column
-                for (int j = 0; j < rowdevices.Length; j++)
-                {
-                    Device device = Device.GetDeviceByCharacter(rowdevices[j]);
-                    devices[i, j] = device;
-                }
-            }
-            return devices;
-        }
-        private static Device[,] ReadDevices(List<string> loadeddevices, List<string> loadedparameters)
+        private static Device[,] GetDevices(List<string> loadeddevices, List<string> loadedparameters)
         {
             Device[,] devices = new Device[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
             int parameterindex = 0;
@@ -134,22 +113,33 @@ namespace ConsoleMario.Utility
             }
             return devices;
         }
-        private static List<string> ReadLines(string filename, bool preview = false)
+        private static Device[,] GetDevices(List<string> loadeddevices)
         {
-            if (Assembly.GetExecutingAssembly().GetManifestResourceNames().Contains(filename))
+            Device[,] devices = new Device[loadeddevices.Count, loadeddevices[0].ToCharArray().Length];
+            for (int i = 0; i < devices.GetLength(0); i++)
             {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                Stream stream = assembly.GetManifestResourceStream(filename);
-                StreamReader str = new StreamReader(stream);
+                // rows
+                char[] rowdevices = loadeddevices[i].ToCharArray();
+                // column
+                for (int j = 0; j < rowdevices.Length; j++)
+                {
+                    Device device = Device.GetDeviceByCharacter(rowdevices[j]);
+                    devices[i, j] = device;
+                }
+            }
+            return devices;
+        }
+        private static List<string> ReadLines(string filename)
+        {
+            if (assembly.GetManifestResourceNames().Contains(filename))
+            {
+                System.IO.Stream stream = assembly.GetManifestResourceStream(filename);
+                System.IO.StreamReader str = new System.IO.StreamReader(stream);
                 List<string> lines = new List<string>();
                 string line = "";
                 do
                 {
                     line = str.ReadLine();
-                    if (line != "" && line != null && preview)
-                    {
-                        line += '\n';
-                    }
                     lines.Add(line);
                 } while (line != "" && line != null);
                 lines.Remove("");
@@ -160,28 +150,34 @@ namespace ConsoleMario.Utility
             }
             else
             {
-                throw new FileNotFoundException();
+                throw new System.IO.FileNotFoundException();
             }
         }
-        private static ConsoleMario.Utility.Path ReadPath(string filename, int level, bool example)
+        private static Path ReadPath(string preview, string filename, int level, string extension, bool example)
         {
-            ConsoleMario.Utility.Path path = null;
-            // Read Path
-            List<string> loadeddevices = ReadLines(filename);
-            string fileparams = filename + ".params";
-            List<string> loadedparameters = null;
-            Device[,] devices = null;
+            string examplepathfilename = filename + extension;
+            string exampleparametersfilename = examplepathfilename + ".params";
+            List<string> loadeddevices = null;
+            List<string> loadedparams = null;
+            Device[,] devices;
             try
             {
-                loadedparameters = ReadLines(fileparams);
-                devices = ReadDevices(loadeddevices, loadedparameters);
+                loadeddevices = ReadLines(examplepathfilename);
+                try
+                {
+                    loadedparams = ReadLines(exampleparametersfilename);
+                    devices = GetDevices(loadeddevices, loadedparams);
+                }
+                catch (System.IO.FileNotFoundException)
+                {
+                    devices = GetDevices(loadeddevices);
+                }
+                return new Path(example, devices, level, preview);
             }
-            catch (FileNotFoundException)
+            catch (System.IO.FileNotFoundException)
             {
-                devices = ReadDevices(loadeddevices);
+                return null;
             }
-            path = new Utility.Path(example, devices, level);
-            return path;
         }
 
         #endregion Private Methods
