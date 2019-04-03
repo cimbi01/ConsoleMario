@@ -18,7 +18,10 @@ Device:
 Device Character változásra eventet
 Device charDevicePairs csúnya > hogy lehet osztályonként hozzáaadni?
 static tagok > nem Device része csak a Device-ra hivatkozik > Új osztály
-Device hozzáad static abstract metodus > implementálják az alosztályok
+
+Minden Device implementál egy interfacet:
+Van neki: void Use(Player), Character > property
+Device > static Devices > minden más megmarad
 
 End:
 Use:
@@ -93,3 +96,5 @@ Device: static Device devices
 Device alosztalyok: Use > Player
 Device alosztalyok: GetDevice > object
 LoadPath > Path 
+
+Ötletek:
