@@ -86,3 +86,10 @@ Elmozdul : Player move meghívódik > Renderel
 Win : End.use meghívódik > HandleWin
 DeviceCharacterchanged : Device Character set > Render Device position
 StepinDevice : ha a játékos pontján van egy device > meghívja a device.use-t
+
+Decouple:
+Key : Door
+Device: static Device devices
+Device alosztalyok: Use > Player
+Device alosztalyok: GetDevice > object
+LoadPath > Path 

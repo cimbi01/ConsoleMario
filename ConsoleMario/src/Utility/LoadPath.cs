@@ -141,7 +141,6 @@ namespace ConsoleMario.Utility
                 lines.Remove("");
                 lines.Remove(null);
                 str.Close();
-                stream.Close();
                 return lines;
             }
             else
