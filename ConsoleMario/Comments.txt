@@ -14,14 +14,6 @@ Player.Move > eventhandler > RenderPlayer
 Player > belemozdul valamibe akkor meghívja a valami use-t
 Player
 
-Device:
-Device Character változásra eventet
-Device charDevicePairs csúnya > hogy lehet osztályonként hozzáaadni?
-static tagok > nem Device része csak a Device-ra hivatkozik > Új osztály
-Minden Device implementál egy interfacet:
-Van neki: void Use(Player), Character > property
-Device > static Devices > minden más megmarad
-
 End:
 Use:
 Win > eseménykezelő > győzelem > End use hívja meg
@@ -96,4 +88,11 @@ Device alosztalyok: Use > Player
 Device alosztalyok: GetDevice > object
 LoadPath > Path 
 
-Ötletek:
+Kész:
+Device:
+Device Character változásra eventet
+Device charDevicePairs csúnya > hogy lehet osztályonként hozzáaadni?
+static tagok > nem Device része csak a Device-ra hivatkozik > Új osztály
+Minden Device implementál egy interfacet:
+Van neki: void Use(Player), Character > property
+Device > static Devices > minden más megmarad

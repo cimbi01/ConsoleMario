@@ -1,6 +1,4 @@
-﻿using ConsoleMario.Utility;
-
-namespace ConsoleMario.Devices
+﻿namespace ConsoleMario.Devices
 {
     public class DeviceBase : IDevice
     {
@@ -21,8 +19,10 @@ namespace ConsoleMario.Devices
 
         #region Public Methods
 
-        public void Use(Player player)
-        { }
+        public void Use(ConsoleMario.Utility.Player player)
+        {
+            // implements IDevice
+        }
 
         #endregion Public Methods
     }
